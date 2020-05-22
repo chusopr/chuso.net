@@ -1,0 +1,26 @@
+baseURL = "http://chuso.net/"
+DefaultContentLanguage = "en"
+title = "chuso.net"
+theme = "cleanwhite"
+relativeURLs = true
+uglyURLs = true
+
+[permalinks]
+post = "/:title"
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[languages]
+  [languages.en]
+  weight = 1
+  baseURL = "http://en.chuso.net/"
+  [languages.es]
+  weight = 2
+  baseURL = "http://es.chuso.net/"
+
+[params]
+  custom_css = ["css/custom.css"]
+  featured_tags = true
+  showtoc = false
