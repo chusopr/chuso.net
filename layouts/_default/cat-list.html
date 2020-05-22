@@ -1,0 +1,10 @@
+{{ $pagecat := .Params.pagecat }}
+<ul>
+{{ range $key, $taxonomy := .Site.Taxonomies.categories }}
+  {{ if eq $key $pagecat }}
+    {{ range $taxonomy.Pages }}
+    <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  {{ end }}
+{{ end }}
+</ul>
