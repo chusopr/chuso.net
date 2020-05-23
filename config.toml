@@ -7,7 +7,7 @@ uglyURLs = true
 cleandestinationdir = true
 
 [permalinks]
-post = "/:title"
+posts = "/:title"
 
 [taxonomies]
 category = "categories"
