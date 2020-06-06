@@ -7,7 +7,9 @@ uglyURLs = true
 cleandestinationdir = true
 
 [permalinks]
-posts = "/:title"
+posts = "/:slug"
+documents = "/:slug"
+pages = "/:filename"
 
 [taxonomies]
 category = "categories"
@@ -18,12 +20,30 @@ tag = "tags"
   weight = 1
   baseURL = "http://en.chuso.net/"
   languageName = "English"
+  languageCode = "en"
   [languages.es]
   weight = 2
   baseURL = "http://es.chuso.net/"
   languageName = "Español"
+  languageCode = "es"
 
 [params]
+  header_image = "/img/header.png"
   custom_css = ["css/custom.css"]
   featured_tags = true
+  featured_condition_size = 1
   showtoc = false
+  SEOTitle = "chuso.net"
+  about_me = true
+  sidebar_avatar = "/img/avatar-circle.png"
+
+  [params.social]
+  rss      = true
+  facebook = "https://facebook.com/chescu"
+  twitter  = "https://twitter.com/chusop"
+  linkedin = "https://www.linkedin.com/in/jes%C3%BAs-p%C3%A9rez-rey-64039013/"
+  github   = "https://github.com/chusopr"
+  gitlab   = "https://gitlab.com/chuso"
+  mastodon = "https://mastodon.social/@chuso"
+  keybase  = "https://keybase.io/jprey"
+  flickr   = "https://flickr.com/chusopr"
