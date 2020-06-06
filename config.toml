@@ -4,6 +4,7 @@ title = "chuso.net"
 theme = "cleanwhite"
 relativeURLs = true
 uglyURLs = true
+cleandestinationdir = true
 
 [permalinks]
 post = "/:title"
@@ -16,9 +17,11 @@ tag = "tags"
   [languages.en]
   weight = 1
   baseURL = "http://en.chuso.net/"
+  languageName = "English"
   [languages.es]
   weight = 2
   baseURL = "http://es.chuso.net/"
+  languageName = "Español"
 
 [params]
   custom_css = ["css/custom.css"]
