@@ -1,4 +1,4 @@
-baseURL = "http://chuso.net/"
+baseURL = "https://chuso.net/"
 DefaultContentLanguage = "en"
 title = "chuso.net"
 theme = "cleanwhite"
@@ -18,12 +18,12 @@ tag = "tags"
 [languages]
   [languages.en]
   weight = 1
-  baseURL = "http://en.chuso.net/"
+  baseURL = "https://en.chuso.net/"
   languageName = "English"
   languageCode = "en"
   [languages.es]
   weight = 2
-  baseURL = "http://es.chuso.net/"
+  baseURL = "https://es.chuso.net/"
   languageName = "Español"
   languageCode = "es"
 
