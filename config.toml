@@ -9,7 +9,7 @@ cleandestinationdir = true
 [permalinks]
 posts = "/:slug"
 documents = "/:slug"
-pages = "/:filename"
+pages = "/:slug"
 
 [taxonomies]
 category = "categories"
@@ -36,6 +36,7 @@ tag = "tags"
   SEOTitle = "chuso.net"
   about_me = true
   sidebar_avatar = "/img/avatar-circle.png"
+  about_page = "/about"
 
   [params.social]
   rss      = true
