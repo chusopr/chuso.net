@@ -15,6 +15,9 @@ pages = "/:slug"
 category = "categories"
 tag = "tags"
 
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
 [languages]
   [languages.en]
   weight = 1
@@ -37,6 +40,7 @@ tag = "tags"
   about_me = true
   sidebar_avatar = "/img/avatar-circle.png"
   about_page = "/about"
+  enable_search = true
 
   [params.social]
   rss      = true

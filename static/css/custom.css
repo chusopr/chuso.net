@@ -101,3 +101,18 @@ figure.table > * > *
     background-position: left -1px bottom 0px;
     padding-bottom: 12px;
 }
+
+form.search {
+    padding: 20px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+form.search input {
+    border: 0;
+}
+
+form.search button {
+    background: transparent;
+    border: none;
+}
