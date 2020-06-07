@@ -1,0 +1,15 @@
+---
+title: "How I recovered the system after renaming ld.so"
+date: 2013-10-14T18:28:37+00:00
+slug: recovered-system-renaming-ld-linux
+categories: [floss,sysadmin]
+tags: [hack,bash,ld-so,shell-scripting]
+---
+<p>Yes, I know, it may be a little stupid renaming ld.so, can we skip this detail?<br />
+It's not something I do very often, but that day I felt like I had to innovate or something like that.</p>
+
+<p>But innovation was a disaster, it is not a good idea to rename a library linked using its exact path by all system dynamic executables, just to take into account if you are going to have the same idea.</p>
+
+<p>Just in case my advice comes too late and someone else renamed ld.so library —do people really do things like that?— then let me explain how I solved it in my case. The first logical reaction is panic and thinking that you ruined the whole system and you'll have to power it off and go with a Live CD to repair it, which in the case of a server is not the best situation. But it's actually quite easy to fix:</p>
+
+<h2><a href="https://en.chuso.net/documents/technical/recover-system-renamed-ld-linux-so">Repairing system after renaming ld.so</a></h2>

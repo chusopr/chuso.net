@@ -1,0 +1,24 @@
+---
+title: "Configurar número de bolas en el Neverball"
+date: 2007-06-18T19:37:14+00:00
+lastmod: 2007-06-21T00:22:46+00:00
+slug: configurar-numero-de-bolas-en-el-neverball
+categories: [games,floss,development]
+tags: [hack,neverball,patch,subversion]
+---
+<figure class="alignright"><a href="/chuso-overlay/archive/distfiles/neverball-balls-cfg.patch"><img src="http://offload1.icculus.org/neverball/thumb-5.jpg" alt="Neverball infinite lifes" width="256" height="192"></a></figure>
+<p>Al que no lo conozca debería probarlo. <a href="http://icculus.org/neverball">Neverball</a> es uno de los mejores <a href="https://es.chuso.net/documentos/no-tecnicos/seleccion-de-juegos-para-linux">juegos libres</a> que hay (gracias, <a href="http://gorrosdemago.org">Adian</a>), basado en el minijuego <a href="http://en.wikipedia.org/wiki/Super_Monkey_Ball#Monkey_Target">Monkey Target</a> de <a href="http://en.wikipedia.org/wiki/Super_Monkey_Ball">Super Monkey Ball</a>. Un poco difícil de entender al principio, al final acaba resultando bastante entretenido y muy adictivo.</p>
+
+<p>En una de una de esas sesiones de Neverball hace un par de días, esta vez con PedrE, se nos ocurrió: ¿Por qué sólo tres vidas? Es un incordio cuando estás obzecado que cada tres intentos tengas que volver al menú principal a volver a entrar en el nivel. ¿Por qué no vidas infinitas? Me puse manos a la obra y aquí está, el parche para configurar el número de bolas en el Neverball. Se configura con la opción <var>balls</var> en el fichero <var>~/.neverball/neverballrc</var>, valores negativos serán interpretados como infinitas bolas.</p>
+
+<p>Por supuesto, también hago disponible un <a href="http://www.gentoo.org/doc/es/handbook/handbook-x86.xml?part=3">ebuild</a> para <a href="http://www.gentoo.org">Gentoo</a> ;-).</p>
+
+<p style="text-align: center; font-weight: bold;"><a href="/chuso-overlay/archive/distfiles/neverball-balls-cfg.patch">Descargar parche</a> || <a href="/chuso-overlay/archive/games-puzzle/neverball/neverball-1.4.0.ebuild">Descargar ebuild</a></p>
+
+<p style="font-style: italic;">Actualización:</p>
+
+<p>Y también:</p>
+
+<p style="text-align: center; font-weight: bold;"><a href="/chuso-overlay/archive/games-puzzle/neverball-svn/neverball-svn-956.ebuild">Descargar ebuild para games-puzzle/neverball-svn</a></p>
+
+<p style="font-style: italic">Última actualización: 21 de junio de 2007 02:22:46 CEST.</p>

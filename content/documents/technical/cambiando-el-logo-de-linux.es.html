@@ -1,0 +1,103 @@
+---
+title: "Cambiando el logo de Linux"
+date: 2003-08-09T19:23:17+00:00
+slug: documentos/tecnicos/cambiando-el-logo-de-linux
+---
+<pre>CAMBIANDO EL LOGO DE LINUX 
+- ------------------------ 
+ 
+Para hacer esto vamos a usar una utilidad llamada fblogo que se puede  
+descargar de http://freakzone.net/gordon/src/fblogo-0.5.0.tar.gz (la  
+página web está en http://freakzone.net/gordon/#fblogo ) 
+ 
+Una cierta experiencia compilando el núcleo sería también recomendable. 
+ 
+Lo descomprimimos: 
+ 
+  # tar zxf fblogo-0.5.0.tar.gz 
+ 
+No hay configure, por lo que se configura editando directamente el  
+Makefile. Por ejemplo, tal vez te interese poner "/usr" en PREFIX en  
+vez de "/usr/local" o tal vez "-O3" en vez de "-O2" en FLAGS, pero las  
+opciones por defecto deberían ser validas para todo el mundo. 
+ 
+Lo compilamos: 
+ 
+  # make 
+  gcc -o fblogo -g -march=athlon -O3 -pipe -W -Wall  
+- -DPNG_SETJMP_NOT_SUPPORTED -lpng fblogo.c 
+ 
+Y lo instalamos: 
+ 
+  # make install 
+  /usr/bin/install -p -o root -g root -m 755 fblogo /usr/bin 
+  /usr/bin/install -p -o root -g root -m 755 fblogo_patch /usr/bin 
+  /usr/bin/install -p -o root -g root -m 644 fblogo.1  
+/usr/share/man/man1 
+  /usr/bin/install -p -o root -g root -m 644 fblogo_patch.1  
+/usr/share/man/man1 
+ 
+Después buscamos la imagen que queremos poner. 
+Por supuesto, también para esto Google nos puede ser útil (¿cuándo no?):  
+http://images.google.com ;) 
+ 
+La imagen tiene que estar en formato PNG, indexada (es decir, con paleta  
+de colores) y no puede terner más de 224 colores. Para cambiar el  
+formato y el número de colores podemos usar cualquier editor de  
+imágenes decente, como The GIMP &lt;http://www.gimp.org&gt;;, o ImageMagick  
+&lt;http://www.imagemagick.org&gt;;. Ambos vienen con cualquier distribución. 
+Si por ejemplo la imagen que bajamos se llama logo.bmp y queremos  
+guardarla convertida con ImageMagick en logo.png hacemos: 
+ 
+  # convert -colors 223 logo.bmp logo.png 
+ 
+Y a continuación creamos la cabecera C que contendrá la imagen que se  
+mostrará al arrancar: 
+ 
+  # fblogo logo.png > linux_logo.h 
+ 
+Ya está, la cabecera C se creó a partir de logo.png y se guardó en  
+linux_logo.h. Copiamos ese archivo al núcleo sobreescribiendo  
+include/linux/linux_logo.h 
+ 
+  # cp linux_logo.h /usr/src/linux/include/linux/linux_logo.h 
+ 
+A continuación editamos /usr/src/linux/drivers/video/fbcon.c y en LOGO_H  
+y LOGO_W ponemos los valores que dice en las líneas 14 y 15 de  
+linux_logo.h. 
+Si no encuentras esos valores puedes obtenerlos con file: 
+ 
+  # file logo.png 
+  logo.png: PNG image data, 56 x 74, 8-bit colormap, non-interlaced 
+ 
+El primer valor (56) sería LOGO_W y el segundo (74) LOGO_H. 
+ 
+Sólo queda recompilar el kernel. Has de tener activadas las siguientes  
+opciones al recompilar 
+ 
+  Code maturity level options 
+    [*] Prompt for development and/or incomplete code/drivers  
+(CONFIG_EXPERIMENTAL) 
+     
+  Console drivers 
+    Frame-buffer suport 
+      [*] Support for frame buffer devices (CONFIG_FB) 
+      [*]   VESA VGA graphics console (CONFIG_FB_VESA) 
+ 
+NOTAS: 
+- - El logo sólo será visible si se está usando el driver de VESA (aunque  
+creo que hay parches para usar otros driver como nVidia), por lo que  
+éste debe ser el driver que se use en la consola (puedes incluir  
+soporte para otros drivers, pero VESA debe ser el utilizado). 
+- - Has de seleccionar un modo de vídeo con un número de colores mayor o  
+igual que el de la imagen. Por ejemplo, si la imagen tiene 200 colores  
+no puedes seleccionar un modo de vídeo con 16 porque no se verá bien la  
+imagen (probablemente se verá un montón de puntos o rayas de colorines  
+o algo parecido). Los modos de vídeo posibles son: 
+ 
+      | 640x480  800x600  1024x768 1280x1024 
+  ----+------------------------------------- 
+  256 |  0x301    0x303    0x305    0x307 
+  32k |  0x310    0x313    0x316    0x319 
+  64k |  0x311    0x314    0x317    0x31A 
+  16M |  0x312    0x315    0x318    0x31B </pre>

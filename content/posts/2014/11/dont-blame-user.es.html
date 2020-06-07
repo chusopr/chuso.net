@@ -1,0 +1,169 @@
+---
+title: "No, la culpa no es del usuario"
+date: 2014-11-09T22:13:28+00:00
+slug: la-culpa-no-es-del-usuario
+categories: [debate,development,web-development,software,internet]
+tags: [whois,seguridad,filezilla,confidencial,validacion,excepcion,contrasena,troyano,pebkac]
+---
+<p>No es habitual ver a un informático defender a los usuarios. Menos aún si el informático es un administrador de sistemas. Se sabe que la relación entre administradores de sistemas y usuarios <a href="http://bofharchive.com/">es tensa</a>. Pero cuando me intentan tomar el pelo me pongo más tenso todavía. Vayamos a los hechos.</p>
+
+<h3>El registrador</h3>
+
+<p>Me hallaba actualizando el contacto administrativo de unos dominios registrados con un conocido registrador español. La empresa que figuraba como contacto administrativo del dominio ya no existe y los dominios pertenecen ahora a otra empresa, así que tengo que actualizar todos los datos, pero esa es otra historia. Ahora voy a transferir los dominios a otro registrador, así que con cambiar el <i lang="en">e-mail</i> para que me llegue el <a href="http://www.dondominio.com/help/es/38/que-es-auth-code-como-lo-consigo/"><i lang="en">auth code</i></a> es suficiente para transferirlos a otro registrador y luego allí ya le pongo el resto de los datos de contacto correctos. Dejo todos los datos como están y solo cambio el <i lang="en">e-mail</i>, le doy a enviar y no hace nada. No envía los datos, no muestra ningún mensaje, no realiza ninguna acción, nada. Pruebo con distintos navegadores y el resultado es siempre el mismo. Como de esto uno ya sabe un poco, voy a la consola de errores del navegador y lo que me encuentro es esto:</p>
+
+<p><a href="/wp-content/uploads/2014/09/registrar1.png"><img class="aligncenter" src="/wp-content/uploads/2014/09/registrar1.png" alt="" width="1209" height="244" /></a></p>
+
+<p>Efectivamente, se está produciendo una excepción JavaScript. Las excepciones, en cualquier lenguaje de programación, son situaciones no controladas. Sirven para informar al programador de que se produjo algún error en la aplicación intentando realizar alguna operación no válida, como dividir por cero o acceder al elemento posterior al último de una lista. El usuario nunca debería ver una excepción. Si el usuario ve una excepción, significa que probablemente el programador hizo algo mal: no tuvo en cuenta un escenario de error.<br />
+Cuando todo sale según se espera, es fácil que no se produzca ningún error. Pero pocas veces es así. ¿Realmente podemos esperar que cualquier usuario meta todos los datos bien a la primera? Los programas tienen que estar preparados para que nada sea como se espera. Si en una casilla le preguntamos al usuario cuál es su año de nacimiento, el programa tiene que estar preparado para que ahí el usuario introduzca letras. Sí, no es lo esperado, pero tiene que estar previsto. Si no prevemos esa situación, se producirá una excepción.</p>
+
+<p>A menudo hay tantas situaciones que hay que prever y tantos datos que hay que comprobar, que es fácil que se nos escape alguno, a todos nos pasa. Y entonces es cuando la excepción llega hasta el usuario y el resultado más probable es que la aplicación termine abruptamente o quede inestable.</p>
+
+<p>Bien, después de esta breve explicación para los no expertos, continuemos. Me había quedado en que, intentando actualizar un único dato del contacto administrativo, la aplicación no hacía nada y en la consola de errores veía que se producía una excepción JavaScript. Es decir, un error de programación: algo no estaba sucediendo como el programa esperaba y el programador no lo había previsto.</p>
+
+<p>Entonces, como era un trámite que necesitaba hacer, envié un <i lang="en">ticket</i> de soporte al registrador para notificarles del error en la página esperando obtener como respuesta que iban a revisar y corregir el error.<br />
+Pero no. La respuesta del registrador fue que estaba poniendo mal los datos en el formulario: el NIF no tenía un formato válido. Intenté hacerles ver que no era normal que la página no hiciese nada al darle a enviar —y menos aún que se produjese una excepción— sin advertir al usuario de que había un error en los datos, sin que el usuario supiera por qué la web no hacía nada. Pero siguieron insistiendo en que lo que pasaba era que estaba poniendo mal los datos. El caso es que si intentaba enviar el formulario sin cambiar nada tampoco funcionaba: los datos que me proporcionaba la página por defecto ya no eran válidos.</p>
+
+<p>OK, <a href="https://www.youtube.com/watch?v=iZCIss7pxk0">aceptamos barco</a>. Les dije que sí, que muy bien, que había puesto mal los datos, que ahora los iba a poner bien y seguía con lo mío.</p>
+
+<p>Bien, a continuación, entonces, me puse con el proceso de iniciar la huida con los dominios que iban a caducar del registrador displicente hacia uno un poco más serio. Pero resulta que el registrador antiguo ya había tomado la previsión de desactivar los dominios una semana antes de que expiren. Me dicen que es normal, que es así como funciona. Vale, está bien, <a href="https://www.youtube.com/watch?v=iZCIss7pxk0">aceptamos pulpo</a>, qué más me da si total no tenemos interés en seguir con ellos. Voy a entrar en el panel de control del dominio caducado para copiar los datos de registro al nuevo registrador y que los del antiguo hagan lo que quieran con él. Pero no, voy a mi lista de dominios, veo allí el que quiero migrar, hago clic para entrar en su panel de control y otra vez no pasa nada. No intenta cargar el panel de control, no da error, no hace nada. De nuevo, ninguna información para el usuario, lo único que el usuario ve es que está intentando hacer algo pero no pasa nada.<br />
+Entonces miro el código fuente de la página y compruebo que el enlace para acceder a ese dominio está en blanco, no apunta a ningún sitio:</p>
+
+<p><a href="/wp-content/uploads/2014/09/registrar2.png"><img class="aligncenter size-full wp-image-1540" src="/wp-content/uploads/2014/09/registrar2.png" alt="" width="1032" height="116" /></a></p>
+
+<p>Me fijo en que el nombre del dominio va en un parámetro de la URL en los dominios que sí que están activos, algo del tipo:</p>
+
+<p><code>http://www.registrador.example/panel?domain=dominio-activo.com</code></p>
+
+<p>¿Qué pasará si cambio ese parámetro por el del dominio inactivo en el que quiero entrar?</p>
+
+<p><code>http://www.registrador.example/panel?domain=dominio-inactivo.com</code></p>
+
+<p>Efectivamente, entra sin problemas en el panel de control del dominio inactivo.</p>
+
+<p>Vale, otro error en la interfaz, voy a reportarlo porque yo todavía tengo fe. Voy al sistema de incidencias y en la lista de dominios que me muestran para seleccionar con cuál tengo la incidencia, este ya no aparece. Así que la abro como una incidencia general indicando con cuál tengo el problema realmente y describo ambos problemas: no funciona el enlace para acceder al panel de control ni puedo abrir una incidencia relacionada con este dominio.</p>
+
+<p>Me dicen que es todo normalísimo, que el enlace no funciona porque el dominio está inactivo.</p>
+
+<p>Reitero: oigan, pero es que me están poniendo un enlace para acceder al panel de control que no lleva a ningún lado y el panel de control sigue funcionando, hagan que el enlace lleve a algún lado o quítenlo.</p>
+
+<p>Me vuelven a responder que no, que el problema es mío, que a ver para qué ando entrando en el panel de control de un dominio inactivo.</p>
+
+<p>Vale, está bien, les respondo que yo ya reporté el error, que lo arreglen si quieren o que hagan lo que quieran, que a mí me da igual porque yo ya no voy a ser su cliente.</p>
+
+<p>Mientras sigo en la huida del registrador antiguo, me encuentro también un error que no dice nada:</p>
+
+<p><a href="/wp-content/uploads/2014/09/registrar3.png"><img class="aligncenter size-full wp-image-1541" src="/wp-content/uploads/2014/09/registrar3.png" alt="" width="640" height="191" /></a></p>
+
+<p>Aunque ya es un avance, ahora por lo menos hay un mensaje, aunque no diga nada. Sin embargo también encuentro un botón que, otra vez, no hace nada:</p>
+
+<video controls class="aligncenter" width="604" height="344" src="/wp-content/uploads/2014/09/registrar.mp4"></video>
+
+<p>No abro incidencia y me limito a avisarlos por Twitter porque ya había perdido la fe: la última vez que lo comprobé, tres meses después, todavía no habían corregido el primer error que les reporté y si reporto más probablemente me volverán a decir que el motivo por el que en su web hay botones que no hacen nada y mensajes de error que no dicen nada es porque estoy haciendo algo mal, como antes.</p>
+
+<h2>El confidencial</h2>
+
+<p>Ahora vamos a cambiar de caso pero sin cambiar el resultado.</p>
+
+<p>Estaba un día visitando una noticia antigua de un confidencial. Ya no me acuerdo qué noticia era, pero era de hace un par de años, si no más. Cuando acabé de leer la noticia, vi la típica sección de noticias relacionadas en una columna a la derecha y allí había otra noticia que me pareció interesante. Hice clic para leerla y lo que me apareció fue esto:</p>
+
+<p><a href="/wp-content/uploads/2014/09/confidencial1.png"><img class="aligncenter size-full wp-image-1543" src="/wp-content/uploads/2014/09/confidencial1.png" alt="" width="600" height="251" /></a></p>
+
+<p>Es decir, el enlace dirigía a una página <a href="https://es.wikipedia.org/wiki/ASP">ASP</a> pero el servidor, en vez de ejecutar el ASP, me mostraba el código fuente. Con todos los datos de conexión a la base de datos: dirección IP, nombre de la base de datos, usuario y contraseña.</p>
+
+<p>Como es información que me parece comprometida y que sería irresponsable divulgar públicamente, me limito a publicar la captura ofuscada vista arriba y el resto de los datos (URL exacta del problema y cómo llegué hasta allí) se los comunico por privado al confidencial en cuestión.</p>
+
+<p>La respuesta que me dan es más o menos la misma que la del registrador del caso anterior: no admiten ningún problema en la web y me dicen que estoy visitando una versión antigua. Yo insisto en que he llegado hasta ese enlace de forma normal visitando la hemeroteca y que en cualquier caso, sea como sea, tiene una fuga de información en la web.</p>
+
+<p>Investigo un poco más y me encuentro con más páginas del mismo sitio con más fugas de información. Me vuelven a decir que el problema se debe a que estoy visitando noticias antiguas.<br />
+OK, vale, entonces, aunque su web nos ofrece la posibilidad de visitar noticias antiguas, la web no está preparada para mostrarnos esas noticias sin que haya fuga de información y en cualquier caso les da igual. Pues yo creo que ya he hecho más de lo que me sentía responsable a hacer, si quieren negar el problema y ellos también culpan al usuario, yo ya no puedo hacer nada.</p>
+
+<h3>FileZilla</h3>
+
+<p>Como administrador de sistemas hay una situación con la que ya me he encontrado varias veces: de repente, de un día para otro, un cliente se encuentra con que todas sus webs han sido <i>troyanizadas</i>. El ataque no se produce por ningún problema de seguridad en los servidores ni en las webs ni por <a href="https://es.wikipedia.org/wiki/Ataque_de_fuerza_bruta">ataques de fuerza bruta</a>. El atacante simplemente entre a cada una de las cuentas FTP (cada web tiene una cuenta de FTP distinta) en el primer intento.<br />
+Entonces, cuando se dan todas estas condiciones, suelo preguntarle al cliente: «¿Usas FileZilla?» obteniendo habitualmente una respuesta afirmativa. A estas alturas ya sabemos que una simple correlación estadística <a href="https://es.wikipedia.org/wiki/Cum_hoc_ergo_propter_hoc">no es suficiente</a> para establecer una causalidad, pero hay más indicios que pueden llevarnos a establecer esta relación con más fundamento.</p>
+
+<p>Los indicios adicionales son los siguientes:</p>
+
+<figure class="alignright">
+<a href="/wp-content/uploads/2013/05/recentservers.png"><img src="/wp-content/uploads/2013/05/recentservers.png" alt="Ficheros recentservers.xml de FileZilla con contraseñas en texto plano en resultados de las búsquedas de Google." width="273" height="232" /></a><figcaption>Ficheros recentservers.xml de FileZilla con contraseñas en texto plano en resultados de las búsquedas de Google.</figcaption></figure>
+
+<p>Vamos directamente al grano. Si usas el Gestor de sitios de FileZilla, comprueba el contenido del fichero <var>~/.filezilla/sitemanager.xml</var> si estás en UN*X o <var>%APPDATA%FileZillasitemanager.xml</var> en Windows.</p>
+
+<p>Ahí lo tienes, el listado de todos los servidores que tienes en el gestor de sitios con sus usuarios y contraseñas en texto plano.</p>
+
+<p>Bueno, puede que digas que esto no te asusta porque no usas el Gestor de sitios o vas a dejar de usarlo. Bien, pues aún puedo intentar asustarte más, porque si no usas el gestor de sitios, la única forma que tendrás de conectarte a un servidor será usando la barra de conexión rápida. ¿Y te has fijado que esa barra contiene un desplegable con los últimos sitios a los que te has conectado permitiéndote volver a conectar con solo hacer clic? Ni siquiera te pide la contraseña, lo que implica que FileZilla recuerda la contraseña. Y, de nuevo, la guarda en un fichero en texto plano: <var>~/.filezilla/recentservers.xml</var> y <var>%APPDATA%FileZillarecentservers.xml</var>. Tras las insistentes quejas, las nuevas versiones te muestran un aviso antes de guardar las contraseñas en <var>recentservers.xml</var>. Las anteriores guardaban las contraseñas directamente sin decir nada.</p>
+
+<p>Además, esta barra de conexión rápida tiene un extra de inseguridad añadido. El gestor de sitios nos ofrece la posibilidad de usar conexión cifrada o sin cifrar aunque, como no, usará conexión sin cifrar por defecto. La barra de conexión rápida ni siquiera nos da esa posibilidad, usará conexión no cifrada siempre, por lo que tu contraseña viajará sin cifrar por la red. Así que no se te ocurra usar FileZilla en una red pública. Bueno, en una privada mejor tampoco. Definitivamente, no uses FileZilla, es un buen cliente de FTP pero su política de seguridad lo rebaja a «herramienta de juguete».</p>
+
+<p>Uno podría pensar que, oye, todos cometemos errores y seguro que está en los planes de los desarrolladores de FileZilla solucionar estos problemas. Y uno se equivocaría.<br />
+Este es un tema recurrente en el <i lang="en">bug tracker</i> de FileZilla y la discusión termina siempre la misma forma: el desarrollador cierra abruptamente el tema diciendo que esto funciona así por diseño, que no hay ningún problema al respecto, que no es responsabilidad suya que tus contraseñas se guarden de forma segura y que no cabe más discusión al respecto.</p>
+
+<p>De nuevo, igual que en los casos anteriores, el desarrollador de FileZilla elude toda responsabilidad sobre la deficiente seguridad de la aplicación para responsabilizar a cualquier otra parte (sistema operativo y, principalmente, usuario) de cualquier problema de seguridad que pueda surgir del uso de su aplicación:</p>
+
+<ul>
+ 	<li><figure class="alignright"><a href="/wp-content/uploads/2014/10/someone-else-do-it.png"><img src="/wp-content/uploads/2014/10/someone-else-do-it-300x225.png" alt="Can't someone else do it?" width="300" height="225" /></a><figcaption>¿Y es que eso no puede hacerlo otro?</figcaption></figure>
+<p>
+
+<q cite="http://trac.filezilla-project.org/ticket/1373#comment:1">Corresponde al sistema operativo proteger los ficheros del usuario. Encripta tu directorio <i lang="en">home</i>.</q> <a href="http://trac.filezilla-project.org/ticket/1373#comment:1">§</a></p>
+
+	<p>OK, del mismo modo que podemos decir que corresponde al sistema operativo proteger los ficheros del usuario, podemos decir que corresponde al gestor de contraseñas proteger las contraseñas, ¿no?<br />
+O que las puertas de las casas no deberían tener cerraduras, corresponde a la policía hacer de tu barrio un lugar seguro.</p>
+
+<p>Y sí, también podemos encriptar nuestro directorio <i lang="en">home</i>... si podemos. Si no somos los administradores del sistema probablemente no podamos. Pero eso tampoco soluciona gran cosa: aunque tengamos un <i lang="en">home</i> encriptado, el directorio se desencripta en cuanto iniciamos sesión exponiendo los ficheros de nuevo como si no estuviera cifrado haciendo bastante inútil esta medida.</p>
+
+<p>Por otra parte, delegar la seguridad en las capas superiores o inferiores es una política de seguridad nefasta (como el resto de la política de seguridad de FileZilla, vaya). Cada capa debe implementar las medidas de seguridad que sean posibles, pues es un principio de la seguridad informática que un sistema es tan seguro como el más inseguro de sus componentes (<a href="https://ssd.eff.org/risk/lessons">EFF</a>, <a href="https://buildsecurityin.us-cert.gov/bsi/articles/knowledge/principles/356-BSI.html">CERT</a>, <a href="http://www.ibm.com/developerworks/library/se-link/">IBM</a>, <a href="http://www.cisco.com/cisco/web/solutions/small_business/resource_center/articles/secure_my_business/as_strong_as_the_weakest_link/index.html">Cisco</a>, <a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6133143">IEEE</a>, ...), que lo que viene a decir es que por mucho que aseguremos otras partes del sistema, seguirá siendo vulnerable si está formado por elementos inseguros (véase también el <a href="http://www.climagic.org/bugreports/libvte-scrollback-written-to-disk.html">caso libvte</a>).</p>
+
+<p>Encriptar el sistema de ficheros o delegar la seguridad en el sistema operativo no te protege cuando la amenaza procede del entorno de FileZilla (por ejemplo, <a href="http://www.juniper.net/security/auto/vulnerabilities/vuln22063.html">BID-22063</a>, <a href="http://www.securityfocus.com/bid/17972/discuss">BID-17972</a>, <a href="http://www.securityfocus.com/bid/23506/discuss">BID-23506</a>, <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0315">CVE-2007-0315</a>, <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1948">CVE-2008-1948</a>, <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3738">CVE-2006-3738</a>) o de un virus corriendo en el mismo entorno que FileZilla.</p>
+
+<p>Pero, oh, espera... los virus...</p></li>
+
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/1373#comment:7">Una vez que tu equipo ha sido infectado, has perdido. Lo que tienes que hacer, en primer lugar, es evitar la infección.</q></p>
+
+	<p><a href="http://trac.filezilla-project.org/ticket/1373#comment:7">§</a>Por lo visto, el desarrollador de FileZilla vive en un mundo perfecto en el que los <a href="https://es.wikipedia.org/wiki/Ataque_de_día_cero"><i lang="en">0-days</i></a> no existen. Y tampoco merece la pena, por lo visto, intentar proteger datos sensibles de la amenaza de un troyano que intente robarlos. Una vez que te has infectado, es mejor darlo todo por perdido y no ponerle trabas al atacante para que llegue hasta tu información sensible. No hay ningún sistema 100% seguro así que, ¿para qué esforzarse en perseguir lo imposible? Si alguien entra en tu sistema, que se lleve lo que pueda, que yo no voy a gastar energía en ponérselo difícil.</p>
+
+<p>Una vez que han entrado en tu casa, has perdido, guardar tus objetos más valiosos en una caja fuerte no incrementa en ningún modo el nivel de seguridad.</p>
+
+<p>Podría evitarse que un troyano tenga acceso a las contraseñas guardadas en FileZilla, por ejemplo, encriptándolas con una contraseña maestra <a href="http://winscp.net/eng/docs/master_password">como hace WinSCP</a>, pero es que...</p></li>
+
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/5530#comment:6">Si [usas contraseña maestra], siempre vas a tener que introducirla, en lugar de eso puedes desactivar directamente recordar contraseñas.</q></p>
+
+	<p><a href="http://trac.filezilla-project.org/ticket/5530#comment:6">§</a>Sí, porque es lo mismo tener que introducir una única contraseña maestra que introducir una contraseña distinta cada vez que te quieras conectar a cualquiera de los 20 sitios que puedes tener almacenados en FileZilla (sí, algunos podemos necesitar acceder habitualmente a 20 cuentas distintas o más).</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/5530#comment:6">Puedes desactivar recordar contraseñas en las preferencias de FileZilla.</q> <a href="http://trac.filezilla-project.org/ticket/5530#comment:6">§</a></p><p>Esto deshabilita completamente el gestor de sitios (salvo para conexiones FTP anónimas) así que solo se puede usar la barra de conexión rápida que, como se ha explicado más arriba, es todavía más inseguro.</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/2935#comment:3">Supongamos que hay una contraseña maestra. Te infectas con algún <i lang="en">malware</i> y la próxima vez que arrancas FileZilla e introduces la contraseña, el <i lang="en">malware</i> la consigue y obtiene acceso a los datos de tus sitios almacenados.
+No hay absolutamente ninguna diferencia.</q> <a href="http://trac.filezilla-project.org/ticket/2935#comment:3">§</a></p>
+
+<p>¿Absolutamente ninguna diferencia? ¿Es lo mismo tener las contraseñas almacenadas en texto plano al alcance de cualquier <i lang="en">malware</i> con solo quererlo que tener que diseñar un <i lang="en">malware</i> que intercepte las pulsaciones de teclas y detecte cuando estamos introduciendo la contraseña maestra de FileZilla para obtenerla, revertir el algortimo de encriptación y obtener las contraseñas finales? ¿Es exactamente lo mismo?</p>
+
+<p>Supongamos que guardas las contraseñas con una contraseña maestra. Te infectas con algún <i lang="en">malware</i> que obtiene tu dirección postal de algún e-mail de tu bandeja de entrada de correo y te envían a un albanokosovar a tu casa para ir partiéndote todos los huesos del cuerpo uno a uno <a href="https://en.wikipedia.org/wiki/Rubber-hose_cryptanalysis">hasta que le digas todas las contraseñas</a> de tus servidores FTP. No hay absolutamente ninguna diferencia.</p>
+
+<p>Tampoco sirve de nada poner una cerradura en la puerta de tu casa, un ladrón siempre podrá pillarte cuando te quedas dormido en el tren, meterte la mano en el bolsillo y robarte la llave. No hay absolutamente ninguna diferencia.</p></li>
+
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/2935#comment:20">Otros proyectos también han decidido almacenar las contraseñas en texto plano.</q> <a href="http://trac.filezilla-project.org/ticket/2935#comment:20">§</a></p><p>Que haya más proyectos que hayan adoptado la misma política, <a href="https://en.wikipedia.org/wiki/Argumentum_ad_populum">no quiere decir</a> que sea una buena política. Esos otros proyectos pueden estar equivocados también.</p></li>
+</ul>
+<p>En un comentario, el desarrollador de FileZilla usa los argumentos de Pidgin para reforzar los suyos. Veamos que <a href="https://developer.pidgin.im/wiki/PlainTextPasswords">argumentos</a> da Pidgin aparte de los ya tratados:</p>
+<ul>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">La mensajería instántanea no es muy segura, y es algo inútil gastar un montón de tiempo añadiendo protecciones […] cuando los propios protocolos no son tan seguros.</q></p><p>Ah, genial, algo así como «si te van a robar la cuenta de todas formas, para qué vamos a proteger la contraseña».</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">No deberías usar tu contraseña de mensajería instantánea para nada más.</q></p><p>¿Eso justifica que la contraseña se guarde de forma no segura expuesta al robo fácil?
+Además, algunos servicios como Google Talk no permiten usar una contraseña distinta de la del correo. Pero claro, eso será de nuevo culpa de otros.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">La contraseña se guarda en texto plano en <var>accounts.xml</var>, pero el fichero sólo es legible por su dueño.</q></p><p>Bueno, y por el administrador del sistema, cualquier persona que tenga acceso físico al equipo y cualquier proceso (<i lang="en">malware</i>, por ejemplo) que se ejecute con los privilegios del usuario o superiores.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">Puedes escribir un script para lanzar Pidgin o Finch que desencripte accounts.xml y lo vuelva a encriptar cuando la aplicación termine.</q></p><p>Sí, algo muy al alcance del usuario medio. Y que nos seguiría exponiendo mientras Pidgin se estuviese ejecutando. No sé por qué esto es una solución mejor que usar una contraseña maestra.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">Si alguien más tiene acceso a tus ficheros, deberías o bien ser capaz de confiar en que esa persona no los tocará o bien no almacenar ninguna información en ese sistema.</q></p><p>Ah, sí, otro mundo ideal en el que siempre sabes en quién puedes confiar y cuando decides confiar en alguien nunca te equivocas. Pero eso es culpa del usuario, claro, por no decidir bien en quien confiar.<br />
+Por otra parte, no siempre puedes elegir quién tiene acceso a tus ficheros.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">Una búsqueda en Google de contraseñas de mensajería instantánea muestra un montón de resultados para obtener contraseñas de otros programas de mensajera instantánea tan fácilmente como de Pidgin</q></p><p>¿Tan fácilmente como abrir un fichero de texto y leer las contraseñas?</p>
+
+<p>Por otra parte, si busco en Google que la Tierra es plana, también puedo encontrar muchos resultados que lo afirman sin que eso lo convierta en una afirmación verdadera.</p>
+
+<p>Y, de nuevo, afirmar que otros cometen el mismo error, <a href="https://es.chuso.net/ipsi-quoque.html">de ningún modo anula el error</a>.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">Almacenar las contraseñas en texto plano es más seguro que ofuscarlas precisamente porque, cuando un usuario no es confundido con una falsa sensación de seguridad, usará el <i lang="en">software</i> de manera más segura.</q></p><p>A no ser que el usuario no tenga ni idea de que sus contraseñas se están guardando en texto plano ni de lo que es ofuscación o encriptación.</p>
+
+<p>Eliminar la falsa sensación de seguridad tampoco te protege de que un troyano te infecte el equipo y te robe un fichero donde se guardan las contraseñas en texto plano. Pero ya aprendimos la lección con FileZilla: ¡culpa tuya por haberte infectado!</p></li>
+</ul>
+
+<h3>Conclusión</h3>
+
+<figure class="alignright"><a href="http://www.catb.org/jargon/html/P/PEBKAC.html"><img class="alignright size-medium wp-image-1544" src="/wp-content/uploads/2014/09/pebkac-240x300.png" alt="PEBKAC" width="240" height="300" /></a></figure>
+<p>
+Bien, ¿a dónde quiero llegar con estos casos?<br />
+Bueno, pues creo que estos tres casos muestran bastante bien cómo un desarrollador puede llegar a culpar de sus propios errores al usuario hasta alcanzar puntos ridículos.</p>
+
+<p>Todos sabemos, y los administradores de sistemas puede que más, que <a href="https://es.chuso.net/enviar-y-recibir.html">los usuarios son bastante estúpidos</a>. Que nadie se me enfade, esto es así. Yo también puedo ser bastante estúpido cuando me convierto en usuario de otros sectores. Pero lo que no puede ser, es que echemos la culpa a los usuarios de nuestros errores de programación. Si nuestra aplicación no funciona cuando el usuario no pone los datos bien, no es culpa del usuario por no poner los datos bien, la aplicación tiene que <a href="http://es.xkcd.com/strips/exploits-de-una-madre/">validar los datos</a>. Si mi web muestra la contraseña del servidor con solo visitar noticias antiguas, por supuesto que no es culpa del usuario, lo que pasa es que tengo un grave problema de seguridad. Si mi programa guarda las contraseñas en un fichero en texto plano que luego es robado por malware, no es solo culpa del usuario, guardar las contraseñas en un fichero de texto va en contra de cualquier buena práctica.</p>

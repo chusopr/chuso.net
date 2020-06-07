@@ -1,0 +1,118 @@
+---
+title: "Reparar un sistema después de renombrar ld.so"
+date: 2013-10-14T18:21:00+00:00
+slug: documentos/tecnicos/recuperar-sistema-renombrar-ld-linux-so
+---
+<p>Bien, una vez que hayamos provocado el desastre, nos daremos cuenta de la que hemos liado porque cada vez que intentemos ejecutar cualquier ejecutable obtendremos el siguiente mensaje:</p>
+
+<p><code>No existe el fichero o el directorio</code></p>
+
+<p>Esto pasa porque lo que no está encontrando es <var>ld.so</var> que es una biblioteca con la que están enlazados todos los ejecutables dinámicos, así que lo primero que tenemos que hacer es <strong>no</strong> cerrar ninguna sesión ni ningún programa que tengamos abierto, porque como no podemos ejecutar ningún ejecutable dinámico, cada programa que cerremos será un programa que podríamos necesitar y no podremos volver a abrir.</p>
+
+<p>Si tenemos busybox instalado estaremos de suerte porque es un ejecutable estático y no necesita de ninguna biblioteca para ejecutarse. Así que ya lo tenemos resuelto:</p>
+
+<p><code>busybox sh</code></p>
+
+<p>Con eso lanzamos un shell en donde tendremos un montón de comandos estándar de UNIX implementados en un solo ejecutable enlazado estáticamente desde el que podremos restaurar la biblioteca ld.so a su ubicación anterior y a tener más cuidado la próxima vez.</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/busybox.png"><img src="/wp-content/uploads/2013/10/busybox.png" alt="Lista de comandos implementados en busybox" width="809" height="329" /></a>
+<figcaption>Lista de comandos implementados en busybox</figcaption></figure>
+
+<p>Lamentablemente, este no era mi caso (nota mental: instalar busybox en todos los servidores), así que tuve que currármelo un poco más, pero una vez que te das cuenta de lo que tienes que hacer, es muy fácil.</p>
+
+<p>Nótese que el caso del que estoy hablando es el de haber <em>renombrado</em> la biblioteca ld.so. Si lo que has hecho ha sido borrarla, estás perdido. No te quedará más remedio que recurrir a Live CD o similar para recuperar la biblioteca. Vale, sí, el Live CD normalmente es una opción mucho más rápida y fácil que cualquiera de las que estoy tratando aquí, pero no es la primera opción cuando se trata de un servidor que estás administrando remotamente.</p>
+
+<p>Vale, de lo primero que tenemos que darnos cuenta es de que no podemos usar ningún comando externo al shell que estemos ejecutando, que voy a asumir que es bash, porque si usas otras cosas es que andas a complicarte la vida sin un porqué. Pero tendremos a nuestra disposición un montón de <a href="http://www.gnu.org/software/bash/manual/bashref.html#Shell-Builtin-Commands">comandos internos de bash</a> aunque lamentablemente ninguno de ellos nos servirá a priori para copiar o renombrar ficheros.<br />
+Aunque si usamos un poco la imaginación, nos daremos cuenta de que lo que podría ser equivalente a copiar un fichero sería coger un fichero, enviarlo a <var>stdin</var>, ejecutar un comando que tome <var>stdin</var> y lo envíe a <var>stdout</var> para poder después redirigirlo a un fichero.<br />
+Es decir, sabemos que con:</p>
+
+<p><code><var>comando</var> &lt; <var>fichero</var></code></p>
+
+<p>hacemos que <var>fichero</var> sirva como entrada estándar de <var>comando</var> y con</p>
+
+<p><code><var>comando</var> &gt; <var>fichero</var></code></p>
+
+<p>hacemos que la salida de <var>comando</var> se escriba en <var>fichero</var>.</p>
+
+<p>Por lo tanto, si tenemos un comando que coja la entrada estándar y la envíe tal cual a la salida estándar, podemos copiar ficheros con:</p>
+
+<p><code><var>comando</var> &lt; <var>origen</var> &gt; <var>destino</var></code></p>
+
+<p>Y esto es básicamente lo que hace <var><a href="https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html">cat</a></var>. Es decir,</p>
+
+<p><code>cat &lt; <var>origen</var> &gt; <var>destino</var></code></p>
+
+<p>es esencialmente lo mismo que</p>
+
+<p><code>cp <var>origen</var> <var>destino</var></code></p>
+
+<p>Pero <var>cat</var> es un comando externo, necesitamos implementar nuestro propio <var>cat</var> con comandos internos. Así que necesitamos una secuencia de comandos que tomen la entrada estándar y la muestren por la salida estándar.<br />
+Bien, el comando interno de bash que muestra lo que queramos por la salida estándar es el <var>echo</var> de toda la vida, ¿verdad? Y un comando que coja algo de la entrada estándar, a mí el primero que se me ocurre es <var>read</var>. Ahora lo que tenemos que conseguir es que lo que <var>read</var> toma de la entrada estándar <var>echo</var> sea capaz de mostrarlo por la salida estándar, y eso es muy fácil si sabemos cómo funciona <var>read</var>, que lo que hace es guardar en la variable que le digamos la línea que le llegue de la entrada estándar. Y como echo es capaz de mostrar por salida estándar esa variable, ya tenemos nuestro «cat interno»:</p>
+
+<pre>while read line
+do
+  echo $line
+done &lt; <var>origen</var> &gt; <var>destino</var></pre>
+
+<p>A lo mejor no sabes la ruta exacta de alguno de los ficheros y necesitamos el listado de ficheros de un directorio. Pero <var>ls</var> es un comando externo, tampoco tenemos <var>ls</var>. Sin embargo, podemos obtener el listado de ficheros simplemente con <i lang="en"><a href="https://en.wikipedia.org/wiki/Command-line_completion">tab completion</a></i>. Aunque si tenemos activado alguno de esos <a href="http://tldp.org/LDP/abs/html/tabexpansion.html">autocompletados inteligentes</a> puede que no nos liste todos los ficheros o que incluso nos liste lo que le dé la gana y que no tenga nada que ver con los ficheros de un directorio. Podemos desactivar el autocompletado inteligente con:</p>
+
+<p><code>complete -r</code></p>
+
+<p>Así que si queremos saber el contenido de <var>/etc</var> escribimos:</p>
+
+<p><code><var>comando</var> /etc/</code></p>
+
+<p>y pulsamos dos veces el tabulador. Si tenemos desactivado el autocompletado programable, da igual que comando usamos, como si es uno que no existe:</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/completion.png"><img src="/wp-content/uploads/2013/10/completion.png" alt="Usando el autocompletado de bash para listar el contenido de un directorio" width="430" height="230" /></a>
+<figcaption>Usando el autocompletado de bash para listar el contenido de un directorio</figcaption></figure>
+
+<p>Bien, con estas dos ideas ya tenemos una especie de implementación interna de <var>cp</var> y <var>ls</var>.</p>
+
+<p>Esta sería una implementación mejorable ya que habría que tener en cuenta algunos casos especiales, pero da igual, no la vamos a mejorar porque no nos vale. No nos vale porque lo que queremos copiar es una biblioteca, así que tiene que tener permisos de ejecución y, hasta donde yo sé, ningún fichero creado con comandos internos de bash tendrá permisos de ejecución. Y tampoco podemos cambiarle los permisos porque <var><a href="https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html">chmod</a></var> es un comando externo.</p>
+
+<p>Así que habrá que pensar otra cosa. Y la <a href="http://unix.stackexchange.com/a/47816">otra cosa</a> es todavía más sencilla, hasta el punto de que te sientes un poco tonto cuando te das cuenta. Porque claro, tu sigues teniendo tu biblioteca ld.so, lo que pasa es que la tienes con otro nombre.<br />
+Como decíamos, ld.so es el cargador dinámico, es la biblioteca que carga todas las demás y cuando nuestro ejecutable solicita una biblioteca, normalmente solicita simplemente el nombre de la biblioteca y ld.so se encarga de buscar la ubicación de esa biblioteca. Pero la ruta de ld.so sí que está con su ubicación exacta en el ejecutable, porque hasta que no tenemos ld.so cargado no hay «nadie» que se encargue de buscar las biblioteca por su nombre en vez de por su ruta completa.</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/ldd.png"><img src="/wp-content/uploads/2013/10/ldd.png" alt="" width="510" height="326" /></a></figure>
+
+<p>Esto es así con los ejecutables enlazados dinámicamente, que al tener parte del código «externalizado» en bibliotecas (.so en UNIX y .dll en Windows) nos permite compartir ese código con otras aplicaciones que también lo usan en vez de repetir el mismo código en todas las aplicacines que lo necesitan para ahorrar espacio en disco y memoria. El problema es que si eliminamos alguna biblioteca el programa dejará de funcionar, como es el caso. Además, un cambio de versión en la biblioteca que tenemos instalada puede hacer que los programas que la usan dejen de funcionar.</p>
+
+<p>Por otra parte están los ejecutables enlazados estáticamente, en los que ningún código se externaliza en bibliotecas sino que un simple ejecutable ya contiene todo el código necesario para funcionar. Cuentan con la ventaja de ser más tolerantes a errores y desastres del sistema y a incompatibilidades, con la contrapartida de que ocupan más:</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/static-dinamic.png"><img src="/wp-content/uploads/2013/10/static-dinamic.png" alt="Los ejecutables estáticos ocupan más pero no dependen de bibliotecas externas." width="544" height="183" /></a>
+<figcaption>Los ejecutables estáticos ocupan más pero no dependen de bibliotecas externas.</figcaption></figure>
+
+<p>La biblioteca ld.so, como no podía ser de otra manera ya que es la que carga todas las demás, está enlazada estáticamente. Pero además, en Linux es autoejecutable:</p>
+
+<figure class="aligncenter"><a href="/wp-content/uploads/2013/10/ldso.png"><img src="/wp-content/uploads/2013/10/ldso.png" alt="" width="560" height="468" /></a></figure>
+
+<p>Esto nos permite hacer el proceso de carga de una forma un poco distinta. En vez de lanzar nuestro ejecutable que provocará que se cargue ld-linux.so para después pasar a cargar el resto de bibliotecas dinámicas, cargaremos primero ld-linux.so para después cargar el ejecutable (que ya no cargará ld.so porque ya está cargado) y después el ld.so que tenemos cargado ya podrá cargar el resto de bibliotecas dinámicas.<br />
+La forma de decirle a ld.so el ejecutable que queremos cargar es pasándoselo como parámetro en la línea de comandos:</p>
+
+<p><code><var>/lib/my_renamed_ld-linux.so</var> /bin/bash</code></p>
+
+<p>Así que ahora ya podemos ejecutar cp para copiar ficheros (nótese que tenemos que incluir la ruta completa del fichero que queremos ejecutar):</p>
+
+<p><code>/lib/my_renamed_ld-linux.so /bin/cp <var>origen</var> <var>destino</var></code></p>
+
+<p>Además, una vez que el <i lang="en">loader</i> ha cargado, podemos indiciarle en la variable de entorno <var>LD_PRELOAD</var> una lista de bibliotecas que queremos cargar antes de iniciar la ejecución del programa separadas por puntos. Así, si resulta que hay alguna otra biblioteca necesaria que también hemos renombrado, podemos indicarle explícitamente la nueva ruta de esta biblioteca:</p>
+
+<p><code>LD_PRELOAD="/lib/my_renamed_libc.so:/lib/my_renamed_librt.so" /lib/my_renamed_ld-linux.so /bin/cp <var>origen</var> <var>destino</var></code></p>
+
+<p>Lecciones aprendidas:</p>
+
+<ul>
+<li>No renombrar ld.so a la ligera.</li>
+<li>Con un poco de imaginación, podemos ingeniárnoslas para copiar ficheros u obtener el listado de un directorio usando solo comandos internos de bash.</li>
+<li>Los ejecutables enlazados estáticamente ocupan mucho más, pero algunos pueden salvarnos la vida, especialmente <a href="http://www.busybox.net/">busybox</a>.</li>
+<li>El <i lang="en">loader</i> de Linux se comporta como un ejecutable más que puede ser llamado desde la línea de comandos pasándole como parámetro el ejecutable que queremos ejecutar. Esto permite incluso que para determinados ejecutables se pueda <a href="http://unix.stackexchange.com/questions/73480/invoking-a-script-with-ld-linux-so">usar un <i lang="en">loader</i> personalizado</a> en vez de usar el del sistema.</li>
+</ul>
+
+<p>Por cierto, a lo largo de este artículo unas veces me referí al <i lang="en">loader</i> de Linux como <var>ld.so</var> y otras como <var>ld-linux.so</var>. <var>ld.so</var> es el nombre genérico que usan los <i lang="en">loaders</i> de UNIX, incluido el de Linux para el antiguo formato de ejecutable <i>a.out</i>. El <i lang="en">loader</i> de Linux para los actuales ejecutables ELF es <var>ld-linux.so</var>.</p>
+
+<p>Y sí, «<i lang="en">loader</i>» en español sería «cargador», pero suena tan raro...</p>

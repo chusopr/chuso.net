@@ -1,0 +1,43 @@
+---
+title: "Adding links to MLDonkey from Opera"
+date: 2007-11-11T13:37:48+00:00
+slug: adding-links-to-mldonkey-from-opera
+categories: [floss,software,opera]
+tags: [hack,opera,mldonkey]
+---
+<p>I envied <a href="http://www.informatik.uni-oldenburg.de/~dyna/mldonkey/">Firefox extension for MLDonkey</a> which allows you to add elinks and torrents to MLDonkey from the browser with a single click, even if <a href="http://mldonkey.sourceforge.net">MLDonkey</a> is running in other PC. It's a luxury I want to have in Opera, is quite easy.</p>
+
+<p>It should be even easier using <var><a href="http://www.opera.com/docs/switches/">-remote openURL()</a></var> Opera parameter, but I got problems doing it this way (it seems to ignore <a href="http://www.opera.com/support/search/view/724/">%U parameter</a>), so I finally did it this way:</p>
+
+<ol>
+<li><p><a href="http://www.opera.com/support/search/view/840/">Disable</a> Opera BitTorrent client, in <a href="opera:config#BitTorrent|Enable">advanced configuration page</a> uncheck <var>Enable</var> under <var>BitTorrent</var> section so Opera doesn't start BitTorrent downloads when clicking a .torrent file.</p></li>
+<li><p>MLDonkey web interface is needed (i.e. <a href="http://mldonkey.sourceforge.net/Http_port">http_port</a> != 0)</p></li>
+<li><p>Then, we make a script, let's call it <var>mld-opera</var> and store it everywhere, for example <var>/usr/local/bin</var>. The contents of the script are the following:</p>
+<code>
+#!/bin/sh<br>
+opera -remote "openURL(http://192.168.0.1:4080/submit?q=dllink+$(echo -n "$*" | sed -e "s-/-%2F-g"),background-page)"
+</code>
+<p>Assuming that MLDonkey is being run in 192.168.0.1 IP address with web interface in port 4080, replace what you need.</p>
+<p>Note that <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sed">sed</a> is being used to replace / by %2F so MLDonkey web interface doesn't throw a 404 error with elinks.</p></li>
+<li>After that, in Opera go to Tools-&gt;Preferences-&gt;Advanced-&gt;Programs and add the following protocols:
+<ul>
+  <li>Protocol: ed2k<br>
+      Open with other application: /usr/local/bin/mld-opera</li>
+  <li>Protocolo: magnet<br>
+      Open with other application: /usr/local/bin/mld-opera</li>
+  <li>Protocolo: sig2dat<br>
+      Open with other application: /usr/local/bin/mld-opera</li>
+</ul>
+<p>If you have saved the script in other location than /usr/local/bin/mld-opera you should replace it with your location.</p>
+</li>
+<li><p>And in Tools-&gt;Preferences-&gt;Advanced-&gt;Downloads uncheck "Hide file types opened with Opera" to modify <var>application/x-bittorrent</var> MIME type (create it if doesn't exist) the following way:</p>
+<p>
+MIME type: application/x-bittorrent<br>
+File extensions: torrent<br>
+Open with other application: /usr/local/bin/mld-opera<br>
+Pass web address directly to application: checked
+</p>
+<p>Again, if you have saved the script in other location than /usr/local/bin/mld-opera you should replace it with your location.</p>
+</li>
+<li><p>If you have limited access to MLDonkey by user and password you can check "Remember password" when Opera asks for it for more convenience.</p></li>
+</ol>

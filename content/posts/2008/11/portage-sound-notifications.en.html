@@ -1,0 +1,25 @@
+---
+title: "Portage sound notifications"
+date: 2008-11-03T09:18:47+00:00
+slug: portage-sound-notifications
+categories: [gentoo-linux]
+tags: [hack,patch,portage]
+---
+<p>The context: you run <a href="http://www.gentoo.org/doc/es/handbook/handbook-x86.xml?part=2&amp;chap=1">emerge</a> with --ask parameter and, since it can take some time to calculate dependencies, you do some other thing. After a while, when you've forgotten it, you discover that emerge have ended calculating dependencies time ago and it's waiting for your confirmation when it could be already done. Has this ever happened to you? Me too. This is why I added sound notifications to some Portage events.</p>
+
+<p>The patch is configured in <var>/etc/make.conf</var> file with the following variables: <var>PLAY_CMD</var> which is the command that will play the sound, like <a href="http://sox.sourceforge.net/">play</a>, <a href="http://www.alsa-project.org/">aplay</a>, <a href="http://multimedia.kde.org/">artsplay</a>, <a href="http://www.tux.org/~ricdude/EsounD.html">esdplay</a> or <a href="http://0pointer.de/lennart/projects/pulseaudio/">paplay</a>, and <var>SOUND_&lt;event&gt;</var> which is the sound file that will be played, events may be <var>ASK</var>, <var>SUCCESS</var> or <var>FAILURE</var>. Files may be in any format supported by PLAY_CMD, so you can use WAV, MP3, OggVorbis, AAC, WMA, ... using the suitable command.</p>
+
+<p>Example:</p>
+
+<code>
+# Sounds will be played with PulseAudio using command paplay<br>
+PLAY_CMD="paplay"<br>
+# Sound played when Portage asks you something (i.e., when you use --ask parameter)<br>
+SOUND_ASK="/home/fred/sounds/question.wav"<br>
+# Sound played when emerge exits successfully<br>
+SOUND_SUCCESS="/home/fred/sounds/correct.wav"<br>
+# Sound played when emerge exits with errors<br>
+SOUND_FAILURE="/home/fred/sounds/error.wav"
+</code>
+
+<p style="font-weight: bold; text-align: center"><a href="/upload/misc/82/portage_sounds.diff">Download portage_sounds.diff</a></p>

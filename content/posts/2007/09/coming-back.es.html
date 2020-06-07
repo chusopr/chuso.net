@@ -1,0 +1,82 @@
+---
+title: "De vuelta"
+date: 2007-09-09T12:09:21+00:00
+slug: de-vuelta
+categories: [web-development]
+tags: [twiceler,cuill,hotlinking,coral-cdn,php,htaccess]
+---
+<p>Los que visitáis frecuentemente mi página (que los hay) habréis comprobado que hace unos días tuvo un comportamiento bastante irregular estando inaccesible la mayor parte del tiempo. Esto se debe a dos motivos.</p>
+
+<ul>
+	<li><p>La <a href="http://www.theadminzone.com/forums/showthread.php?t=37400">abusiva frecuencia</a> con la que el nuevo buscador <a href="http://www.cuill.com">Cuill</a> rastrea páginas web exprimiendo el ancho de banda con más de 1.000 peticiones diarias, la mayoría de las cuales se refieren a <a href="http://es.wikipedia.org/wiki/URL">URLs</a> inexistentes que parecen ser generadas aleatoriamente por el propio buscador a base de combinar distintas URLs, hasta conseguir que mi <a href="http://sdf-eu.org">servidor de hospedaje</a> me bloquee mi página web por exceder el <a href="http://sdf-eu.org/over/">ancho de banda diario</a>.</p></li>
+	<li><p>El <a href="http://simple.wikipedia.org/wiki/Hot-linking">hotlinking</a> de una imagen hospedada en mi página web como <a href="http://es.wikipedia.org/wiki/Avatar_(sociedad_virtual)">avatar</a> por un usuario de una de las 75 <a href="http://www.alexa.com/site/ds/top_sites?ts_mode=lang&amp;lang=es">páginas web más visitadas en español</a> (y entre las 2.000 <a href="http://www.alexa.com/site/ds/top_sites?ts_mode=global&amp;lang=none">más visitadas del mundo</a>), según <a href="http://www.alexa.com">Alexa</a>. Esto provoca que cada vez que alguien visualiza un hilo de ese foro en el que participó este usuario el visitante descargue la imagen de mi página web, con la consiguiente vampirización de mi <a href="http://es.wikipedia.org/wiki/Ancho_de_banda">ancho de banda</a>.</p></li>
+</ul>
+
+<p>Para solucionar esto he tomado las siguientes medidas:</p>
+
+<ul>
+	<li><p>Redirigí mi página web al <a href="http://es.wikipedia.org/wiki/Caché">caché</a> de <a href="http://www.coralcdn.org">Coral Content Distribution Network</a>, por lo que cada vez que entréis a mi página seréis redirigidos a esta copia (y por eso ahora va más lento, pero por lo menos va) quedando la página original hospedada en <a href="http://sdf-eu.org">SDF-eu</a> sólo para proveer al caché de Coral CDN. Si queréis hacer lo mismo en vuestra página web, lo que hay que hacer es detectar cuándo se está accediendo desde Coral CDN para autorizar el acceso y en caso contrario redirigir a la misma URL añadiendo <var>.nyud.net</var> al final del nombre de dominio. En <a href="http://www.php.net">PHP</a>:</p>
+<pre>
+&lt;?php
+  if (strpos($_SERVER["HTTP_USER_AGENT"], "CoralWebPrx") === false)
+  {
+    header("HTTP/1.1 302 Found");
+    header("Location: " . $_SERVER["HTTP_HOST"] . ".nyud.net" . $_SERVER["REQUEST_URI"]);
+    exit;
+  }
+?&gt;
+</pre>
+	<p>Si no usáis PHP se puede hacer también añadiendo lo siguiente en <var><a href="http://httpd.apache.org/docs/1.3/howto/htaccess.html">.htaccess</a></var>:</p>
+<pre>
+RewriteEngine on
+RewriteCond %{HTTP_USER_AGENT}  !^CoralWebPrx*
+RewriteRule ^(.*) http://%{HTTP_HOST}.nyud.net/$1  [P,L]
+</pre>
+</li>
+<li><p>Bloquear Cuill. Cuill es un buscador <a href="http://blogoscoped.com/forum/106841.html">fundado por ex miembros de Google</a> que aún no está operativo y de momento sólo se dedica a rastrear páginas web. Conocido sólo por los que tuvimos que sufrir a su robot rastreando nuestro sitio, por eso no me interesa ser indexado por este buscador a cambio de que me sature mi página. Para bloquear <a href="http://www.janetsystems.co.uk/Articles/WebRobots/tabid/82/itemid/693/Default.aspx">Twiceler</a>, el robot de Cuill, en <a href="http://www.php.net">PHP</a>:</p>
+<pre>
+&lt;?php
+  if (strpos($_SERVER["HTTP_USER_AGENT"], "Twiceler") !== false)
+  {
+    header("HTTP/1.1 403 Access denied");
+    exit;
+  }
+?&gt;
+</pre>
+<p>En <var><a href="http://httpd.apache.org/docs/1.3/howto/htaccess.html">.htaccess</a></var></p>
+<pre>
+RewriteCond %{HTTP_USER_AGENT} Twiceler
+RewriteRule .* - [F,L]
+</pre>
+<p>Si este buscador respetase los más básicos códigos de conducta en Internet también sería posible bloquearlo en <var><a href="http://www.robotstxt.org">robots.txt</a></var>:</p>
+<pre>
+User-Agent: Twiceler
+Disallow: /
+</pre>
+<p>Pero parece ser que a la lista de malas prácticas de Cuill hay que añadir que no respeta este protocolo.</p>
+</li>
+
+<li><p>Bloquear hotlinking. El hotlinking consiste en enlazar una imagen o algún otro fichero de una página web desde otra sin consentimiento provocando un consumo de ancho de banda en la segunda que debería asumir la primera. Es una de las prácticas abusivas más comunes, dañinas y rechazadas. Por eso he tenido también que bloquearlo. A partir de ahora no se podrá enlazar con ninguna imagen de mi página web, aunque podéis usar <a href="http://imgred.com">ImgRed</a> como yo hago, un servicio de hotlinking ético.</p>
+<pre>
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} .*jpg$|.*gif$|.*png$ [NC]
+RewriteCond %{HTTP_REFERER} !^$
+# Permitir mi propia página
+RewriteCond %{HTTP_REFERER} !h0m3r\.sdf-eu\.org [NC]
+# Autorizar a la copia de mi página en Coral CDN
+RewriteCond %{HTTP_REFERER} !h0m3r\.sdf-eu\.org\.nyud\.net [NC]
+# Autorizar ImgRed.com
+RewriteCond %{HTTP_REFERER} !imgred\.com [NC]
+# Autorizar motores de búsqueda
+RewriteCond %{HTTP_REFERER} !google\. [NC]
+RewriteCond %{HTTP_REFERER} !yahoo\. [NC]
+# Autorizar cache de Google
+RewriteCond %{HTTP_REFERER} !search\?q=cache [NC]
+
+RewriteRule (.*) /img/leech.png
+</pre>
+</li>
+</ul>
+
+<p>Eso es todo, son unas medidas que pueden repercutir en el rendimiento del sitio (sobre todo el cache de Coral CDN) pero mientras tenga el ancho de banda tan limitado en el servidor y mientras algunos no asuman unas mínimas reglas de conducta no me queda alternativa. Si queréis que pueda cambiar mi página a un servidor mejor ya sabéis <a href="https://es.chuso.net/contacto/acerca-de">para qué está la publicidad</a> ;-)</p>

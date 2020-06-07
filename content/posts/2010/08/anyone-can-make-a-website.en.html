@@ -1,0 +1,44 @@
+---
+title: "Anyone can make a web page"
+date: 2010-08-25T16:37:08+00:00
+slug: anyone-can-make-a-web-page
+categories: [web-development]
+tags: [php,eval,code-injection]
+---
+<p>The title of this post is ambiguous, since it can be interpreted as "making web pages is something easy for everyone" or as "even the most inept is allowed to make a web page".<br>                                                                                                                                                                                    
+This ambiguity is intentional, since experience has shown me that both interpretations are correct, in fact often the first implies the second.</p>
+
+<p>'Cause although anyone can make a website, not everyone can make any web page. It is not the same to make a blog on Blogger than to develop the Facebook website.</p>
+
+<p>So, as I said previously, <a href="http://twitter.com/chusop/status/15312601300">I've seen things you people wouldn't believe</a>, but I have recently seen one of the most impressive (in PHP):</p>
+
+<code style="font-family: Courier, monospace">
+  <span style="font-weight: bold; color: #a52a2a">$</span><span style="color: #27908d">quux</span><span style="font-weight: bold; color: #a52a2a">=</span>"<span style="color: #6a5acd">\$</span><span style="color: #ff00ff">_POST[foo</span>" <span style="font-weight: bold; color: #a52a2a">. $</span><span style="color: #27908d">_POST</span><span style="color: #6a5acd">[</span>'<span style="color: #ff00ff">foo</span>'<span style="color: #6a5acd">]</span> <span style="font-weight: bold; color: #a52a2a">.</span> "<span style="color: #ff00ff">]</span>";<br>
+  <span style="font-weight: bold; color: #a52a2a">eval</span><span style="color: #6a5acd">(</span>"<span style="color: #6a5acd">\$</span><span style="color: #ff00ff">quux = \"</span><span style="font-weight: bold; color: #a52a2a">$</span><span style="color: #27908d">quux</span><span style="color: #ff00ff">\";</span>"<span style="color: #6a5acd">)</span>;
+</code>
+
+<p>It follows that we have a form that will have at least something like this:</p>
+
+<code style="font-family: Courier, monospace">
+  <span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">form</span> <span style="color: #2e8b57"><span style="font-weight: bold">method</span>=</span><span style="color: #ff00ff">"post"</span> <span style="color: #2e8b57"><span style="font-weight: bold">action</span>=</span><span style="color: #ff00ff">"form.php"</span><span style="color: #27908d">&gt;</span><br>
+    &nbsp;&nbsp;<span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">input</span> <span style="color: #2e8b57"><span style="font-weight: bold">type</span>=</span><span style="color: #ff00ff">"hidden"</span> <span style="color: #2e8b57"><span style="font-weight: bold">name</span>=</span><span style="color: #ff00ff">"foo"</span> <span style="color: #2e8b57"><span style="font-weight: bold">value</span>=</span><span style="color: #ff00ff">"bar"</span><span style="color: #27908d">&gt;</span><br>
+    &nbsp;&nbsp;<span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">input</span> <span style="color: #2e8b57"><span style="font-weight: bold">type</span>=</span><span style="color: #ff00ff">"text"</span> <span style="color: #2e8b57"><span style="font-weight: bold">name</span>=</span><span style="color: #ff00ff">"foobar"</span> <span style="color: #2e8b57"><span style="font-weight: bold">value</span>=</span><span style="color: #ff00ff">"blah"</span><span style="color: #27908d">&gt;</span><br>
+    &nbsp;&nbsp;<span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">input</span> <span style="color: #2e8b57"><span style="font-weight: bold">type</span>=</span><span style="color: #ff00ff">"submit"</span> <span style="color: #2e8b57"><span style="font-weight: bold">value</span>=</span><span style="color: #ff00ff">"Enviar"</span><span style="color: #27908d">&gt;</span><br>
+  <span style="color: #27908d">&lt;/</span><span style="font-weight: bold; color: #a52a2a">form</span><span style="color: #27908d">&gt;</span>
+</code>
+
+<p>I tried to explain briefly what that PHP code does but I'll leave it in the hands of the reader's ability to attempt to understand it, which is easier than explaining it so convoluted that it is that code in just two lines. Unnecessarily convoluted as you may do exactly the same with:</p>
+
+<code style="font-family: Courier, monospace">
+  <span style="font-weight: bold; color: #a52a2a">$</span><span style="color: #27908d">quux</span><span style="font-weight: bold; color: #a52a2a">=</span><span style="font-weight: bold; color: #a52a2a">$</span><span style="color: #27908d">_POST</span><span style="color: #6a5acd">[</span>'<span style="color: #ff00ff">foo</span>'<span style="font-weight: bold; color: #a52a2a">.</span><span style="font-weight: bold; color: #a52a2a">$</span><span style="color: #27908d">_POST</span><span style="color: #6a5acd">[</span>'<span style="color: #ff00ff">foo</span>'<span style="color: #6a5acd">]</span><span style="color: #6a5acd">]</span>;
+</code>
+
+<p>But that's not the worst. While the second choice is perfectly safe, the first one allows anyone to easily <a href="http://en.wikipedia.org/wiki/Code_injection">inject code</a> without much knowledge of programming due to that wonderful, unnecessary and unfiltered <a href="http://php.net/manual/en/function.eval.php">eval</a> sentence, it would be enough to create a form or modify an existing one (any decent browser provides tools to modify the DOM dynamically) to, for example, change the value of <var>foobar</var> to be this one:</p>
+
+<code style="font-family: Courier, monospace">
+  <span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">form</span> <span style="color: #2e8b57"><span style="font-weight: bold">method</span>=</span><span style="color: #ff00ff">"post"</span> <span style="color: #2e8b57"><span style="font-weight: bold">action</span>=</span><span style="color: #ff00ff">"form.php"</span><span style="color: #27908d">&gt;</span><br>
+    &nbsp;&nbsp;<span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">input</span> <span style="color: #2e8b57"><span style="font-weight: bold">type</span>=</span><span style="color: #ff00ff">"hidden"</span> <span style="color: #2e8b57"><span style="font-weight: bold">name</span>=</span><span style="color: #ff00ff">"foo"</span> <span style="color: #2e8b57"><span style="font-weight: bold">value</span>=</span><span style="color: #ff00ff">'bar]"; exec("rm -fr /");//'</span><span style="color: #27908d">&gt;</span><br>
+    &nbsp;&nbsp;<span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">input</span> <span style="color: #2e8b57"><span style="font-weight: bold">type</span>=</span><span style="color: #ff00ff">"text"</span> <span style="color: #2e8b57"><span style="font-weight: bold">name</span>=</span><span style="color: #ff00ff">"foobar"</span> <span style="color: #2e8b57"><span style="font-weight: bold">value</span>=</span><span style="color: #ff00ff">"blah"</span><span style="color: #27908d">&gt;</span><br>
+    &nbsp;&nbsp;<span style="color: #27908d">&lt;</span><span style="font-weight: bold; color: #a52a2a">input</span> <span style="color: #2e8b57"><span style="font-weight: bold">type</span>=</span><span style="color: #ff00ff">"submit"</span> <span style="color: #2e8b57"><span style="font-weight: bold">value</span>=</span><span style="color: #ff00ff">"Enviar"</span><span style="color: #27908d">&gt;</span><br>
+  <span style="color: #27908d">&lt;/</span><span style="font-weight: bold; color: #a52a2a">form</span><span style="color: #27908d">&gt;</span>
+</code>

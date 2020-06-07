@@ -1,0 +1,31 @@
+---
+title: "How to fix flash player to work on any browser"
+date: 2007-03-11T21:33:57+00:00
+slug: how-to-fix-flash-player-to-work-on-any-browser
+categories: [web-development,software]
+tags: [hack,flash]
+---
+<figure class="alignright">
+<a href="http://www.anybrowser.org/campaign"><img width="110" height="93" alt="Campaign for a non-browser-specific WWW" src="http://www.anybrowser.org/campaign/bvgraphics/cdhtml.gif"></a>
+</figure>
+
+<p><strong><em>Update:</em></strong> Opera 9.50 seems to solve this problem. <a href="opera:about">Check your version</a> and update if needed.</p>
+
+<p>After a <a href="http://it.slashdot.org/it/07/01/03/2050206.shtml">serious vulnerability</a> had been discovered in Acrobat Reader for PDF, one of the leading products from Adobe now <a href="http://www.linux-watch.com/news/NS7542722606.html">becoming</a> a standard, which affected all browsers now the online video format they are also trying to introduce as a standard doesn't work with some browsers. You can check that <a href="https://en.wikipedia.org/wiki/Adobe_Flash">Flash</a> plugin for Linux (it seems that also affects Windows) doesn't play <a href="https://en.wikipedia.org/wiki/FLV">FLV</a> video with Opera (you can also find cases with Firefox or Konqueror). You can find many <a href="http://chuso.net/search.php?be=google&amp;q=IA__g_type_init+flash">reports</a> of many users with this problem, I also had my fight with it. Finally, <a href="http://bugs.gentoo.org">Gentoo Bugzilla</a> gave me <a href="http://bugs.gentoo.org/show_bug.cgi?id=127200">the answer</a>:</p>
+
+<code>sed -ie "s/netscape/flashsux/g" /opt/netscape/plugins/libflashplayer.so</code>
+
+<p>Supposing that <em>/opt/netscape/plugins/libflashplayer.so</em> is the location of the plugin, it will be fixed and you'll have a Flash plugin suitable for any browser. But this fix has an issue: it's illegal because it violates <a href="http://www.adobe.com/products/eulas/players/flash/">Flash <abbr title="End User License Agreement">EULA</abbr>)</a>, so I can't recommend its use :-).</p>
+
+<p>In the same source is cited a legal solution consisting of locating the plugins in browser plugins directory:</p>
+
+<code>ln -s /opt/netscape/plugins/flashplayer.xpt /opt/opera/lib/opera/plugins/flashplayer.xpt<br>
+ln -s /opt/netscape/plugins/libflashplayer.so /opt/opera/lib/opera/plugins/libflashplayer.so</code>
+
+<p>Supposing that <em>/opt/netscape/plugins</em> is the directory where Flash plugin is located and <em>/opt/opera/lib/opera/plugins</em> is the browser's plugins directory.</p>
+
+<p>Meanwhile, <a href="http://www.opera.com">Opera</a> <a href="http://my.opera.com/haavard/blog/2007/03/05/1">wants</a> a standard for web video based on <a href="https://en.wikipedia.org/wiki/Ogg">Ogg</a> <a href="https://en.wikipedia.org/wiki/Theora">Theora</a> and maintained by <a href="http://www.w3.org">W3C</a> freed from plugins, licenses and patents.</p>
+
+<div style="text-align: center; padding: 10px;">
+<a href="http://www.anybrowser.org/campaign"><img src="http://www.anybrowser.org/campaign/bvgraphics/whocares.gif" alt="What browser do you want to use today? Who cares?" width="360" height="72"></a>
+</div>

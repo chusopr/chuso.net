@@ -1,0 +1,116 @@
+---
+title: "Repairing system after renaming ld.so"
+date: 2013-10-14T18:22:41+00:00
+slug: documents/technical/recover-system-renamed-ld-linux-so
+---
+<p>Well, we will notice the disaster we have caused because every time you try to run any executable you will get the following message:</p>
+
+<p><code>No such file or directory.</code></p>
+
+<p>What is not finding is <var>ld.so</var>, which is a library that is linked by all dynamic executables on the system, so the first thing we must do is <strong>not</strong> to close any session or any program you have open. Because, since we can't execute any dynamic executable, every program we close will be a program that we might need and won't be able to reopen.</p>
+
+<p>If we have busybox installed, we will be lucky because it is a static executable and does not require any library to run. So now our problem is solved, just execute:</p>
+
+<p><code>busybox sh</code></p>
+
+<p>That launches a shell where we have a lot of standard UNIX commands implemented in a single statically linked executable from which we can restore ld.so library to its previous location and be more careful next time.</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/busybox.png"><img src="/wp-content/uploads/2013/10/busybox.png" alt="List of available internal commands in busybox" width="809" height="329" /></a>
+<figcaption>List of available internal commands in busybox</figcaption></figure>
+
+<p>Unfortunately, this was not my case (mental note: install busybox in all servers), so I had to work a little more, but once you realize what you have to do, it's very easy.</p>
+
+<p>Note that the case I am talking about is if you <em>renamed</em> ld.so library. If what you have done is to delete it, I'm afraid you have nothing to do. You will have to use a Live CD or something like this to recover the library. Okay, yes, the Live CD is usually a much faster and easier way than anything else I'm trying here, but it isn't the first choice when it's about a server that you're running remotely.</p>
+
+<p>Okay, the first thing we have to realize is that we can't use any command external to the shell we're running, which I'll assume it's bash, because if you use other things you are complicating your life without a reason. But we have available a lot of <a href="http://www.gnu.org/software/bash/manual/bashref.html#Shell-Builtin-Commands">bash internal commands</a> but unfortunately none of them is directly able to copy or rename files.</p>
+
+<p>But if you use your imagination, you will realize that sending the source file to <var>stdin</var>, running a command that takes <var>stdin</var> and sends it to <var>stdout</var> and then redirecting <var>stdout</var> to a destination file might be equivalent to copying a file.<br />
+That is, we know that:</p>
+
+<p><code><var>command</var> &lt; <var>file</var></code></p>
+
+<p>uses <var>file</var> as standard input for <var>command</var> and</p>
+
+<p><code><var>command</var> &gt; <var>file</var></code></p>
+
+<p>takes <var>command</var> output and saves it in <var>file</var>.</p>
+
+<p>So, If we have a command that takes standard input and sends it as is to standard output, we can copy a file with</p>
+
+<p><code><var>command</var> &lt; <var>source</var> &gt; <var>destination</var></code></p>
+
+<p>And this is basically what <var><a href="https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html">cat</a></var> does. That is, this:</p>
+
+<p><code>cat &lt; <var>source</var> &gt; <var>destination</var></code></p>
+
+<p>is essentially the same as</p>
+
+<p><code>cp <var>source</var> <var>destination</var></code></p>
+
+<p>But <var>cat</var> is an external command, we need to implement our own <var>cat</var> using bash internal commands. So we need a script to take standard input and show it on standard output.<br />
+Well, the bash internal command that shows what we want on <var>stdout</var> is classic <var>echo</var>, right? And to take something from standard input, the first thing that comes to mind is <var>read</var> command. Now, what we have to achieve is that what <var>read</var> takes from <var>stdin</var> <var>echo</var> has to be able to display it to <var>stdout</var> , and that is very easy if you know how <var>read</var> works. <var>read</var> reads a line from <var>stdin</var> saves it in a variable. And <var>echo</var> is able to display that variable on standard output so we have our "homemade cat":</p>
+
+<pre>while read line
+do
+  echo $line
+done &lt; <var>source</var> &gt; <var>destination</var></pre>
+
+<p>You may not know the exact path of some of the files and need the list of files in a directory. But <var>ls</var> is also an external command, so we neither have <var>ls</var>. However, we can get the list of files in a directory just with <a href="http://en.wikipedia.org/wiki/Command-line_completion">tab completion</a>. Although if we have enabled any of these <a href="http://tldp.org/LDP/abs/html/tabexpansion.html">smart autocompletions</a> we may not get all the files or even get a list that has nothing to do with the files in a directory. You can disable intelligent autocompletion by running:</p>
+
+<p><code>complete -r</code></p>
+
+<p>So, if we want to get the contents of <var>/etc</var> directory, we can type:</p>
+
+<p><code><var>command</var> /etc/</code></p>
+
+<p>and press tab key twice. If we had disabled programmable completion, it doesn't care which command we use, even if we use a nonexistent one:</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/completion.png"><img src="/wp-content/uploads/2013/10/completion.png" alt="Using tab completion to get a directory listing" width="430" height="230" class="size-full wp-image-1215" /></a>
+<figcaption>Using tab completion to get a directory listing</figcaption></figure>
+
+<p>Well, with these two ideas we already have a kind of internal implementation of <var>cp</var> and <var>ls</var>.</p>
+
+<p>This implementation could be improved since it doesn't take into account some special cases, but anyway, we will not improve it because it doesn't fit our needs. It doesn't fit because what we want to copy is a library, so it has to have execute permissions and as far as I know, no file created with bash internal commands will have execute permissions. And we can't change permissions because <var><a href="https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html">chmod</a></var> is an external command.</p>
+
+<p>So we will have to think of another option. And <a href="http://unix.stackexchange.com/a/47816">the other option</a> is even more simple, to the point that you may feel a little stupid when you realize. Because obviously, you still have your ld.so library, what happens is that you have it in a wrong location.<br />
+As told above, ld.so is the dynamic loader, it's the library that loads all the other libraries and when our executable requests a library, usually asks for it just by the name of the library and ld.so is responsible for finding the location of that library. But ld.so path is hardcoded with its exact location in the executable, because until we load ld.so "nobody" is responsible to search libraries by name rather than by its full path.</p>
+
+<figure class="aligncenter"><a href="/wp-content/uploads/2013/10/ldd.png"><img src="/wp-content/uploads/2013/10/ldd.png" alt="" width="510" height="326" /></a></figure>
+
+<p>This is like this with dynamically linked executables, that by having part of the code "outsourced" in libraries (.so on UNIX and .dll on Windows) allows us to share that code with other applications that also use it instead of repeating the same code in all applications that need to save disk space and memory. The problem is that if we remove some of those libraries the program will stop working, as is the case. Furthermore, a change in the version of the library we have installed can cause programs that use it to stop working.</p>
+
+<p>On the other hand are statically linked executables, in which no code is outsourced in libraries but a single executable already contains all the code needed to run. They have the advantage of being more tolerant to errors and system disasters and incompatibilities, but occupy more disk space:</p>
+
+<figure class="aligncenter">
+<a href="/wp-content/uploads/2013/10/static-dinamic.png"><img src="/wp-content/uploads/2013/10/static-dinamic.png" alt="Static files have larger size but don't depend on external libraries." width="544" height="183" /></a>
+<figcaption>Static files have larger size but don't depend on external libraries.</figcaption></figure>
+
+<p>Since ld.so is the library that loads all others, it's statically linked. But, in addition, on Linux it is directly executable from command line:</p>
+
+<figure class="aligncenter"><a href="/wp-content/uploads/2013/10/ldso.png"><img src="/wp-content/uploads/2013/10/ldso.png" alt="" width="560" height="468" /></a></figure>
+
+<p>This allows us to make the loading process in a slightly different way. Instead of launching our executable so it loads ld-linux.so and then the loader loads the rest of the dynamic libraries, we will load ld-linux.so first and then run the executable (which will no longer try to load ld.so because it is already loaded) and then the previously loaded ld.so will load the rest of the dynamic libraries.<br />
+The way to tell ld.so the application we want to run is by passing it as a parameter in the command line:</p>
+
+<p><code><var>/lib/my_renamed_ld-linux.so</var> /bin/bash</code></p>
+
+<p>So now you can run cp to copy files (note that you have to type the full path of the file you want to run):</p>
+
+<p><code>/lib/my_renamed_ld-linux.so /bin/cp <var>source</var> <var>destination</var></code></p>
+
+<p>Furthermore, once the loader has loaded, you can tell it a list of libraries you want to load before starting the program in the environment variable <var>LD_PRELOAD</var> separated by colons. So, if it turns out another required library have also been renamed, you can explicitly tell to ld.so the new path for this library:</p>
+
+<p><code>LD_PRELOAD="/lib/my_renamed_libc.so:/lib/my_renamed_librt.so" /lib/my_renamed_ld-linux.so /bin/cp <var>source</var> <var>destination</var></code></p>
+
+<p>Lessons learned:</p>
+
+<ul>
+<li>Thou shalt not rename thy ld.so in vain.</li>
+<li>With a little bit of imagination, we are able to copy files or get a directory listing using only bash built-in commands.</li>
+<li>Statically linked executables may be much larger, but some of them may save your life, especially <a href="http://www.busybox.net/">busybox</a>.</li>
+<li>Linux loader behaves like another executable that can be called from the command line passing the executable you want to run as a parameter. This even allows a particular executable to <a href="http://unix.stackexchange.com/questions/73480/invoking-a-script-with-ld-linux-so">use a custom loader</a> instead of the system one.</li>
+</ul>
+
+<p>By the way, along this article I sometimes referred to Linux loader as <var>ld.so</var> and other times as <var>ld-linux.so</var>. ld.so is the generic name used by UNIX loaders, including Linux loader for old a.out executable file format. The Linux loader for current ELF executable file format is called <var>ld-linux.so</var>.</p>

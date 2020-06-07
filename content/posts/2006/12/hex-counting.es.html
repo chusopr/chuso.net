@@ -1,0 +1,40 @@
+---
+title: "Contar en hexadecimal"
+date: 2006-12-22T09:48:55+00:00
+slug: contar-en-hexadecimal
+categories: [curiosities,science,development]
+tags: [hexadecimal,rgb,html]
+---
+<p>En la <a href="http://recurrente.afraid.org/myblog/?q=node/201">última</a> tira cómica de <a href="http://recurrente.afraid.org">Raulito el friki</a> se cita la numeración hexadecimal y varios lectores se lamentan de no dominarla. Aquí voy a explicarlo.</p>
+
+<p>La numeración <a href="https://es.wikipedia.org/wiki/Sistema_decimal">decimal</a> empieza en el 0 y cuando llega al 9, la última cifra, el siguiente es 0 llevándonos 1 para sumárselo a la siguiente cifra de mayor peso, es decir, si al número 9 le sumamos 1 el resultado es 0 y le sumamos 1 a las decenas: 10.</p>
+
+<p>En <a href="https://es.wikipedia.org/wiki/Sistema_hexadecimal">hexadecimal</a> las cifras no se acaban en el 9, después de éste vienen A, B, ..., F y sólo despues de F es cuando volvemos al 0 y le incrementamos 1 a la siguiente cifra. Los 17 primeros números en hexadecimal serían: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F, 10.</p>
+
+<p>Si por ejemplo tenemos el número 39, el siguiente sería el 3A. El que va después del 99, el 9A. Después del 4F el 50. Y tras el 9F el A0. Espero que se entienda.</p>
+
+<p>Para hacer operaciones (suma y multiplicación) o convertir entre decimal y hexadecimal lo más fácil es pasar por <a href="https://es.wikipedia.org/wiki/Sistema_binario">binario</a>. En binario sólo se usan el 1 y el 0 y el peso de cada cifra es 2<sup>posición</sup>. Así, en el número 11001 los pesos serían:</p>
+<table>
+<tr><td>2<sup>4</sup></td><td>2<sup>3</sup></td><td>2<sup>2</sup></td><td>2<sup>1</sup></td><td>2<sup>0</sup></td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+</table>
+
+<p>Por lo que 11001<sub>BIN</sub> = 1*2<sup>4</sup> + 1*2³ + 0*2² + 0*2¹ + 1*2<sup>0</sup> = 8 + 4 + 0 + 1 = 13<sub>DEC</sub>. Ya hemos pasado de binario a decimal.<br>
+El proceso inverso, pasar de decimal a binario, es también bastante sencillo, sólo hay que escribir el número en potencias de 2 sin repetir ninguna, el exponente de las potencias será la posición de los unos y el resto todo ceros:<br>
+28<sub>DEC</sub> = 2<sup>4</sup> + 2³ + 2² = 11100<sub>BIN</sub>.</p>
+
+<p>Y ahora vamos por fin a ver como pasar de decimal a hexadecimal pasando por binario. En primer lugar hay que pasar el número decimal a binario y con el binario resultante tomamos los bits de cuatro en cuatro y representamos su valor en hexadecimal. Vamos a verlo con un ejemplo.</p>
+
+<p>303<sub>DEC</sub> = 2<sup>5</sup> + 2<sup>4</sup> + 2³ + 2² + 2¹ + 2<sup>0</sup> = 100101111 <sub>BIN</sub> = 0001 0010 1111 <sub>BIN</sub><br>
+0001<sub>BIN</sub> = 1<sub>HEX</sub><br>
+0010<sub>BIN</sub> = 2<sub>HEX</sub><br>
+1111<sub>BIN</sub> = F<sub>HEX</sub><br>
+303<sub>DEC</sub> = 12F<sub>HEX</sub></p>
+
+<p>Para pasar de hexadecimal a binario, el proceso inverso: se escribe cada uno de los dígitos hexadecimales con su representación binaria de cuatro dígitos y luego se calcula la representación decimal del número binario que se obtiene.</p>
+
+<p>En el chiste hablaban de los colores en hexadecimal. En <a href="https://es.wikipedia.org/wiki/HTML">HTML</a> los colores se representan por un número hexadecimal de 6 dígitos, en los que los dos primeros corresponden al rojo, los dos del medio al verde y los dos últimos al azul. Siendo FF<sub>HEX</sub> = 255<sub>DEC</sub> el valor máximo que pueden tomar.</p>
+
+<p>837BA5 =
+(Rojo = 83<sub>HEX</sub>, Verde = 7B<sub>HEX</sub>, Azul = A5<sub>HEX</sub>) =
+(Rojo = <span style="background: #830000"> </span> 131<sub>DEC</sub>, Verde = <span style="background: #007b00"> </span> 123<sub>HEX</sub>, Azul = <span style="background: #0000c5"> </span> 165<sub>HEX</sub>) = <span style="background: #837ba5"> </span></p>

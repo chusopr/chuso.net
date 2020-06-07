@@ -1,0 +1,60 @@
+This patch for Gentoo Portage adds support for sound notification on some events.
+
+See http://chuso.net/?id=82 for more info.
+
+TODO:
+
+  * Check if PLAY_CMD command exists
+
+  * Check if SOUND_* files exist
+
+  * Maybe convert it to a portage module instead of a patch
+
+--- /usr/lib/portage/bin/emerge	2008-10-13 14:00:13.000000000 +0200
++++ /usr/lib/portage/bin/emerge	2008-10-31 19:02:55.000000000 +0100
+@@ -165,6 +165,11 @@
+ 	elif colours is None:
+ 		colours=[bold]
+ 	colours=(colours*len(responses))[:len(responses)]
++
++	playcmd = get_play_cmd("ASK")
++	if playcmd is not None:
++		os.popen(playcmd)
++
+ 	print bold(prompt),
+ 	try:
+ 		while True:
+@@ -4887,8 +4892,13 @@
+ 
+ 	if retval == os.EX_OK:
+ 		exit_msg = " *** exiting successfully."
++		sound = "SUCCESS"
+ 	else:
+ 		exit_msg = " *** exiting unsuccessfully with status '%s'." % retval
++		sound = "FAILURE"
++	playcmd = get_play_cmd(sound)
++	if playcmd is not None:
++		os.popen(playcmd)
+ 	emergelog("notitles" not in settings.features, exit_msg)
+ 
+ 	# Dump the mod_echo output now so that our other notifications are shown
+@@ -6625,6 +6635,19 @@
+ 		settings["NOCOLOR"] = "true"
+ 		settings.backup_changes("NOCOLOR")
+ 
++def get_play_cmd(sound):
++	settings, trees, mtimedb = load_emerge_config()
++
++	if settings["PLAY_CMD"]:
++		playcmd = settings["PLAY_CMD"]
++	else:
++		playcmd = "play"
++
++	if settings["SOUND_" + sound]:
++		return playcmd + " " + settings["SOUND_" + sound]
++	else:
++		return None
++
+ def emerge_main():
+ 	# Disable color until we're sure that it should be enabled (after
+ 	# EMERGE_DEFAULT_OPTS has been parsed).

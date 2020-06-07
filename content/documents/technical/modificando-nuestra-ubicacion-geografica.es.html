@@ -1,0 +1,52 @@
+---
+title: "Modificando nuestra ubicación geográfica"
+date: 2009-05-25T21:07:16+00:00
+slug: documentos/tecnicos/modificando-nuestra-ubicacion-geografica
+---
+<p>En este artículo vamos a ver como podemos cambiar nuestra ubicación geográfica (<a href="http://en.wikipedia.org/wiki/Geolocation">GeoIP</a>) sin movernos del sitio. Es decir, hacer que parezca que estamos en un país en el que no estamos.</p><p>La situación es la siguiente: hay determinados servicios que sólo están disponibles para algunos países o que ofrecen distintos contenidos dependiendo del país. ¿Qué podemos hacer si queremos usar los servicios de otro país? Pues hacerle creer al servicio que estamos en ese otro país.</p>
+
+<p>Para ello necesitaremos un <a href="http://es.wikipedia.org/wiki/Proxy"><i lang="en">proxy</i></a>, ese gran desconocido para algunos y una herramienta de uso habitual para otros. En otros tiempos era común que algunos proveedores de acceso a Internet impusiesen el uso de sus <i lang="en">proxies</i> para acceder a determinados servicios, pero actualmente este uso de los <i lang="en">proxies</i> cayó un poco en desuso y cada vez se usan más para <a href="http://www.taringa.net/posts/info/929049/Truco-para-rapidshare-y-megaupload-(proxy).html">otros fines</a> distintos a los que fueron pensados.<br>
+Lo difícil de este punto es encontrar un <i lang="en">proxy</i>, que funcione, que no tenga una política demasiado restrictiva y que esté en el país que buscamos. Por suerte contamos con <a href="http://www.torproject.org/">Tor</a>, un servicio de <a href="http://es.wikipedia.org/wiki/Encaminamiento">ecaminamiento</a> <a href="http://es.wikipedia.org/wiki/Peer-to-peer">P2P</a> cuyo funcionamiento en cierto modo podría recordarnos a <a href="http://freenetproject.org/">Freenet</a>. Cuando ponemos en marcha Tor nos crea un <i lang="en">proxy</i> <a href="http://es.wikipedia.org/wiki/SOCKS">SOCKS5</a> que por defecto será de acceso sólo local en el puerto 9050. Todas las conexiones que se dirijan a ese <i lang="en">proxy</i> local serán redirigidas a alguno de los demás <i lang="en">peers</i> de la red Tor hasta que alguno alcance el destino y nos devuelva el resultado.</p>
+
+<p>Por lo tanto, el primer paso será instalar un cliente Tor (recomiendo <a href="https://www.torproject.org/vidalia/">Vidalia</a>) y ya tendremos a nuestro servicio toda una red mundial de <i lang="en">proxies</i>. Pero resulta que sólo queremos usar los de un determinado país. Para hacer esto tendremos que editar el fichero de configuración de Tor, lo que en Vidalia se hace abriendo el Panel de Control de Vidalia, después hacemos clic en el botón Preferencias y en la ventana de preferencias que se abrirá vamos a la sección Avanzado y allí hacemos clic en el botón <em>Editar actual torrc</em>.
+Nos aparecerá una ventana para editar el fichero torrc en el que añadiremos una línea <var>ExitNodes</var> como la siguiente (o modificaremos la que ya exista, si es el caso):</p>
+
+<p><code>  ExitNodes {<span style="color: #aa0000;">xx</span>}</code></p>
+
+<p>Reemplazando <var style="color: #aa0000;">xx</var> por el código <a href="http://www.iso.org/iso/home/standards/country_codes/country_names_and_code_elements.htm">ISO 3166</a> del país correspondiente.
+Por ejemplo, si queremos conectarnos a través de nodos alemanes pondremos:</p>
+
+<p><code>  ExitNodes {de}</code></p>
+
+<p>Ya podemos reiniciar Tor y simular que nos conectamos desde el país <var style="color: #aa0000;">xx</var> poniendo el <i lang="en">proxy</i> Tor (por defecto 127.0.0.1:9050) en el programa que estemos usando. Pero, ¿y si el programa no soporta <i lang="en">proxies</i> SOCKS5? Si el programa, soporta <i lang="en">proxies</i> HTTP, podemos usar <a href="http://www.pps.univ-paris-diderot.fr/~jch/software/polipo/tor.html">polipo</a>.</p>
+
+<p>Pero hay programas que no soportan <i lang="en">proxies</i> de ningún tipo, por ejemplo, telnet. Para estos casos tenemos dos opciones: tsocks/torsocks y ksb26.</p>
+
+<p><a href="http://tsocks.sourceforge.net/">tsocks</a> es una librería que se inyecta en el programa que vamos a ejecutar haciendo uso de la variable <a href="https://nf.nci.org.au/training/talks/lca2009.pdf"><var>LD_PRELOAD</var></a> y desvía las conexiones de red del programa por un <i lang="en">proxy</i>. <a href="http://code.google.com/p/torsocks/">torsocks</a> es una variante de tsocks optimizada para Tor. Para usar un programa con Tor a través de tsocks/torsocks no tenemos más que configurar el programa para que sea el <i lang="en">proxy</i> de Tor el que use (es muy sencillo y en el propio fichero de configuración viene un ejemplo de la configuración necesaria, así que no voy a profundizar en esto) y después ejecutar el programa con tsocks/torsocks:</p>
+
+<p><code>tsocks <var>programa</var></code></p>
+
+<p>Pero la opción que me parece más interesante es la de ksb26 ya que hace la redirección a nivel de <i lang="en">kernel</i> en vez de inyectar una librería y nos permite configurar de una forma sencilla cuáles son las conexiones que queremos redirigir por el <i lang="en">proxy</i>. <a href="http://ksb.sourceforge.net/">ksb26</a> es un módulo para el núcleo 2.6 de Linux que permite redirigir de forma transparente (es decir, sin que el programa "se entere") determinadas conexiones a otra dirección. Si tu caso es el mismo que el mío, puede que necesites hacer algunas modificaciones que publicaré más adelante para que el módulo compile con <i lang="en">kernels</i> modernos. Una vez compilado el módulo lo cargamos:</p>
+
+<p><code>modprobe ksb26</code></p>
+
+<p>El módulo se configura a través del dispositivo <var>/dev/ksb26</var>, sin embargo en ocasiones este dispositivo no está correctamente creado y debemos eliminarlo y volver a crearlo (podemos ver los códigos <i lang="en">major</i> y <i lang="en">minor</i> del dispositivo en <var>dmesg</var> o <var>syslog</var>):</p>
+
+<p><code>rm -f /dev/ksb26<br>  mknod /dev/ksb26 c 244 0</code></p>
+
+<p>Ya sólo nos falta añadir qué conexiones se deben redirigir a qué direcciones. Para configurar en <var>ksb26</var> los <i lang="en">proxies</i> que queremos usar (el <i lang="en">proxy</i> Tor en nuestro caso), la sintaxis es la siguiente:</p>
+
+<p><code>echo '#Sdireccion_ip:puerto;version_socks|' &gt;| /dev/ksb26</code></p>
+
+<p>y para escoger qué conexiones deben pasar por el proxy</p>
+
+<p><code>echo '#Hdireccion_ip:puerto;|' &gt;| /dev/ksb26</code></p>
+
+<p>Podemos usar * como comodín para la dirección IP y 0 para todos los puertos. En caso de cometer un error se puede borrar la configuración con:</p>
+
+<p><code>echo '#cls|' &gt;| /dev/ksb26</code></p>
+
+<p>Así, por ejemplo, si tenemos el <i lang="en">proxy</i> Tor ejecutándose en el puerto 9050 de <var>localhost</var> y queremos redirigir por Tor todas las conexiones a la dirección IP <var>208.77.188.166</var>, configuraremos ksb26 del siguiente modo:</p>
+
+<p><code>echo '#S127.0.0.1:9050;5|' &gt;| /dev/ksb26<br>
+echo '#H208.77.188.166:0;|' &gt;| /dev/ksb26</code></p>

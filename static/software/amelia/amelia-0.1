@@ -1,0 +1,201 @@
+#!/bin/sh
+
+# TODO: Get homes from /etc/passwd
+# TODO: When removing users' temp dirs (.ccache, .thumbnails) ask if it must
+#       remove all users' directories or only current user's one.
+# TODO: Allow users to execute it, hiding options that need root access
+
+# Search locales for es|en
+for i in `echo ${LC_ALL:-${LC_MESSAGES:-${LANG:-en}}} | tr : ' '`
+do
+  ling=$(echo "$i" | cut -d . -f 1 | cut -d @ -f 1 | cut -d _ -f 1)
+  if echo $ling | grep "es\|en" > /dev/null
+  then
+    break
+  fi
+done
+
+# If no es|en is found, default is English
+if ! echo $ling | grep "es\|en" > /dev/null
+then
+  ling=en
+fi
+
+# Localized text strings
+case $ling in
+  es) t_title="Liberador de espacio en disco"
+      t_root="Es necesario ser root para ejecutar este script"
+      t_wait="Calculando tamaño..."
+      t_clean="Limpiar"
+      t_desc="Descripción"
+      t_size="Tamaño"
+      t_path="Ruta"
+      t_wsync="Temporales webrsync"
+      t_dist="Tarballs fuente (distfiles)"
+      t_thumb="Previsualizaciones"
+      t_portage="Temporales Portage"
+      t_ccache="Cache de ccache"
+      t_kernel="Fuentes compiladas del núcleo (make clean)"
+      t_binpkg="Paquetes binarios"
+      t_flash="Temporales de Macromedia Flash"
+      t_done="Finalizado"
+      s_kernel="Desconocido"
+      ;;
+  en) t_title="Disk space "
+      t_root="You need to be to root in order to use this script"
+      t_wait="Calculating size..."
+      t_clean="Clean"
+      t_desc="Description"
+      t_size="Size"
+      t_path="Path"
+      t_wsync="Webrsync TEMPDIR"
+      t_dist="Source tarballs (distfiles)"
+      t_thumb="Thumbnails"
+      t_portage="Portage TEMPDIR"
+      t_ccache="ccache cache"
+      t_kernel="Kernel compiled sources (make clean)"
+      t_binpkg="Binary packages"
+      t_flash="Macromedia Flash temp files"
+      t_done="Finalizado"
+      s_kernel="Desconocido"
+      ;;
+esac
+
+# Only root can execute this
+if [ "$(id -u)" != "0" ]
+then
+  zenity --error --text="$t_root"
+  exit
+fi
+
+# While the scripts recopiles the size of each directory, a progress bar is
+# showed using zenity.
+# A FIFO is needed to notify zenity when a step is done (there are six steps,
+# so I need to execute a zenity after every step adding 17 to the previous
+# percentage).
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=0 --auto-close --text="$t_wait" &
+
+portageq=$(/usr/lib/portage/bin/portageq envvar PORTAGE_TMPDIR)
+PORTAGE_TMPDIR=${portage:-/var/tmp}
+s_wsync=$(du -hs ${PORTAGE_TMPDIR}/emerge-webrsync | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=14 --auto-close --text="$t_wait" &
+
+
+portageq=$(/usr/lib/portage/bin/portageq envvar DISTDIR)
+DISTDIR=${portage:-/usr/portage/distfiles}
+s_dist=$(du -hs ${DISTDIR} | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=29 --auto-close --text="$t_wait" &
+
+
+s_thumb=$(du -chs /home/*/.thumbnails /root/.thumbnails | grep "\<total\>" | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=43 --auto-close --text="$t_wait" &
+
+
+s_portage=$(du -hs ${PORTAGE_TMPDIR}/portage | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=58 --auto-close --text="$t_wait" &
+
+
+s_ccache=$(du -chs /home/*/.ccache /root/.ccache | grep "\<total\>" | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=71 --auto-close --text="$t_wait" &
+
+
+portageq=$(/usr/lib/portage/bin/portageq envvar PKGDIR)
+PKGDIR=${portage:-/usr/portage/packages}
+s_binpkg=$(du -hs ${PKGDIR} | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=86 --auto-close --text="$t_wait" &
+
+
+s_flash=$(du -hsc /tmp/Flash* | tail -n 1 | cut -d "	" -f 1)
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+mkfifo /tmp/liberador.$$
+cat /tmp/liberador.$$ | zenity --progress --percentage=100 --auto-close --text="$t_wait" &
+
+echo 1 > /tmp/liberador.$$
+rm -f /tmp/liberador.$$
+
+# Main dialog
+# User's choice is saved in $out
+out=$(
+       zenity --list --checklist --width=640 --height=350 \
+         --column "$t_clean" --column "$t_desc" --column "$t_size" --column "$t_path" \
+	 FALSE "$t_wsync"   "$s_wsync"   "$PORTAGE_TMPDIR/emerge-webrsync" \
+	 FALSE "$t_dist"    "$s_dist"    "$DISTDIR" \
+	 FALSE "$t_thumb"   "$s_thumb"   '~/.thumbnails' \
+         FALSE "$t_portage" "$s_portage" "$PORTAGE_TMPDIR/portage" \
+	 FALSE "$t_ccache"  "$s_ccache"  '~/.cache' \
+	 FALSE "$t_kernel"  "$s_kernel"  '/usr/src/linux*' \
+	 FALSE "$t_binpkg"  "$s_binpkg"  "$PKGDIR" \
+	 FALSE "$t_flash"  "$s_flash"  '/tmp/Flash-*'
+     )
+
+# Process every item checked in the listbox. Zenity returns their descriptions
+# delimited by a pipe (|).
+
+if [ "$out" ]
+then
+
+until [ -z "$out" ]
+do
+  # Get the first item from the remaining, which will be processed now
+  todo=$(echo "$out" | cut -d \| -f 1)
+  # Delete the first item (since the script is already processing it) from
+  # the remaining list
+  out=$(echo "$out" | cut -sd \| -f 2-)
+  
+  case "$todo" in
+    "$t_wsync"  ) rm -rf ${PORTAGE_TMPDIR}/emerge-webrsync
+    		  ;;
+    "$t_dist"   ) rm -rf ${DISTDIR}/*
+                  ;;
+    "$t_thumb"  ) rm -rf /home/*/.thumbnails /root/.thumbnails
+                  ;;
+    "$t_portage") rm -rf ${PORTAGE_TMPDIR}/portage/*
+                  ;;
+    "$t_ccache" ) rm -rf /home/*/.ccache /root/.ccache
+                  ;;
+    "$t_kernel" ) (
+    		    for i in /usr/src/linux*
+		    do
+		      cd $i
+		      make clean
+		    done
+                  )
+		  ;;
+    "$t_binpkg" ) rm -rf ${PKGDIR}/*
+                  ;;
+    "$t_flash" ) rm -f /tmp/Flash*
+		  ;;
+  esac
+done
+
+zenity --info --text "$t_done"
+
+fi

@@ -1,0 +1,20 @@
+---
+title: "RapidShare premium download with Opera"
+date: 2008-07-08T16:42:12+00:00
+slug: rapidshare-premium-download-with-opera
+categories: [development,web-development,internet,opera]
+tags: [hack,opera,rapidshare]
+---
+<p>I must blame <a href="http://5050.es">Fonso</a> again, because he asks me about something like <a href="http://flashgot.net/">FlashGot</a> but for <a href="http://www.opera.com">Opera</a> in Linux, i.e., a way to be able to select a block of RapidShare URLs to download them with a premium account with a download manager. So when I didn't find anything, I started with it.</p>
+
+<p>I finally got a <a href="http://man.cx/bash(1)">bash</a> script that receives a list of links as parameters and adds them to <a href="http://web.archive.org/web/20070813175241/http://aria.rednoah.com/">Aria</a> with a RapidShare premium account. Using aria was not a choice, since it was the only one, apart from <a href="http://man.cx/wget(1)">wget</a>, that supports RapidShare premium accounts (i.e., <a href="http://www.ietf.org/rfc/rfc2617.txt">HTTP authentication</a>) without problems.</p>
+
+<p>The script will be downloaded in any directory, for example <var>/usr/local/bin</var> and to add it to Opera you should edit menu configuration file located at <var>~/.opera/menus</var>. By default, it will be something like <var>standard_menu.ini</var>. If you don't know what's your file, you can see it in <a href="opera:config#Menu Configuration">Menu Configuration</a> option. If you don't have a menu configuration file, you can create it in Tools -&gt; Preferences -&gt; Advanced -&gt; Toolbars -&gt; Menu setup -&gt; Duplicate.</p>
+
+<p>You have to add the following line in the <var>[Hotclick Popup Menu]</var> section:
+
+<p><code>Item, "Download selection"=Execute program, "/usr/local/bin/downloadthis.sh", "%t"</code></p>
+
+<p>Assuming that the link is located at <var>/usr/local/bin/downloadthis.sh</var>, otherwise, it will be replaced by its location.</p>
+
+<p style="text-align: center; font-weight: bold;"><a href="https://chuso.net/software/opera/misc/downloadthis.sh">Download script</a></p>

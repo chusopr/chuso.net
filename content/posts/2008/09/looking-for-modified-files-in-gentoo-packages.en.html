@@ -1,0 +1,10 @@
+---
+title: "Looking for modified files in Gentoo packages"
+date: 2008-09-12T08:48:14+00:00
+slug: looking-for-modified-files-in-gentoo-packages
+categories: [gentoo-linux]
+tags: [hack,portage]
+---
+<p>Did you know that <a href="http://tug.org/teTeX/">teTeX</a> development was abandoned more than two years ago? And it's recommended to migrate to <a href="http://www.tug.org/texlive/">TeX Live</a>. When I was doing so by reading the Gentoo Linux <a href="http://www.gentoo.org/proj/en/tex/texlive-migration-guide.xml">guide</a> I found that it says: <em>if you have modified configuration files under /etc/texmf...</em>. How will I know that? I modified many configuration files and I can't remember which ones I've modified. I thought about using <a href="http://www.gentoo.org/proj/en/portage/tools/index.xml">equery</a> to check that, but I only know the command to check all the files in a package, not a single file, so I thought that it would be easier to do my own script than to read the whole equery man page. So here it is, the script that checks if certain files in a package were modified:</p>
+
+<p style="text-align: center; font-weight: bold;"><a href="https://chuso.net/software/echecksum/echecksum">Download echecksum</a></p>

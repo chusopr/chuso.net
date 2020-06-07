@@ -1,0 +1,14 @@
+---
+title: "IE 8 no pasa el test Acid 2"
+date: 2008-01-01T17:40:21+00:00
+slug: ie-8-no-pasa-el-test-acid-2
+categories: [web-development,windows]
+tags: [acid-test,internet-explorer]
+---
+<figure class="alignright">
+<a href="/img/archive/ieblog-standards-standards-standards.png"><img src="/img/archive/ieblog-standards-standards-standards.png" width="169" height="124" alt="IEBlog talking about standards, standards, standards"></a>
+<figcaption>Fragmento de IEBlog</figcaption></figure>
+
+<p>La noticia se extendió por todos los medios especializados: por fin, <a href="http://en.wikipedia.org/wiki/Acid2#Timeline_of_successful_browsers">casi dos años</a> después del primer navegador que lo paso (que no fue iCab, Safari ni Konqueror sino <a href="http://www.howtocreate.co.uk/acid/">Opera</a>), Internet Explorer 8 pasaría el test <a href="http://www.webstandards.org/action/acid2/">Acid 2</a>. El titular de <a href="http://channel9.msdn.com/Showpost.aspx?postid=367207">la única prueba</a> que nos da Microsoft (ya que el navegador no está disponible) es contundente: «completadas las pruebas del test Acid 2». El <a href="http://blogs.msdn.com/ie/archive/2007/12/19/internet-explorer-8-and-acid2-a-milestone.aspx">artículo correspondiente en IEBlog</a> tampoco parece tener dudas de su éxito: «IE8 ahora renderiza correctamente la "cara de Acid2"».</p>
+
+<p>Apasionante. ¿Será el principio del fin de los quebraderos de cabeza de los desarrolladores web para hacer funcionar nuestras páginas en el (lamentablemente) navegador más usado manteniendo la conformidad con los estándares? Esto es necesario comprobarlo, pues de ser cierto, sería, como dice el titular de IEBlog, un hito. A falta de medios mejores para comprobarlo me hago con la mejor prueba que Microsoft nos ofrece: <a href="http://channel9.msdn.com/Showpost.aspx?postid=367207">un vídeo</a> mostrando los progresos de MSIE renderizando el test Acid 2. A falta de un modo mejor de comprobar el actual comportamiento de MSIE con Acid2 tendré que asumir que la última imagen que aparece en ese vídeo es la que proclaman que pasa el test. Sin embargo, ¿qué ven mis ojos? Una barra de desplazamiento, barra que no debería aparecer por la propiedad <var><a href="http://www.sidar.org/recur/desdi/traduc/es/css/visufx.html#overflow">overflow: hidden</a></var> que en el test Acid2 se aplica a todo el <a href="http://html.conclase.net/w3c/html401-es/struct/global.html#h-7.5">body</a>. Por lo tanto, no, MSIE 8 no pasa el test Acid 2.</p>

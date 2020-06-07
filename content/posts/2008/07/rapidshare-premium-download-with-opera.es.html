@@ -1,0 +1,20 @@
+---
+title: "Descargar con RapidShare premium en Opera"
+date: 2008-07-08T16:42:12+00:00
+slug: descargar-con-rapidshare-premium-en-opera
+categories: [development,web-development,internet,opera]
+tags: [hack,opera,rapidshare]
+---
+<p>La culpa vuelve a ser de <a href="http://5050.es">Fonso</a>, que me pregunta por algo similar a <a href="http://flashgot.net/">FlashGot</a> pero para <a href="http://www.opera.com">Opera</a> y en Linux, es decir, un modo de poder seleccionar en el navegador un bloque de URLs de RapidShare para descargarlas con una cuenta premium en un gestor de descargas. Y yo claro, al no encontrar nada, pues no pude evitar ponerme a hacer algo.</p>
+
+<p>Acabé con un script de <a href="http://man.cx/bash(1)/es">bash</a> que acepta como parámetros una lista de enlaces y los añade en el gestor de descargas <a href="http://web.archive.org/web/20070813175241/http://aria.rednoah.com/">Aria</a> con cuenta premium the RapidShare. Usar aria no fue una elección, ya que fue el único que encontré, aparte de <a href="http://man.cx/wget(1)/es">wget</a>, que soporta cuentas premium de RapidShare (es decir, <a href="http://www.ietf.org/rfc/rfc2617.txt">autenticación HTTP</a>) sin problemas.</p>
+
+<p>El script se descarga en un directorio a elección del usuario, vamos a poner por ejemplo <var>/usr/local/bin</var> y para añadirlo al Opera se ha de editar el fichero de configuración de menús que se encuentra en <var>~/.opera/menus</var>. Por defecto es algo así como <var>standard_menu.ini</var>. En caso de no saber cual es el fichero se puede comprobar en la opción <a href="opera:config#Menu Configuration">Menu Configuration</a> de la configuración. Si no tienes un fichero de menú puedes generarlo en Herramientas -&gt; Opciones -&gt; Avanzado -&gt; Barras -&gt; Configurar menú -&gt; Duplicar.</p>
+
+<p>En el fichero de configuración del menú se añadira una línea como ésta en la sección <var>[Hotclick Popup Menu]</var>:
+
+<p><code>Item, "Descargar selección"=Execute program, "/usr/local/bin/downloadthis.sh", "%t"</code></p>
+
+<p>Suponiendo que la ubicación del script sea <var>/usr/local/bin/downloadthis.sh</var>, de no ser así se reemplazará por lo que proceda.</p>
+
+<p style="text-align: center; font-weight: bold;"><a href="https://chuso.net/software/opera/misc/downloadthis.sh">Descargar script</a></p>

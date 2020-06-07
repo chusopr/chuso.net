@@ -1,0 +1,141 @@
+---
+title: "Desdramatizando heartbleed: No se han comprometido dos tercios de Internet"
+date: 2014-04-09T20:09:33+00:00
+lastmod: 2015-01-02T14:55:34+00:00
+slug: openssl-heartbleed-desdramatizado-dos-terceras-partes-elmundo
+categories: [software,internet,sysadmin]
+tags: [ssl,tls,heartbeat,heartbleed,openssl,merce-molist,exploit,seguridad]
+---
+<p><em><strong>Actualización:</strong> El Mundo ha modificado el titular eliminando la afirmación de que se han comprometido dos terceras partes de Internet, pero mantienen en el cuerpo de la noticia la afirmación de que dos terceras partes de los servidores usan OpenSSL.</em></p>
+
+<p><em><strong>Actualización 2:</strong> Errata Security ha hecho <a href="http://blog.erratasec.com/2014/04/600000-servers-vulnerable-to-heartbleed.html">un estudio</a> de propagación del bug de Heartbleed dando como resultado que, de las direcciones IP que dan un servicio de HTTPS, solo el 2% son vulnerables. Para interpretar este dato es necesario tener en cuenta:</em></p>
+
+<ul>
+<li><em>No es el 2% de Internet, ni el 2% de servidores, ni siquiera el 2% de servidores web. Se trata del 2% de los servidores web que tienen activado HTTPS.</em></li>
+<li><em>El dato se refiere al número de direcciones IP. Detrás de cada dirección IP puede haber varios servidores igual que cada servidor también puede tener varias direcciones IP.</em></li>
+<li><em>Solo se ha analizado si es vulnerable la implementación SSL de servidores web, pero cualquier servicio que use SSL podría ser vulnerable, como se comenta más abajo.</em></li>
+</ul>
+
+<p><em><strong>Actualización 3:</strong> INTECO cifra el porcentaje de dominios .es afectados <a href="http://www.inteco.es/blogs/post/Seguridad/BlogSeguridad/Articulo_y_comentarios/heartbleed_desmitificado">en torno al 1%</a>. Ojo, que son dominios .es. Ni servidores ni direcciones IP, así que a tener en cuenta consideraciones similares a las de la actualización anterior: servidores ≠ direcciones IP ≠ dominios.</em></p>
+
+<p>Hoy nos llamó un cliente asustado diciéndonos que fuésemos a ver la portada de tecnología de El Mundo y comprobásemos si lo que aparecía allí le afectaba.</p>
+
+<p>Al ir a ver en la susodicha portada la noticia que ha provocado esa alerta, veo que se trata de una noticia de la popular periodista de Internet Mercè Molist sobre el recientemente divulgado (aunque descubierto en diciembre) y grave fallo de seguridad de OpenSSL conocido como <a href="http://heartbleed.com/">heartbleed</a> (<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0160">CVE-2014-0160</a>):</p>
+
+<figure class="aligncenter"><a href="http://www.elmundo.es/tecnologia/2014/04/09/53450b9b268e3e9f128b456e.html"><img src="/wp-content/uploads/2014/04/heartbleed_elmundo.png" alt="Un gravísimo agujero de seguridad compromete a las dos terceras partes de Internet" width="651" height="224" /></a></figure>
+
+<p>El fallo es grave por tres motivos.</p>
+
+<ul>
+<li>La extendida presencia de OpenSSL.</li>
+<li>El nivel de acceso que proporciona a la máquina comprometida y la ausencia de rastros de las posibles intrusiones.</li>
+<li>La existencia de <i lang="en"><a href="https://gist.github.com/takeshixx/10107280">exploits</a> in the wild</i> que hacen que sea muy fácil explotar el fallo.</li>
+</ul>
+
+<p>Pero como señala Ricardo Galli, también es matizable el alarmismo que se ha podido ver en algunos medios sobre el punto dos. El problema de seguridad deja abierta una importante <a href="https://www.mattslifebytes.com/?p=533">puerta de acceso</a> al sistema, pero tampoco nos desmadremos con las conclusiones:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/gallir/status/453879009794080769"><p><a href="https://twitter.com/chusop">@chusop</a> <a href="https://twitter.com/mercemolist">@mercemolist</a> Y que parece que es automático que se puedan robar usuarios y contraseñas de la memoria del servidor. No es así.</p>&mdash; Ricardo Galli (@gallir) <a href="https://twitter.com/gallir/statuses/453879009794080769">April 9, 2014</a></blockquote>
+
+<p><em><strong>Actualización:</strong> Más sobre el punto dos: una de las posibles consecuencias que más se han repetido es que heartbleed también permitiría robar la clave privada del certificado del servidor. Esto es <a href="http://blog.erratasec.com/2014/04/why-heartbleed-doesnt-leak-private-key.html">bastante improbable</a>.</em></p>
+
+<p>Pero vamos, que sí, que hay que estar preocupados y comprobar si somos vulnerables. Así que el cliente tiene razón al pedirnos que nos aseguremos de que sus servidores no son vulnerables. Pero sus servidores, al igual que el 99% de servidores que he comprobado, no son vulnerables. Eso deja en un 1% el número de servidores vulnerables que he encontrado. A lo mejor es que somos muy buenos y tenemos unos servidores muy seguros, que probablemente algo de eso también haya, pero un descenso del 66% al 1% me parece una diferencia bastante significativa. ¿Qué ha pasado?</p>
+
+<p>¿Seguro que el fallo compromete a dos tercios de Internet? Mira que Internet es muy grande. Bueno, pues si entramos al cuerpo de la noticia, ya cambia un poco la afirmación:</p>
+
+<figure class="aligncenter"><a href="http://www.elmundo.es/tecnologia/2014/04/09/53450b9b268e3e9f128b456e.html"><img src="/wp-content/uploads/2014/04/heartbleed_openssl_elmundo.png" alt="El Proyecto OpenSSL hizo público el lunes un comunicado que metafóricamente paró el corazón a muchos administradores de sistemas: avisaba de un grave fallo en las versiones 1.0.1 y 1.0.1f de OpenSSL, un paquete de herramientas y bibliotecas que utilizan dos terceras partes de los servidores de Internet, para cifrar sus comunicaciones y contenidos." width="489" height="151" /></a></figure>
+
+<p>Ahora resulta que ya no son dos tercios de Internet sino dos tercios de los servidores de Internet. Y no son servidores comprometidos sino servidores con OpenSSL instalado. El fallo afectaría a los dos tercios de los servidores que tienen OpenSSL instalado y en Internet hay algo más que servidores, así que el dato de que afecta a dos tercios de Internet ya se esfuma.</p>
+
+<p>A partir de aquí ya no se vuelve a hablar de este dato, así que no tenemos más información para poder juzgarlo. Pero con lo visto, ya hemos detectado el primer problema para tomarnos en serio el titular: Internet no son solo los servidores. Y aún si hablamos de servidores, me parece un dato exagerado ya que el dato que usa para cifrar el número de servidores comprometidos en dos tercios se basa en el número de servidores que supuestamente usan OpenSSL. Así que así se lo transmitimos al cliente para tranquilizarlo: hemos comprobado que sus servidores no son vulnerables y el dato del titular es exagerado.</p>
+
+<p>Aviso también por Twitter a mis seguidores con respecto a no tomar en serio el titular sensacionalista:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-cards="hidden" lang="es" cite="https://twitter.com/chusop/statuses/453871063727095808"><p>No está exagerado ni nada el dato &quot;Un gravísimo agujero de seguridad compromete a las dos terceras partes de Internet&quot;<a href="http://t.co/y40t01bUiW">http://t.co/y40t01bUiW</a></p>&mdash; Chuso Pérez (@chusop) <a href="https://twitter.com/chusop/statuses/453871063727095808">April 9, 2014</a></blockquote>
+
+<p>Y este tuit, como la mayoría de mis tuits, pasaría desapercibido si no fuera porque Ricardo Galli, al que tampoco le va la marcha ni nada ;-) , le da difusión</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/gallir/statuses/453875509739667457"><p><a href="https://twitter.com/chusop">@chusop</a> cierto, <a href="https://twitter.com/mercemolist">@mercemolist</a> eso es muy sensacionalista (y se parece a esos publireportajes de empresas de antivirus)</p>&mdash; Ricardo Galli (@gallir) <a href="https://twitter.com/gallir/statuses/453875509739667457">April 9, 2014</a></blockquote>
+
+<p>Entonces Mercè Molist muy justamente nos pide que expliquemos por qué nos parece exagerado el dato:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/mercemolist/statuses/453876136066711552"><p>¿dónde le veis la exageración? <a href="https://twitter.com/gallir">@gallir</a> <a href="https://twitter.com/chusop">@chusop</a></p>&mdash; Mercè Molist Ferrer (@mercemolist) <a href="https://twitter.com/mercemolist/statuses/453876136066711552">April 9, 2014</a></blockquote>
+
+<p>Como me pilla a la hora de comer, le digo que ahora mismo no puedo y que le responderé más tarde explicándole cuáles son mis objeciones.</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/chusop/statuses/453876328895623168"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> <a href="https://twitter.com/gallir">@gallir</a> Ahora no tengo tiempo, pero más tarde, si otro no lo hace antes, igual escribo algo sobre por qué me parece exagerado.</p>&mdash; Chuso Pérez (@chusop) <a href="https://twitter.com/chusop/statuses/453876328895623168">April 9, 2014</a></blockquote>
+
+<p>Pero a modo de adelanto, le explico cuál es la base de mis objeciones:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/chusop/statuses/453876751433990144"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> <a href="https://twitter.com/gallir">@gallir</a> Pero básicamente, usar OpenSSL no me parece condición suficiente para contar como comprometido.</p>&mdash; Chuso Pérez (@chusop) <a href="https://twitter.com/chusop/statuses/453876751433990144">April 9, 2014</a></blockquote>
+
+<p>También, como el dato en el que se basa esa información parece ser el número de servidores que usan OpenSSL, le pido a Mercè Molist la fuente de ese dato:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/chusop/statuses/453877413022535680"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> <a href="https://twitter.com/gallir">@gallir</a> Por cierto, ¿tienes la fuente del dato de &quot;2/3 de los servidores usan OpenSSL&quot;?</p>&mdash; Chuso Pérez (@chusop) <a href="https://twitter.com/chusop/statuses/453877413022535680">April 9, 2014</a></blockquote>
+
+<p>Aclarando que no estoy dudando de su profesionalidad, sino que quiero acceder a la fuente original de los datos para poder comprenderlos mejor. Con emoticionos y todo:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/chusop/statuses/453878127123783680"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> <a href="https://twitter.com/gallir">@gallir</a> Quiero decir, no te estaba cuestionado, te estaba preguntando si me la podías proporcionar ;-)</p>&mdash; Chuso Pérez (@chusop) <a href="https://twitter.com/chusop/statuses/453878127123783680">April 9, 2014</a></blockquote>
+
+<p>La respuesta que recibo son insultos y la negación de proporcionar la fuente:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/mercemolist/statuses/453878856743940096"><p>búscalo tú mismo. Además de troll, vago <a href="https://twitter.com/chusop">@chusop</a> <a href="https://twitter.com/gallir">@gallir</a></p>&mdash; Mercè Molist Ferrer (@mercemolist) <a href="https://twitter.com/mercemolist/statuses/453878856743940096">April 9, 2014</a></blockquote>
+
+<p>Vaya. Esa no es una buena respuesta. Hay cosas por las que no estoy dispuesto a pasar en un debate, y una de ellas son los insultos. Para mí, ahí se acaba la discusión. Así que esta explicación que estaba escribiendo para Mercè Molist ya no se la enviaré, al menos mientras no retire sus insultos.</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/chusop/statuses/453879205118619648"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> <a href="https://twitter.com/gallir">@gallir</a> No, perdona, la carga de prueba reside en ti, tú has hecho la afirmación.Y si empezamos a insultar por mí se ha acabado</p>&mdash; Chuso Pérez (@chusop) <a href="https://twitter.com/chusop/statuses/453879205118619648">April 9, 2014</a></blockquote>
+
+<p>Lo más curioso es que después se justifica y lamenta diciendo que ella ha sido la insultada, cosa que yo nunca he hecho:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/mercemolist/statuses/453880821729214464"><p>. <a href="https://twitter.com/gallir">@gallir</a> pues se dice bien y se cambia,  como tantas otras veces. Pero a mi no me insulta ni mi madre.</p>&mdash; Mercè Molist Ferrer (@mercemolist) <a href="https://twitter.com/mercemolist/statuses/453880821729214464">April 9, 2014</a></blockquote>
+
+<p>En fin, como a menudo le gusta decir a Ricardo Galli: «puños de hierro, mandíbulas de cristal». Decimos que quien nos pide referencias de los datos que damos nos está insultando, pero luego respondemos con insultos.</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/mercemolist/statuses/453880256236355584"><p>ricardo, esto no es un escéptico, es un imbécil que en su twitter me llama Merche y dice que antes molaba. ¿Esto es serio? <a href="https://twitter.com/gallir">@gallir</a></p>&mdash; Mercè Molist Ferrer (@mercemolist) <a href="https://twitter.com/mercemolist/statuses/453880256236355584">April 9, 2014</a></blockquote>
+
+<p>Debo de haber superado algún límite del humor o algo. El de las susceptibilidades que se la cogen con papel de fumar, por ejemplo.</p>
+
+<p>Por otra parte, dar un dato y negarse a respaldarlo con ninguna prueba o fuente diciéndole a los que pidan pruebas que las busquen ellos mismos va en contra de toda lógica. ¿Se lo imaginan? «Noticias de la noche. Muere a tiros el Presidente de Elbonia. El que quiera pruebas, que las busque él mismo». Absurdo, ¿verdad? Y es que el que hace una afirmación es el que tiene que aportar algún dato que sustente esa afirmación (<a href="http://wiki.ironchariots.org/index.php?title=Burden_of_proof">carga de prueba</a>). De lo contrario, vamos listos. Si alguien te dice que dos de cada tres personas usan dentadura postiza sin aportar ninguna fuente o prueba, ¿lo aceptas sin más o le pides que justifique su afirmación? ¿No te parece una cifra demasiado grande como para aceptarla sin más? Pues lo mismo con la afirmación de Mercè Molist.</p>
+
+<p>Por lo tanto, como Mercè Molist sigue sin aportar la fuente de su dato, no podemos confiar en su veracidad. Sin embargo, podemos especular de dónde lo ha sacado. Es un dato muy divulgado que dos tercios de los servidores web usan Apache y NGINX. Nótese que, de la reducción inicial del ámbito de aplicación de esos dos tercios de Internet a solo dos tercios de los servidores, ahora ya pasamos a dos tercios de los servidores web. Pero de esto ya hablaremos más adelante, sigamos. Como decía, tenía la sospecha de que cuando Mercè Molist hablaba de dos tercios de servidores con OpenSSL se refería a los dos tercios de servidores web con Apache y NGINX, pero quería confirmarlo porque a lo mejor estaba usando otros datos. Al fin y al cabo, no solo los servidores web usan OpenSSL (de esto también hablaré más adelante). Recibiendo como respuesta solo insultos y la negativa a justificar la afirmación, solo nos queda la especulación, a la cual también se une Ricardo Galli apuntando a la misma sospecha que yo:</p>
+
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/gallir/statuses/453880200473116672"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> <a href="https://twitter.com/chusop">@chusop</a> 3. Esa estadística sale de que 2/3 de servidores son Apache y NGInx, pero no todos ellos tienen SSL, es una exageración</p>&mdash; Ricardo Galli (@gallir) <a href="https://twitter.com/gallir/statuses/453880200473116672">April 9, 2014</a></blockquote>
+
+<p>Me apunto en la montaña de cosas por hacer buscar la referencia a esos datos de dos tercios de servidores Apache y NGNIX. Si bien, no hay una fuente oficial y 100% fiable para estos datos, Netcraft suele ser una fuente bastante citada en cuanto a estadísticas de servidores, probablemente ahí encuentre algo.</p>
+
+<p>Y, efectivamente, una vez que he buscado informes de Netcraft, <a href="http://news.netcraft.com/archives/2014/04/02/april-2014-web-server-survey.html">sus datos</a> cifran en dos tercios los servidores web que usan Apache y NGINX y, efectivamente, Apache y NGINX ofrecen HTTPS con OpenSSL. ¿Es suficiente este dato para sostener la información de que dos tercios de Internet ha sido comprometido? Veamos por qué no:</p>
+
+<ul>
+<li><p>Mi móvil, tablet, portátil, ... también están conectados a Internet. ¿Están en el informe de Netcraft? No. Así que ya no son dos tercios de Internet.</p></li>
+<li><p>Los servidores de correo, FTP, mensajería instantánea, ... también pueden usar OpenSSL. ¿Están en el informe de Netcraft? Tampoco. Esos dos tercios solo se refieren a servidores web.</p></li>
+<li><p>Pero es que esos dos tercios no se refieren a servidores web que usan HTTP sobre SSL, sino a servidores web que usan Apache y NGINX. ¿Usan todos los servidores HTTP SSL? Desde luego que no. Puedes probar a cambiar en las webs que más visitas el http:// por https://, a ver cuántas lo soportan. <a href="https://www.elmundo.es">La web en la que escribe Mercè</a>, por ejemplo, no funciona sobre SSL. Se reducen más todavía esos dos tercios.<br>
+Esto mismo ya lo avisa también Netcraft en un <a href="http://news.netcraft.com/archives/2014/04/08/half-a-million-widely-trusted-websites-vulnerable-to-heartbleed-bug.html">artículo</a> que nos envía <a href="https://twitter.com/chencho">@chencho</a>:</p>
+<blockquote data-dnt="true" class="twitter-tweet" data-conversation="none" lang="es" cite="https://twitter.com/chencho/statuses/453891205462753280"><p><a href="https://twitter.com/mercemolist">@mercemolist</a> pues yo solo te veo insultar a ti a <a href="https://twitter.com/chusop">@chusop</a> /cc <a href="https://twitter.com/gallir">@gallir</a>. Yo sólo encuentro esto <a href="http://t.co/tWyaJvycBO">http://t.co/tWyaJvycBO</a> Y tu fuente?</p>&mdash; chencho (@chencho) <a href="https://twitter.com/chencho/statuses/453891205462753280">April 9, 2014</a></blockquote>
+</li>
+<li><p>De todos los Apaches y NGINX que usan SSL, ¿todos lo hacen con OpenSSL? Aunque la mayoría sí, hay <a href="http://curl.haxx.se/docs/ssl-compared.html">otras implementaciones de SSL</a>, como GnuTLS que <a href="https://mod.gnutls.org/">Apache permite como sustituto de OpenSSL</a>. Aunque OpenSSL es mayoritario, los dos tercios se reducen un poco más.</p></li>
+<li><p>De todos los que usan OpenSSL, ¿son todos vulnerables al fallo de seguridad? No, solo las versiones entre la 1.0.1 y 1.0.1f. Toda la rama 1.0.0 y toda la rama 0.9.8 están libres del fallo. Esas ramas todavía se usan. Por ejemplo, el primer servidor con el que se me ocurrió comprobar su versión de OpenSSL:</p>
+<img src="/wp-content/uploads/2014/04/openssl_barrapunto.png" alt="Barrapunto usa OpenSSL 0.9.8c." width="525" height="205" class="aligncenter size-full wp-image-1415" />
+<p>Los dos tercios se hacen más pequeños todavía.</p>
+</li>
+<li><p>¿Todas las versiones de OpenSSL entre 1.0.1 y 1.0.1f son vulnerables? No, depende de la compilación. Solo son vulnerables las que fueron compiladas con heartbeat. Las que fueron compiladas sin heartbeat (<var>OPENSSL_NO_HEARTBEATS</var>) no están afectadas.</p></li>
+</ul>
+
+<p>Pero como ya se ha comentado, resulta que OpenSSL no solo se usa para HTTP sino que también se puede usar para correo, mensajería instantánea, FTP... Aquí un ejemplo del bug heartbeat en NNTP:</p>
+
+<figure class="aligncenter"><img src="/wp-content/uploads/2014/04/heartbleed_nntp.png" alt="Explotando heartbleed en un servidor NNTP" width="667" height="542" /><figcaption>Explotando heartbleed en un servidor NNTP</figcaption></figure>
+
+<p>Y si sumamos todos los servidores vulnerables y no solo los HTTP, ¿podríamos llegar a esos dos tercios? ¿Puede ser ese el dato que usó Mercè Molist? Nunca lo sabremos, porque sigue sin explicar su afirmación y a mí me seguiría pareciendo una estimación exagerada.</p>
+
+<p>Todo esto me ha recordado a <a href="http://www.securitybydefault.com/2013/03/como-cyberbunker-ataco-spamhaus-y-casi.html">un artículo</a> que escribí en Security by Default acerca del ataque de CB3ROB a Spamhaus. En ese artículo también se daban cifras sensacionales, pero citaba su fuente, la identificaba con una fuente interesada en dar cifras exageradas y aconsejaba varias veces escepticismo hacia esos datos.</p>
+
+<p>Aún así hubo quien dijo que había sido sensacionalista. A quienes lo dijeron, no los insulté, solo le recordé a quien dudó de los datos que, efectivamente, yo también recomendaba escepticismo.</p>
+
+<p>Bonus por haber llegado hasta el final: ¿Cómo comprobar si un gran número de máquinas es vulnerable? Esto es lo que he hecho yo: si las máquinas están en un rango de direcciones IP consecutivas (para el ejemplo vamos a suponer que están en el rango <var>192.0.2.64/27</var>), con el siguiente comando obtenemos el listado de máquinas que tienen heartbeat activado en el puerto 443:</p>
+
+<p><code>for i in $(seq 65 94); do echo -e "Q\n\r" | timeout 3 openssl s_client -connect 192.0.2.$i:443 -tlsextdebug 2&gt;&amp;1 | grep -q heartbeat &amp;&amp; echo 192.0.2.$i; done</code></p>
+
+<p>Y para los protocolos que usen STARTTLS (en el ejemplo, para SMTP):</p>
+
+<p><code>for i in $(seq 65 94); do echo -e "Q\n\r" | timeout 3 openssl s_client -connect 192.0.2.$i:25 -starttls 25 -tlsextdebug 2&gt;&amp;1 | grep -q heartbeat &amp;&amp; echo 192.0.2.$i; done</code></p>
+
+<p>Una vez que tenemos el listado de direcciones IP con heartbeat activado, podemos probar si es vulnerable con <a href="https://gist.github.com/takeshixx/10107280">hb-test.py</a>, que incluso nos mostrará un volcado de memoria de la máquina como prueba.</p>
+<script async src="//platform.twitter.com/widgets.js"></script>

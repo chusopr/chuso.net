@@ -1,0 +1,22 @@
+---
+title: "kdepim-runtime patch for standard IMAP flags in KMail (KDE bug 291332)"
+date: 2012-07-31T18:32:20+00:00
+slug: kdepim-runtime-patch-standard-imap-flags-kmail-kde-bug-291332
+categories: [floss]
+tags: [patch,overlay,portage,linux,ebuild,gentoo,imap,kde,kdepim,kmail,reply,repository,rfc,sabayon,standard]
+---
+				<p>This is a situation that I found at work: I use KMail and my co-workers use Thunderbird. We use a shared e-mail account and, when they reply to a message, I can see it as replied, but when I reply to a message from KMail, only KMail can see it as replied.<br />
+You can imagine where the problem may be and, after a little research, this is what I found.</p>
+<p>As explained in <a href="https://bugs.kde.org/show_bug.cgi?id=291332">KDE bug 291332</a>, when you reply an e-mail from KMail, kdepim-runtime sets <strong>$REPLIED</strong> flag in the message, instead of <strong>\Answered</strong> flag as IMAP 4rev1 recommends in <a href="http://www.rfc-editor.org/rfc/rfc2060.txt">RFC 2060</a>.<br />
+However, kdepim-runtime does recognize as replied a message flagged with any of both flags, either standard <strong>\Answered</strong> or proprietary <strong>$REPLIED</strong>.</p>
+<p>So KMail will show as replied messages that have been replied from other e-mail clients (which use <strong>\Answered</strong> flag). But those other clients, which will look for <strong>\Answered</strong> flag, won&#8217;t recognize as replied those messages replied from KMail since kdepim-runtime only sets <strong>$REPLIED</strong> proprietary flag.</p>
+<p>Since kdepim-runtime recognizes both flags but only sets <strong>$REPLIED</strong>, the fix seems easy: modifying kdepim-runtime so it sets <strong>\Answered</strong> flag. It seems so easy and so it is, I was using a patched kdepim-runtime for <del>weeks</del> more than a year without incidents and I don&#8217;t understand why the bug has been open for few months in KDE bugtracker without anybody providing a fix (until now). In fact, I don&#8217;t understand what reason led kdepim-runtime developers to use <strong>$REPLIED</strong> flag instead of <strong>\Answered</strong>.</p>
+<p>Below, you&#8217;ll find a link to download the patch. Also Gentoo Linux ebuild from my <a href="https://chuso.net/chuso-overlay">overlay</a> is provided and binary packages for Gentoo Linux and Sabayon Linux from binhosts from my overlay.<br />
+Bug evolution can be followed in KDE bugtracker.</p>
+<ul>
+<li><strong><a href="https://bugs.kde.org/attachment.cgi?id=74101&#038;action=edit">kdepim-imap-flags.patch</a></strong> &#8211; kdepim-runtime patch for standard IMAP reply flag.</li>
+<li><a href="https://forja.rediris.es/svn/chuso-overlay/kde-base/kdepim-runtime/">kdepim-runtime patched package (ebuild)</a> for Gentoo Linux.</li>
+<li><a href="http://chuso-overlay.forja.rediris.es/packages/amd64/kde-base/">kdepim-runtime binary package</a> for Gentoo Linux (amd64).</li>
+<li><a href="http://chuso-overlay.forja.rediris.es/sabayon/standard/chuso.net/packages/amd64/5/">kdepim-runtime patched package</a> for Sabayon Linux (amd64).</li>
+<li><a href="https://bugs.kde.org/show_bug.cgi?id=291332">KDE bug 291332</a>.</li>
+</ul>

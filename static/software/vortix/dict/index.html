@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<!--
+
+ /***************************************************************
+  *                                                             *
+  * Copyright © 2006, Jesús Pérez Rey <chescu at gmail dot com> *
+  *                                                             *
+  * All rights reserved                                         *
+  *                                                             *
+  ***************************************************************/
+
+-->
+<html lang="en">
+<head>
+  
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>chuso.net - /software/vortix/dict</title>
+<style>
+
+div.chuso_info {
+  background-color: white;
+  padding: 5px;
+  color: black;
+  float: right;
+  text-align: left;
+  font-family: Verdana;
+  font-size: 10pt;
+}
+
+table.top_table {
+  width: 100%;
+  background-color: white;
+  vertical-align: middle;
+  padding: 0px;
+  border-spacing: 0px;
+  color: black;
+  font-family: Verdana;
+  font-size: 10pt;
+}
+
+td.title {
+  text-align: left;
+  vertical-align: top;
+}
+
+table.title {
+  padding: 0px;
+  border-spacing: 0px;
+  font-size: 4pt;
+}
+
+td.title_i {
+  padding: 5px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+p.title {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+td.title_r {
+  border-bottom: 1px solid black;
+}
+
+td.title_d {
+  border-right: 1px solid black;
+}
+
+td.title_dr {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+a.title {
+  text-decoration: none;
+  color: black;
+}
+
+td.menu {
+  width: 18%;
+  font-size: 10pt;
+  text-align: center;
+}
+
+td.languages {
+  width: 10%;
+  text-align: center;
+}
+
+a.banner_link
+{
+  border: 1px solid black;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+td.submenu {
+  visibility: hidden;
+  position: fixed;
+  border-bottom: 1px solid black;
+}
+
+table.submenu {
+  visibility: hidden;
+  position: fixed;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  background-color: white;
+  vertical-align: middle;
+  padding: 0px;
+  border-spacing: 0px;
+}
+
+td.menu_i {
+  font-size: 10pt;
+  text-align: center;
+}
+
+p.redblock {
+  border: 1px solid red;
+  background-color: #FFCCCC;
+  padding: 20px;
+}
+  </style>
+  <script>
+  <!--
+  function show_menu(menu, menu_l, submenu)
+{
+  menu_l.style.position = 'relative';
+  menu_l.style.width = submenu.offsetWidth - menu.offsetWidth;
+  menu_l.style.visibility = 'visible';
+  submenu.style.visibility = 'visible';
+}
+
+function hide_menu(menu, menu_l, submenu)
+{
+  submenu.style.visibility = 'hidden';
+  menu_l.style.visibility = 'hidden';
+  menu_l.style.position = 'absolute';
+}
+
+function scrolldown_menu()
+{
+  top_table.style.top = 0;
+}
+
+function scrollup_menu()
+{
+  top_table.style.top = top_div.offsetTop - menu_tr.offsetHeight;
+}
+  </script>
+
+</head>
+
+<body>
+<table id="top_table" class="top_table" onmouseover="scrolldown_menu()" onmouseout="scrollup_menu()">
+  <tbody>
+    <tr id="menu_tr">
+      <td>
+	<table id="title" class="title">
+	  <tbody>
+	    <tr>
+	      <td id="title_i" class="title_i">
+                       <p class="title"><a class="title" href="http://chuso.net">chuso.net</a></p>
+	      </td>
+	      <td id="title_r" class="title_r">&nbsp;</td>
+	    </tr>
+	    <tr>
+	      <td id="title_d" class="title_d">&nbsp;</td>
+	      <td id="title_dr" class="title_dr">&nbsp;</td>
+	    </tr>
+	  </tbody>
+	</table>
+      </td>
+      <td class="menu">
+        <a class="banner_link" href="/">Index</a>
+      </td>
+      <td class="menu">
+	<table onmouseover="show_menu(menu1, menu1_12, menu1_2);" onmouseout="hide_menu(menu1, menu1_12, menu1_2);">
+	  <tr>
+	    <td class="menu_i" id="menu1"><a class="banner_link" href="">Software</a></td>
+	    <td class="submenu" id="menu1_12">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	      <table id="menu1_2" class="submenu">
+		<tr><td><a style="text-decoration: none;" href="">Gentoo Linux</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="/software">Otros</a></td></tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </td>
+
+      <td class="menu">
+	<table onmouseover="show_menu(menu2, menu2_12, menu2_2);" onmouseout="hide_menu(menu2, menu2_12, menu2_2);">
+	  <tr>
+	    <td class="menu_i" id="menu2"><a class="banner_link" href="https://en.chuso.net/documents">Documents</a></td>
+	    <td class="submenu" id="menu2_12">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	      <table id="menu2_2" class="submenu">
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/documents/technical">Technical</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/documents/not-technical">Not technical</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/documents/science">Science</a></td></tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </td>
+      <td class="menu">
+        <a class="banner_link" href="">Gopher</a>
+      </td>
+      <td class="menu">
+        <a class="banner_link" href="/screenshots.html">Screenshots</a>
+      </td>
+      <td class="menu">
+	<table onmouseover="show_menu(menu3, menu3_12, menu3_2);" onmouseout="hide_menu(menu3, menu3_12, menu3_2);">
+	  <tr>
+	    <td class="menu_i" id="menu3">
+              <a class="banner_link" href="https://en.chuso.net/contact">Contact</a>
+            </td>
+	    <td class="submenu" id="menu3_12">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	      <table id="menu3_2" class="submenu">
+		<tr><td><script>
+<!--
+  document.write('<a style="text-decoration: none;" href="');
+  document.write('&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#115;&#99;&#117;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;');
+  document.write('">E-mail<\/a>');
+//-->
+</script></td></tr>
+		<tr><td><a style="text-decoration: none;" href="/keys/chuso2013.asc">PGP&nbsp;key</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/contact/about">About</a></td></tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </td>
+      <td>
+      </td>
+      <td class="languages">
+</td>
+    </tr>
+    <tr style='background-image: url("/img/navbar.png");'>
+      <td colspan="9">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="9" style="text-align: center;">
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+<!--
+  top_table.style.position = 'absolute';
+  document.write("<div id=\"top_div\" style=\"height: " + (top_table.offsetHeight - menu_tr.offsetHeight) + ";\">&nbsp;<\/div>");
+  top_table.style.top = top_div.offsetTop - menu_tr.offsetHeight;
+x//-->
+</script>
+
+<H2>Current directory is /software/vortix/dict</H2>
+<PRE>
+        768 Dec 20 19:51 <A HREF=".."
+>../</A></PRE>
+<PRE>        120 Oct 31 22:12 <A HREF="Z"
+>Z/</A></PRE>
+<PRE>        120 Oct 31 22:12 <A HREF="bz2"
+>bz2/</A></PRE>
+<PRE>        120 Oct 31 22:12 <A HREF="gz"
+>gz/</A></PRE>
+<PRE>        120 Oct 31 22:12 <A
+HREF="uncompressed">uncompressed/</A></PRE>
+</BODY>
+
+</HTML>

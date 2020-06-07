@@ -1,0 +1,25 @@
+---
+title: "Notificaciones de sonido para Portage"
+date: 2008-11-03T09:18:47+00:00
+slug: notificaciones-de-sonido-para-portage
+categories: [gentoo-linux]
+tags: [hack,patch,portage]
+---
+<p>La situación es la siguiente: ejecutas <a href="http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=2&amp;chap=1">emerge</a> con la opción --ask y como puede tardar un rato en calcular las dependencias te pones a hacer otra cosa. Al cabo de un rato, cuando ya te habías olvidado, descubres ese emerge que hace tiempo que terminó de calcular las dependencias y está esperando a que le des confirmación cuando ya podía haber terminado. ¿Nunca te ha pasado? A mí sí. Es por cosas como ésta que he añadido notificaciones sonoras a algunos eventos de Portage a modo de parche para el comando emerge.</p>
+
+<p>El parche se configura en el fichero <var>/etc/make.conf</var> mediante las variables <var>PLAY_CMD</var> que representa el comando que reproducirá el sonido, como <a href="http://sox.sourceforge.net/">play</a>, <a href="http://www.alsa-project.org/">aplay</a>, <a href="http://multimedia.kde.org/">artsplay</a>, <a href="http://www.tux.org/~ricdude/EsounD.html">esdplay</a> o <a href="http://0pointer.de/lennart/projects/pulseaudio/">paplay</a>, y <var>SOUND_&lt;evento&gt;</var> que representa el fichero de sonido que se reproducirá, pudiendo ser los eventos <var>ASK</var>, <var>SUCCESS</var> o <var>FAILURE</var>. Los ficheros podrán estar en cualquier formato soportado por PLAY_CMD, así se podrá usar WAV, MP3, OggVorbis, AAC, WMA, ... usando el comando apropiado.</p>
+
+<p>Por ejemplo:</p>
+
+<code>
+# Indica que los sonidos se reproducirán mediante PulseAudio con el comando paplay<br>
+PLAY_CMD="paplay"<br>
+# Sonido que se reproducirá cuando emerge haga una pregunta (i.e., cuando se usa el parametro --ask)<br>
+SOUND_ASK="/home/fred/sounds/question.wav"<br>
+# Sonido que se reproducirá cuando emerge salga con resultado satisfactorio<br>
+SOUND_SUCCESS="/home/fred/sounds/correct.wav"<br>
+# Sonido que se reproducirá cuando emerge salga debido a un error<br>
+SOUND_FAILURE="/home/fred/sounds/error.wav"
+</code>
+
+<p style="font-weight: bold; text-align: center"><a href="/upload/misc/82/portage_sounds.diff">Descargar portage_sounds.diff</a></p>

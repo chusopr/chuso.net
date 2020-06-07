@@ -1,0 +1,161 @@
+---
+title: "No, don't blame the user"
+date: 2014-11-09T22:09:02+00:00
+slug: dont-blame-user
+categories: [debate,development,web-development,software,internet]
+tags: [confidential,password,exception,security,trojan,validation,pidgin]
+---
+<p>It is unusual to see a computer engineer defending users. Even more if the engineer is a system administrator. It is known that the relationship between system administrators and users <a href="http://bofharchive.com/">is tense</a>. But when somebody tries to fool me, I get even more tense.<br />
+Let's go over the facts.</p>
+
+<h2>The registrar</h2>
+
+<p>I'm updating the administrative contact of some domain names registered with a well-known Spanish registrar. The company listed as the administrative contact no longer exists and now the domain names belong to another company, so I have to update all the data, but that's another story. Now I will transfer the domain to another registrar, so I only need to change the e-mail address to get the <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/259/8/what-is-epp-code">auth code</a> to transfer the domain name to another registrar. I will correct the rest of the contact details at the new registrar.<br />
+I leave all data as is and just change the e-mail address, then I submit the form and it does nothing. It does not send the data, shows no message, no action, nothing. I try with different browsers and the result is always the same. Since I know a little bit about this, I go to the browser error console and this is what I found there:</p>
+
+<p><a href="/wp-content/uploads/2014/09/registrar1.png"><img class="aligncenter" src="/wp-content/uploads/2014/09/registrar1.png" alt="" width="1209" height="244" /></a></p>
+
+<p>Indeed, a JavaScript exception is being raised. Exceptions, in any programming language, are not-controlled situations. Its purpose is to inform the programmer that an error occurred in the application trying to perform some illegal operation, such as dividing by zero or accessing beyond the last element of a list. The user should never see an exception. If the user sees an exception it means that the developer probably did something wrong: the developer did not take into account an error scenario.<br />
+It's easy to get no errors when everything goes as expected. But rarely all goes this way. Can we really expect all users to input correct data at their first try? Programs have to be prepared for nothing being as expected. If an input box asks the user for its birth year, the program has to be prepared for the user to enter letters there. Yes, it is not what the program expects, but it has to be prepared for that. If we do not foresee this situation, an exception will be thrown.</p>
+
+<p>There are often so many situations that you must foresee and so much data that you have to check that it is easy to forget some of them, we all do this. And it is then when the exception reaches the user and the most likely outcome is that the application ends abruptly or becomes unstable.</p>
+
+<p>Well, after this brief explanation for non-experts, let's continue. I was trying to update a single piece of data of the administrative contact, the application did nothing and the error console showed a JavaScript exception. That is, a programming error: something was not going as the program expected and the developer didn't foresee it.</p>
+
+<p>Then, since it was a process that I needed to do, I sent a support ticket to the registrar to notify them about the error hoping to hear from them that they would review and correct the error.</p>
+
+<p>Instead of that, the registrar response was that I was putting wrong data in the form: the tax number was invalid. I tried to make them see that it was not normal that the page did nothing when submitting the form —even more, throwing an exception— without warning the user that there was an error in the data, without the user knowing why the page did nothing. But they kept insisting that what happened was that I was submitting wrong data. Actually I also tried to submit the form without changing anything, it neither worked: data provided by default wasn't valid anyway.</p>
+
+<p>OK, <a href="https://www.youtube.com/watch?v=1fNxf-ItaYI">we accept neatness</a>. I told them that it's OK, I put wrong data and now I will put the right one and I will go on with my business.</p>
+
+<p>Well, so then I started with the process of running away with the domains that were about to expire from the lackadaisical registrar to another one a little more serious. But the old registrar had already disabled expiring domains a week before they expire. They say that it's normal, that's how it works. Okay, fine, <a href="https://www.youtube.com/watch?v=1fNxf-ItaYI">I accept rhinoceros</a>, who cares if we have no interest at all in staying with them. I go to the control panel to copy expired domains data to the new domain registrar so the former do what they want with expired domains. But I go to my domain list, I see there the ones I want to move, I click to into their control panel link and again nothing happens. It doesn't try to load the control panel, it does not fail, it does nothing. Again, no information to the user, the only thing you can see is that you are trying to do something but nothing happens.<br />
+Then I look at the source code of the page and realize that the link to access the control panel is blank, it points nowhere:</p>
+
+<p><a href="/wp-content/uploads/2014/09/registrar2.png"><img class="aligncenter" src="/wp-content/uploads/2014/09/registrar2.png" alt="" width="1032" height="116" /></a></p>
+
+<p>I notice that the domain name goes on a URL parameter if that domain is active, something like:</p>
+
+<p><code>http://www.registrar.example/panel?domain=active-domain.com</code></p>
+
+<p>What would happen if I change that parameter and set its value to the name of the inactive domain whose panel I want to visit?</p>
+
+<p><code>http://www.registrar.example/panel?domain=inactive-domain.com</code></p>
+
+<p>Indeed, now I can get into the control panel of the inactive domain.</p>
+
+<p>OK, another interface error, I will report it because I still have faith. I go to ticket system and the list of domains from which I have to select which one I have the incidence with doesn't show this domain. So I open it as an overall incidence describing both problems: the link to access the control panel does not work and I can't open an issue with this domain.</p>
+
+<p>They say that everything is very normal: the link doesn't work because the domain is inactive.</p>
+
+<p>I insist: you are putting a link to access the control panel that points nowhere and the control panel still works, either fix the link or remove it.</p>
+
+<p>They say again that everything is fine, that it is my problem for entering an inactive-domain control panel.</p>
+
+<p>OK, fine, I tell them that I've already reported the bug and that I don't care if they want to fix it or not because I will no longer be their customer.</p>
+
+<p>While I go on the run from the old registrar, I also find an error message that says nothing:</p>
+
+<figure class="aligncenter"><a href="/wp-content/uploads/2014/09/registrar3.png"><img src="/wp-content/uploads/2014/09/registrar3.png" title="Translation: &quot;There was an error updating data&quot;" alt="Translation: &quot;There was an error updating data&quot;" width="640" height="191" />
+</a>
+<figcaption>Translation: "There was an error updating data"</figcaption></figure>
+
+<p>At least now there is a message, although it says nothing. But, anyway, now I also find a button that does nothing, again:</p>
+
+<video controls class="aligncenter" width="604" height="344" src="/wp-content/uploads/2014/09/registrar.mp4"></video>
+
+<p>I don't open a new ticket and just warn them by Twitter because I had lost my faith: last time I checked it, three months later, they still have not fixed the first error I reported to them. And if I report a new one, they will probably tell me again that the reason why their web buttons do nothing and error messages say nothing is because I am doing something wrong, as before.</p>
+
+<h2>The confidential</h2>
+
+<p>Now let's change the case without changing the result.</p>
+
+<p>I was visiting an old piece of news of one of those sites known as "confidential news". I can't remember what piece of news it was, but it was from a couple of years ago, if not more. When I finished reading the news, I saw that common section listing related news in a column to the right where there were another news that I found interesting. I clicked to read then and this is what appeared:</p>
+
+<p><a href="/wp-content/uploads/2014/09/confidencial1.png"><img class="aligncenter size-full wp-image-1543" src="/wp-content/uploads/2014/09/confidencial1.png" alt="" width="600" height="251" /></a></p>
+
+<p>That is, the link led to an <a href="http://es.wikipedia.org/wiki/ASP">ASP</a> page but the server —instead of running the ASP— showed the source code to me. With all the database connection data included: IP address, name of the database, user and password.</p>
+
+<p>Since it's sensitive information, I thought that it would be irresponsible to disclose it publicly, so I simply publish the obfuscated screenshot seen above and send them the remaining data —exact URL and how I got there— with a private message.</p>
+
+<p>The answer I get is roughly the same as the previous case: they don't admit any problems on the web and tell me that I'm visiting an old version. I insist that I got that link normally by visiting the archive and that in any case, either way, they have a data leak in their website.</p>
+
+<p>I do a little more research and find more pages of the same site with more data leaks. They reply saying again that this is because I'm visiting old news.</p>
+
+<p>OK, so, even when their website allows us to read old news, the site is not prepared to show these old news without leaks of sensitive information and in any case they don't care. Well I think I've done more than I felt responsible to do, if they want to deny the problem and they also blame the user, I can't do anything.</p>
+
+<h3>FileZilla</h3>
+
+<p>As a system administrator, there is a situation that I have found several times: suddenly, from one day to another, a client finds out that all their sites have been <i>trojanized</i>. The attack is not caused by any security problems on servers or websites or by a <a href="https://en.wikipedia.org/wiki/Brute-force_attack">brute-force attack</a>. The attacker just gets into each FTP account (each site has a different FTP account) on their first try.<br />
+So, when all these conditions are met, I usually ask the client: "Do you use FileZilla?" And I usually get an affirmative answer. By now we already know that a simple statistical correlation <a href="http://es.wikipedia.org/wiki/Cum_hoc_ergo_propter_hoc">does not imply</a> causation, but there is more evidence that can lead us to establish this relationship with higher basis.</p>
+
+<p>These are the additional clues:</p>
+
+<figure class="alignright">
+<a href="/wp-content/uploads/2013/05/recentservers.png"><img src="/wp-content/uploads/2013/05/recentservers.png" alt="FileZilla recentservers.xml files with plain text passwords in Google search results." width="273" height="232" /></a><figcaption>FileZilla recentservers.xml files with plain text passwords in Google search results.</figcaption></figure>
+
+<p>Let's go straight to the point: if you are using FileZilla Site Manager, check teh contents of <var>~/.filezilla/sitemanager.xml</var> file if you use UN*X or <var>%APPDATA%\FileZilla\sitemanager.xml</var> if you use Windows.</p>
+
+<p>There you got it, the full listing of all the servers you saved in your Site Manager with usernames and passwords in plain text.</p>
+
+<p>Well, you may say that this does not concern you because you don't use Site Manager or are going to stop using it. Well, I can still try to scare you, because if you don't use the site manager, the only way you'll have to connect to a server is by using the Quick Connect bar. And have you noticed that this bar contains a drop down with the last sites you've connected to allowing you to reconnect with just one click? It doesn't even ask you for the password, which means that FileZilla remembers the password. And, again, it saves it in a plain text file: <var>~/.filezilla/recentservers.xml</var> and <var>%APPDATA%\FileZilla\recentservers.xml</var>. Following persistent complaints, the first time you use this bar, the newer versions will show you a warning before storing passwords in <var>recentservers.xml</var>. Previous versions just saved passwords without noticing the user.</p>
+
+<p>In addition, this quick connect toolbar has an additional insecurity. The site manager offers you to use encrypted or unencrypted connections although, of course, it uses unencrypted connection by default. In the other hand, quick connect toolbar not even offers this choice, it will always use unencrypted connection, so your password will travel unencrypted over the network. So do not ever use FileZilla on a public network. Well, better neither in a private. Definitely don't use FileZilla at all, it is a great FTP client but its security policy reduces it to "toy tool."</p>
+
+<p>OK, we all do make mistakes and you may be pretty sure the developers of FileZilla will fix these problems, right? If you think that, you are wrong.<br />
+This is a recurring topic in FileZilla bug tracker and the discussion always ends the same way: the developer abruptly closes the discussion by saying that this works like this by design, there is no problem to fix, it's not his responsibility to store your passwords in a safe way and there is no need to discuss it any more.</p>
+
+<p>Again, as in the previous cases, FileZilla developer avoids any responsibility for his application's poor security and instead he moves responsibility of any security issues that may arise from the use of your application to anywhere else (operating system and final user):</p>
+
+<ul>
+ 	<li><figure class="alignright"><a href="/wp-content/uploads/2014/10/someone-else-do-it.png"><img src="/wp-content/uploads/2014/10/someone-else-do-it-300x225.png" alt="Can't someone else do it?" width="300" height="225" /></a></figure>
+	<p><q cite="http://trac.filezilla-project.org/ticket/1373#comment:1">It is the task of the operating system to protect the user's files. Just encrypt your home directory.</q> <a href="http://trac.filezilla-project.org/ticket/1373#comment:1">§</a></p><p>OK, just so we can also say that corresponds to the password manager to protect passwords, right?
+Or that the doors of the houses should have no locks, it's police responsibility to make your neighborhood a safe place.</p>
+
+<p>Also, yes, we can encrypt our home directory — if we can. If we are not system administrators, probably we can't because you do not have enough privileges to do so. Anyway, this does not solve much: even if we have an encrypted home directory, the directory is decrypted as we log in exposing files as if they were not encrypted, so this measure becomes useless.</p>
+
+<p>Moreover, delegating safety to upper or lower layers is a dreadful security policy — like the rest of the security policies of FileZilla. Each layer must be as safe as possible, it is a computer security principle that a system is as safe as the most insecure of its components: <a href="https://ssd.eff.org/risk/lessons">EFF</a>, <a href="https://buildsecurityin.us-cert.gov/bsi/articles/knowledge/principles/356-BSI.html">CERT</a>, <a href="http://www.ibm.com/developerworks/library/se-link/">IBM</a>, <a href="http://www.cisco.com/cisco/web/solutions/small_business/resource_center/articles/secure_my_business/as_strong_as_the_weakest_link/index.html">Cisco</a>, <a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6133143">IEEE</a>, ... That means that no matter how safe are some parts of your system if other pieces lack security measures (see also <a href="http://www.climagic.org/bugreports/libvte-scrollback-written-to-disk.html">libvte case</a>).</p>
+
+<p>Encrypting full file system or delegating security measures in the operating system does not protect you when the threat comes from FileZilla environment (eg, <a href="http://www.juniper.net/security/auto/vulnerabilities/vuln22063.html">BID-22063</a>, <a href="http://www.securityfocus.com/bid/17972/discuss">BID-17972</a>, <a href="http://www.securityfocus.com/bid/23506/discuss">BID-23506</a>, <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0315">CVE-2007-0315</a>, <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1948">CVE-2008-1948</a>, <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3738">CVE-2006-3738</a>, ...) or a virus running in the same environment as FileZilla.</p>
+
+<p>But, oh, wait... viruses...</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/1373#comment:7">Once you've got malware on your computer, you've lost already, game over. You need to prevent the infection in the first place.</q> <a href="http://trac.filezilla-project.org/ticket/1373#comment:7">§</a></p><p>Apparently, FileZilla developer lives in a perfect world where <a href="https://en.wikipedia.org/wiki/Zero-day_attack">0-day</a> bugs do not exist.<br/>
+Also, apparently, it's not worth trying to protect sensitive data from the threat of a Trojan that attempts to steal it. Once you've been infected, it's better to give up everything for lost and not hinder the attacker to get to your sensitive information. There is no 100%-safe system so, why try to pursue something impossible? If someone breaks into your system, they can take whatever they want, I will not spend energy making it difficult to them.</p>
+
+<p>Once someone breaks into your home, you've lost. Keeping your valuables in a safe does not increase the security level at all.</p>
+
+<p>You could prevent a trojan to access your saved passwords, for example, crypting them with a master password <a href="http://winscp.net/eng/docs/master_password">as WinSCP does</a>, but...</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/5530#comment:6">If you always have to enter some master password, you can instead disable saving of passwords completely.</q> <a href="http://trac.filezilla-project.org/ticket/5530#comment:6">§</a></p><p>Yes, having to enter one single master password is the same as having to enter different password each time you want to connect to any of the 20 sites that you may have stored in FileZilla (yes, some of us may need regular access to 20 or more different accounts).</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/5530#comment:6">You can instead disable saving of passwords completely.</q> <a href="http://trac.filezilla-project.org/ticket/5530#comment:6">§</a></p><p>This will completely disable site manager excepting anonymous FTP servers, so then you will have to use quick connect bar which —as seen above— is even more insecure.</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/2935#comment:3">Suppose there were a master password. You catch some malware and the next time you start FileZilla and enter your password, the malware knows it and does its thing with your stored site data.<br />
+It just makes no difference at all.</q> <a href="http://trac.filezilla-project.org/ticket/2935#comment:3">§</a></p>
+
+<p>No difference at all? Is having passwords stored in plain text available for any malware that just wants to take them the same as having to design an specific malware that catches keystrokes and detects when are you typing FileZilla master passwords in order to intercept it, reverse encryption algorithm and get the final passwords? Is it exactly the same?</p>
+
+<p>Suppose that you save passwords. You get infected with some malware that gets your physical address from any e-mail in your email inbox and then they send you an Kosovo Albanian to your home to break <a href="http://en.wikipedia.org/wiki/Rubber-hose_cryptanalysis">all bones in your body</a> until you tell him all passwords of your FTP servers.<br />
+Yeah, there is absolutely no difference.</p>
+
+<p>There is also no point in putting a lock on your door, a thief could always catch you when you fall asleep on the train, put their hand in your pocket and steal the key. There is absolutely no difference.</p></li>
+ 	<li><p><q cite="http://trac.filezilla-project.org/ticket/2935#comment:20">Other projects too opt to store the passwords in plaintext.</q> <a href="http://trac.filezilla-project.org/ticket/2935#comment:20">§</a></p><p>If more projects have adopted the same policy, this <a href="https://en.wikipedia.org/wiki/Argumentum_ad_populum">doesn't make it</a> a good policy. These projects may be wrong too.</p></li>
+</ul>
+<p>In a comment, FileZilla developer uses Pidgin arguments to strengthen his own. Let's see what <a href="https://developer.pidgin.im/wiki/PlainTextPasswords">arguments</a> does Pidgin provide apart from those already mentioned:</p>
+<ul>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">Instant messaging is not very secure, and it's kind of pointless to spend a lot of time adding protections [...] when the protocols themselves aren't all that secure.</q></p><p>Oh great, something like "if they are going to steal your account anyway, why are we going to protect your password?"</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">You shouldn't be using your instant messaging password for anything else.</q></p><p>Does this justify that the password is stored unsafely exposed to an easy theft?<br />
+Also, some services that use single sign-on such as Google Talk does not allow you to use a different password for the mail. But again, that it will be others' fault.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">The password is in <var>accounts.xml</var> in plain text, but the file itself is only readable by its owner.</q></p><p>Well, and by the system administrator, too. And anyone with physical access to the computer and any process (including malware) that runs with user's privileges or higher.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">You could write a script to wrap Pidgin or Finch that would decrypt accounts.xml and re-encrypt it when the application exits.</q></p><p>Yeah, sure, very accessible to the average user. And meanwhile, we continue exposing plain passwords while Pidgin is running. I don't know why this is better than using a master password.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">If someone can get to your files you should either be able to trust the person to not touch them, or you shouldn't be storing sensitive information there at all.</q></p><p>Ah, yes, another ideal world where you always know who to trust and when you decide to trust someone you are never wrong. But this is user's fault, of course, because he was wrong when he decided who to trust. Moreover, you can't always choose who has access to your files.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">A Google search for ​im passwords shows a bunch of hits for getting the passwords out of other IM clients just as easily as Pidgin.</q></p><p>As easy as opening a text file and reading the passwords?</p>
+
+<p>Moreover, if you look at Google that Earth is flat, you can also find many results "confirming" that claim, but this doesn't make it true.</p>
+
+<p>And, again, saying that others make the same mistake, in <a href="https://en.wikipedia.org/wiki/Argumentum_ad_populum">no way nullifies</a> the error.</p></li>
+ 	<li><p><q cite="https://developer.pidgin.im/wiki/PlainTextPasswords">Having our passwords in plaintext is more secure than obfuscating them precisely because, when a user is not misled by a false sense of security, he is likely to use the software in a more secure manner.</q></p><p>Unless the user has no idea that their passwords are being stored in plain text or what obfuscation or encryption is.</p>
+
+<p>Removing the false sense of security neither protects you from a trojan to infect your computer and steal a file where your passwords are stored in plain text. But we already learned this lesson with FileZilla: it's your fault for being infected.</p></li>
+</ul>
+<h3>Conclusion</h3>
+<figure class="alignright"><a href="http://www.catb.org/jargon/html/P/PEBKAC.html"><img src="/wp-content/uploads/2014/09/pebkac-240x300.png" alt="PEBKAC" width="240" height="300" /></a></figure>
+<p>Well, I think that these three cases show quite well how a developer can get to blame the user for their own mistakes. And doing so, they can take quite ridiculous stances.</p>
+
+<p>We all know —and system administrators more, maybe— that the users are pretty stupid. Don't get angry, this is so. I can also be pretty stupid in other sectors when I become the user. But what we can't do it's blaming users for our bugs. If my application crashes when the user puts wrong data, it is not the user's fault for putting wrong data, the application has to <a href="http://xkcd.com/327/">validate input data</a>. If my web page displays the server password just by visiting old news, of course it is not user's fault, what happens is that I have a serious security problem. If my program saves passwords in a plain text file which is then stolen by malware, is not only the fault of the user: storing passwords in a text file goes against all good practices.</p>

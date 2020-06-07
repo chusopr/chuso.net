@@ -1,0 +1,27 @@
+---
+title: "Reasignando las DLLs del sistema"
+date: 2007-04-08T16:59:42+00:00
+slug: reasignando-las-dlls-del-sistema
+categories: [windows]
+---
+<figure class="alignright">
+<img alt="" width="100" height="141" src="/img/avatar/tux_win_killer_small.jpg">
+</figure>
+
+<p>Vaya semana. <a href="http://www.microsoft.es">Microsoft</a> mete la pata y yo tengo que arreglaro, claro, <a href="http://www.sromero.org/linux/pringao/Pringao_Howto.html">es lo que toca</a>.</p>
+
+<p>Si a ti también te resulta familiar el siguiente mensaje:</p>
+
+<cite>Reasignación no válida de DLL del sistem<br><br>
+
+La DLL de sistema user32.dll se ha reasignado en la memoria La aplicación no funcionará correctamente. La reasignación ocurrió porque la DLL C:\Windows\System32\Hhctrl.ocx ocupa un intervalo de direcciones reservado para las DLL del sistema de Windows. Debe ponerse en contacto con el fabricante que proporciona la DLL para obtener una nueva.</cite>
+
+<p>Tranquilo, no significa que ya sea hora de formatear o llamar a tu <a href="http://www.sromero.org/linux/pringao/Pringao_Howto.html">pringao</a>, es sólo que <a href="http://es.wikipedia.org/wiki/Microsoft_Windows">Windows</a> ha decidido premiar tu fidelidad con su última <a href="http://support.microsoft.com/?kbid=935448">actualización con bug</a>. Y yo voy a premiar tu fidelidad como lector mío y uno de mis  <a href="/img/archive/sysstat.png">visitantes</a> que usa Windows (si, <a href="http://www.statcounter.com">os</a> <a href="http://www.google.es/analytics">espío</a>) diciéndote como solucionarlo ahorrándote la búsqueda, tan sólo hay que instalar el siguiente parche:</p>
+
+<p><a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=74ad4188-3131-429c-8fcb-f7b3b0fd3d86&amp;DisplayLang=es">WindowsXP-KB935448-x86-ESN</a></p>
+
+<p>O al menos ése es el que suponemos que debería ser si tenemos Windows en español porque ese es el parche en español, ¿no? Pues parece que no, porque en la <a href="http://msdn2.microsoft.com/es-es/library/aa381058.aspx">iinformación sobre la versión</a> de ese componente el idioma que figura es el inglés, por lo que probablemente rechazará ese parche y el que hará falta será el de la versión en inglés que es éste:</p>
+
+<p><a href="http://www.microsoft.com/downloads/details.aspx?familyid=74AD4188-3131-429C-8FCB-F7B3B0FD3D86&amp;displaylang=en">WindowsXP-KB935448-x86-ENU</a></p>
+
+<p>Y entonces, ¿para qué pongo el parche en español? No sé, ¿para qué lo pone Microsoft? Tal vez haya alguna versión de Windows en español en la que la información sobre la versión de ese componente diga que está en español.</p>

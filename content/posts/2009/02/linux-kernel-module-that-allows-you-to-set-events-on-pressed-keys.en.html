@@ -1,0 +1,26 @@
+---
+title: "Linux kernel module that allows you to set events on pressed keys"
+date: 2009-02-01T09:35:52+00:00
+slug: linux-kernel-module-that-allows-you-to-set-events-on-pressed-keys
+categories: [floss]
+tags: [hack,framebuffer-console,kernel,keylogger,linux,typewriter]
+---
+<p>As a probe of the use of <a href="http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=blob_plain;f=Documentation/kprobes.txt;hb=HEAD">kprobes</a> for <a href="http://www.ei.uvigo.es/docencia/asignatura.php?asignatura=0127010">Extension of Operating Systems</a> I have made a Linux module that allows you to execute a command for every pressed key and see its keycode.</p>
+
+<p>It includes some sample scripts that can be used as the command to be executed on every key pressed, these scripts are:</p>
+
+<ul>
+  <li>keylogger
+    <p>Registers every pressed key in a file.</p>
+  </li>
+  <li>printscr
+    <p>If <a href="http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=tree;f=Documentation/fb;h=0d75374d20682dcd21e8d688fe98859bbce95ce9;hb=HEAD">framebuffer</a> is enabled it allows doing a console screenshot using print screen key.</p>
+  </li>
+  <li>typewriter
+    <p>Plays a sound on every key pressed, sample sounds included imitate a typewriter.
+  </li>
+</ul>
+
+<p>The tarball includes more instructions and examples.</p>
+
+<p style="font-weight: bold; text-align: center;"><a href="/software/kbdevents/kbdevents-1.1.tar.gz">Download kbdevents</a></p>

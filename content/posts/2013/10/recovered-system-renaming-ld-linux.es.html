@@ -1,0 +1,15 @@
+---
+title: "Cómo recuperé un sistema después de renombrar ld-linux.so"
+date: 2013-10-14T18:26:14+00:00
+categories: [floss,sysadmin]
+tags: [hack,ld-so,bash,shell-scripting]
+slug: como-recupere-un-sistema-despues-de-renombrar-ld-linux
+---
+<p>Sí, ya lo sé, puede que haya sido un poco una estupidez renombrar ld.so, ¿podemos obviar este detalle?<br />
+No es algo que suela hacer a menudo, pero ese día, no sé, me apetecía innovar o algo.</p>
+
+<p>Pero la innovación resultó ser un desastre, resulta que no es muy buena idea renombrar una biblioteca con la que enlazan usando su ruta exacta todos los ejecutables dinámicos del sistema, ya os aviso por si vais a tener la misma idea.</p>
+
+<p>Por si acaso llego tarde y a alguien más se le ocurre renombrar la biblioteca ld.so (¿en serio la gente hace esas cosas?) a continuación explico cómo lo solucioné en mi caso. La primera reacción lógica es la del pánico pensando que arruinaste todo el sistema y que vas a tener que apagarlo e ir con un Live CD a repararlo, lo que en el caso de un servidor no es la mejor de las situaciones, pero en realidad es muy fácil solucionarlo:</p>
+
+<h2><a href="https://es.chuso.net/documentos/tecnicos/recuperar-sistema-renombrar-ld-linux-so">Reparar un sistema después de renombrar ld.so</a></h2>

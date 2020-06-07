@@ -1,0 +1,218 @@
+---
+title: "Copiando CDs en Linux"
+date: 2003-07-10T16:16:10+00:00
+slug: documentos/tecnicos/copiando-cds-en-linux
+---
+<h3>Lo necesario</h3>
+
+<p>Las herramientas estándar para copiar CDs en Linux son las <a href="http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html">cdrtools</a>, pero para este artículo usaremos <a href="http://cdrdao.sourceforge.net">cdrdao</a>. Para usar los técnicas que explico para ahorrar espacio necesitarás:</p>
+
+<p>Si el CD es de audio, alguno de éstos (por orden de preferencia, aunque los dos primeros son imprescindibles):</p>
+
+<ul>
+  <li><a href="http://sox.sourceforge.net">SoX</a></li>
+  <li><a href="http://www.xiph.org/paranoia">cdparanoia</a></li>
+  <li><a href="http://www.vorbis.com">vorbis-tools</a></li>
+  <li><a href="http://www.mp3dev.org/mp3">lame</a></li>
+  <li><a href="http://www.mpg123.de">mpg123</a></li>
+  <li><a href="http://sourceforge.net/projects/mpg321">mpg321</a></li>
+  <li>¿<a href="http://www.mplayerhq.hu">MPlayer</a>?</li>
+</ul>
+
+<p>Para otro tipo de CDs alguno de éstos (por orden de preferencia, aunque lo más probable es que ya los tengas todos instalados):</p>
+
+<ul>
+  <li><a href="http://sources.redhat.com/bzip2">bzip</a></li>
+  <li><a href="http://www.gnu.org/software/gzip/gzip.html">gzip</a></li>
+  <li><a href="ftp://ftp.leo.org/pub/comp/os/unix/linux/sunsite/utils/compress">ncompress</a></li>
+</ul>
+
+<h3>Conociendo la grabadora</h3>
+
+<p>Lo primero que tenemos que hacer es averiguar donde está la grabadora si es que no lo sabemos ya.</p>
+
+<p>Desafortunadamente, parece ser que Linux no permite enviar comandos SCSI a través de ATAPI para unidades IDE, por lo que en un principio no se podrían usar grabadoras IDE. Pero afortunadamente el kernel nos permite hacer un apaño con el módulo ide-scsi (Emulación de SCSI para unidades ATAPI). Si tienes una unidad ATAPI tendrás que activar dicho módulo siguiendo las instrucciones del archivo README.ATAPI de las cdrtools.
+Si no tienes instalado cdrtools puedes consultar dicho archivo aquí: <a href="http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/man/README/README.ATAPI">http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/man/README/README.ATAPI</a> o aquí: <a href="ftp://ftp.berlios.de/pub/cdrecord/README.ATAPI">ftp://ftp.berlios.de/pub/cdrecord/README.ATAPI</a>
+
+<p>Si sabes qué dispositivo dentro de /dev es el que le corresponde a tu unidad CD-R (probablemente esté en /dev/scd*, /dev/sr*, /dev/sg*, /dev/cdroms/* o /dev/scsi) entonces creas un enlace llamado /dev/cdrecorder hacia ese dispositivo y podrás usar cdrdao sin necesidad de especificar el dispositivo.
+Por ejemplo, si tu grabadora está en /dev/cdroms/cdrom1 entonces creas un enlace simbólico llamado /dev/cdrecorder con el siguiente comando:</p>
+
+<code>ln -s /dev/cdroms/cdrom0 /dev/cdrecorder</code>
+
+<p>y podrás usar cdrdao sin especificarle la unidad, por ejemplo:</p>
+
+<code>cdrdao write tocfile</code>
+
+<p>Ten en cuenta que si estás usado devfs tendrás que hacer el enlace simbólico de otra forma para que no desaparezca al reiniciar el ordenador. La forma de hacerlo usando devfs es añadiendo esto en /etc/devfsd.conf (suponiendo que el CD-R se encuentre en /dev/cdroms/cdrom1):</p>
+
+<code>LOOKUP ^cdrecorder$ CFUNCTION GLOBAL mksymlink cdroms/cdrom1 cdrecorder
+REGISTER ^cdroms/cdrom1$ CFUNCTION GLOBAL mksymlink $devname cdrecorder
+UNREGISTER ^cdroms/cdrom0$ CFUNCTION GLOBAL unlink cdrecorder</code>
+
+<p>Si no quieres crear el enlace simbólico puedes decirle a cdrdao en que unidad se encuentra el CD-R cada vez que lo ejecutes, por ejemplo:</p>
+
+<code>cdrdao write --device /dev/sg0 tocfile</code>
+
+<p>Si no sabemos qué dispositivo es el que le corresponde, escribimos</p>
+
+<code>cdrdao scanbus</code>
+
+<p>Nos mostrará por cada unidad SCSI tres números separados por comas que son el bus, el id y el lun y a continuación la descripción de la unidad. Esos tres números tendrás que pasárselos a cdrdao cada vez que lo uses, por ejemplo:</p>
+
+<code>cdrdao write --device 0,0,0 tocfile</code>
+
+<h3>Copiando CDs 'on the fly'</h3>
+
+<p>Desde luego la forma que menos espacio consume en el disco duro es copiar directamente de CD a CD (si dispones de otra unidad de CD, aparte de la grabadora), pues no consume espacio en el disco duro. Pero es menos recomendable pues si se produce algún error al leer el CD original o una desincronización el CD de destino se echará a perder, mientras que eso no pasaría si si copiara primero al disco duro.
+La sintaxis sería la siguiente:</p>
+
+<code>cdrdao copy --source-device &lt;dispositivo_e&gt; --device &lt;dispositivo_s&gt; --on-the-fly &lt;archivo_toc&gt;</code>
+
+<p>Sustituyendo &lt;dispositivo_e&gt; por el dispositivo donde se encuentra el CD original, &lt;dispositivo_s&gt; para el dispositivo de la grabadora y &lt;archivo&gt; por el archivo donde se guardará la tabla de contenidos.
+Por ejemplo:</p>
+
+<code>cdrdao copy --source-device /dev/cdrom --device /dev/sg0 --on-the-fly tocfile</code>
+
+<h3>Grabando CDs pasándolos por el disco duro</h3>
+
+<p>Bien, para grabar un CD sin usar el método 'on the fly' tenemos que guardar por una parte la tabla de contenidos (TOC) en un archivo, que es donde se encuentra la información sobre la estructura del CD y por otra parte el contenido en sí del CD. Todo esto se hace con un único comando:</p>
+
+<code>cdrdao read-cd &lt;archivo_toc&gt;</code>
+
+<p>Y después copiaremos el CD con el siguiente comando:</p>
+
+<code>cdrdao write &lt;archivo_toc&gt;</code>
+
+<h3>Copiando un CD de Audio usando poco espacio</h3>
+
+<p>Bien, un CD estándar de audio (74 minutos) ocupa alrededor de 750 MB cuando es volcado al disco duro. Con el método que explico aquí ocupara sobre 100 MB.
+Para ello necesitaremos igualmente la TOC, la leemos de la siguiente forma:</p>
+
+<code>cdrdao read-toc --datafile - &lt;archivo_toc&gt;</code>
+
+<p>La TOC quedará guardada en el archivo que le digamos. Después leemos el contenido del CD, pero según lo va leyendo lo convertimos a Ogg Vorbis o MP3 reduciendo por tanto el tamaño que ocupará. A continuación explico como hacerlo dependiendo del programa que usemos.</p>
+
+<h4>Vorbis-tools</h4>
+
+<code>cdparanoia -d &lt;dispositivo&gt; 1- /dev/stdout | oggenc - -o &lt;archivo_ogg&gt;</code>
+
+<h4>Sox</h4>
+
+<p>No conseguí crear un Ogg Vorbis con SoX, pero supuestamente sería así:</p>
+
+<code>cdparanoia -d &lt;dispositivo&gt; 1- /dev/stdout | sox -t wav - &lt;archivo_ogg&gt;</code>
+
+
+<h4>LAME</h4>
+
+<code>cdparanoia -d &lt;dispositivo&gt; 1- /dev/stdout | lame - &lt;archivo_mp3&gt;</code>
+
+<h4>MPLAYER</h4>
+
+<p>No estoy seguro de que con MPlayer se pueda convertir de WAV a MP3 porque cuando yo lo intento se produce una violación de segmento, pero en un principio si que se podría si se compiló con soporte para lame y MEncoder y sería así:</p>
+
+<code>cdparanoia -d &lt;dispositivo&gt; 1- /dev/stdout | mencoder -oac mp3lame - -o &lt;archivo_mp3&gt;</code>
+
+<p>Una vez creado el archivo OGG o MP3 ya solo queda grabar el CD a medida que vamos descodificando el susodicho OGG o MP3:</p>
+
+<h4>Si es un ogg</h4>
+
+<p>Con vorbis-tools:</p>
+
+<code>ogg123 -d raw -f - &lt;archivo_ogg&gt; | sox -t raw -wsc2 -r 44100 - -t cdr - | cdrdao write &lt;archivo_toc&gt;</code>
+
+<p>Con SoX:</p>
+
+<p>Ésto sólo se podrá hacer si SoX fue compilado con soporte para Ogg Vorbis, para saberlo escribe sox -h</p>
+
+<code>sox &lt;archivo_ogg&gt; -wsc2 -r 44100 -t cdr - | cdrdao write &lt;archivo_toc&gt;</code>
+
+<h4>Si es un MP3</h4>
+
+<p>Con lame:</p>
+
+<code>lame -t --decode &lt;archivo_mp3&gt; - | sox -t raw -wsc2 -r 44100 - -t cdr - | cdrdao write &lt;archivo_toc&gt;</code>
+
+<p>Con mpg123:</p>
+
+<code>mpg123 -s &lt;archivo_mp3&gt; | sox -t raw -wsc2 -r 44100 - -t cdr - | cdrdao write &lt;archivo_toc&gt;</code>
+
+<p>Con mpg321:</p>
+
+<code>mpg321 -w - &lt;archivo_mp3&gt; | sox -t wav -wsc2 -r 44100 - -t cdr - | cdrdao write &lt;archivo_toc&gt;</code>
+
+<p>Con MPlayer se puede convertir a WAV tanto desde MP3 como desde OGG, pero como envía texto a la salida estándar (se puede reducir, pero no eliminar) dicho texto se mezclaría con el archivo.</p>
+
+<h3>Copiando cualquier tipo de CD con poco espacio</h3>
+
+<p>Bueno, con esto la compresión que conseguiremos es muy probable que sea bastante poca.</p>
+
+<p>Se trata de comprimir el contenido del CD utilizando algún compresor. Empiezo desde el que más comprime al que menos. Todos deberían estar incluidos en tu distribución. Puede que bzip2 no lo tengas si usas un Linux muuuuuy antiguo y puede que gzip no lo tengas si usas un UNIX no Linux muuuuuy muuuuuy antiguo.</p>
+
+<h4>Bzip2</h4>
+
+<code>cdrdao read-cd --datafile /dev/stdout &lt;archivo_toc&gt; | bzip2 -c9 &gt; &lt;arhivo_bz2&gt;</code>
+
+<h4>Gzip</h4>
+
+<code>cdrdao read-cd --datafile /dev/stdout &lt;archivo_toc&gt; | gzip -c9 &gt; &lt;archivo_gz&gt;</code>
+
+<h4>Compress</h4>
+
+<code>cdrdao read-cd --datafile /dev/stdout &lt;archivo_toc&gt; | compress -cb 16 &lt;archivo_Z&gt;</code>
+
+<p>Luego hay que hacer una modificación en el archivo TOC:</p>
+
+<code>sed -ie "s:^DATAFILE \"/dev/stdout.*\":DATAFILE \"-\":" &lt;archivo_toc&gt;</code>
+
+<p>Y ya lo grabamos, dependiendo del programa que hayamos usado será:</p>
+
+<h4>Bzip2</h4>
+
+<code>bzip2 -cd &lt;archivo_bz2&gt; | cdrdao write &lt;archivo_toc&gt;</code>
+
+<h4>Gzip</h4>
+
+<code>gzip -cd &lt;archivo_gz&gt; | cdrdao write &lt;archivo.toc&gt;</code>
+
+<h4>Compress</h4>
+
+<code>compress -cd &lt;archivo_Z&gt; | cdrdao write &lt;archivo.toc&gt;</code>
+
+<h3>Notas</h3>
+
+<ol>
+  <li>De los métodos para grabar CDs ocupando menos espacio sólo he probado suficientemente el método para grabar CDs de audio usando vorbis-tools, así que no puedo garantizar nada con respecto a los demás métodos.</li>
+  <li>Puede algunos métodos fallen dependiendo de como esté compilado tu sistema.</li>
+  <li>A no ser que no te importe echar a perder un CD virgen (que tampoco sería tanta pérdida tal y como están los precios, ¿no?), si no estás seguro de lo que haces convendría que primero probases con un CD regrabable si es posible. Si no te es posible probar con un CD regrabable prueba primero a "grabar" el CD pasándole a cdrdao la opción --simulate, esto realizará la grabación pero con el láser apagado, por lo que la grabación no se realizará realmente y te servirá para comprobar si se va a realizar bien.</li>
+  <li>Si no has creado el enlace /dev/cdrecorder, cada vez que ejecutes cdrdao tendrás que pasarle la opción --device &lt;dispositivo&gt;</li>
+  <li>
+    <p>Si cdrdao no detecta automáticamente el driver que tiene que usar para tu grabadora puedes especificárselo con --driver para --device y --source-driver para --source-device&nbsp;</p>
+    <h4>Ejemplo</h4>
+    <p>
+      Como lo mejor es verlo siempre con un ejemplo práctico, vamos a verlo. Supongamos que no hago el enlace /dev/cdrecorder porque no sé donde se encuentra mi grabadora, que el driver de mi grabadora es generic-mmc pero cdrdao no lo detecta automáticamente y que quiero copiar un CD usando vorbis tools.<br>
+      Primero averiguo donde está mi grabadora:
+    </p>
+
+    <code>cdrdao scanbus</code>
+
+    <p>Y me dice:</p>
+
+    <code>0,0,0: HL-DT-ST, CD-RW GCE-8160B, 1.02</code>
+
+    <p>Se encuentra en 0,0,0. Sabiendo esto, si uso devfs, ya sabré que el dispositivo de mi grabadora es /dev/scsi/host0/bus0/target0/lun0/cd, pero voy a suponer que no uso devfs.
+    Comienzo a leer el TOC:</p>
+
+    <code>cdrdao read-toc --device 0,0,0 --driver generic-mmc --datafile - contenido.toc</code>
+
+    <p>Cuando haya finalizado, leo el contenido del CD de origen, que se encuentra en /dev/hdb, convirtiéndolo a Vorbis:</p>
+
+    <code>cdparanoia -d /dev/hdb 1- /dev/stdout | oggenc - -o data.ogg</code>
+
+    <p>Y por último grabo ya el CD:</p>
+
+    <code>ogg123 -d raw -f - data.ogg | sox -t raw -wsc2 -r 44100 - -t cdr - | cdrdao write --device 0,0,0 --driver generic-mmc contenido.toc</code>
+
+    <p>Espero haberos sido de ayuda ;)</p>
+  </li>
+</ol>

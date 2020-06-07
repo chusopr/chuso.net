@@ -1,0 +1,28 @@
+---
+title: "<sarcasm>Realmente adoro el Internet Explorer</sarcasm>"
+date: 2007-05-24T13:14:20+00:00
+lastmod: 2007-06-01T18:58:32+00:00
+slug: realmente-adoro-el-internet-explorer
+categories: [web-development]
+tags: [internet-explorer]
+---
+<figure class="alignright">
+<a href="/img/archive/disenoweb.png"><img alt="Reparto del tiempo en el diseño web" width="225" height="180" src="/img/archive/disenoweb.png"></a>
+</figure>
+<p>Sé que ya he criticado <a href="https://es.chuso.net/navegadores-y-estandares.html">anteriormente</a> al <a href="http://www.microsoft.es/ie/">Internet Explorer</a> por su peculiar interpretación de los estándares. Pero es que luego está el caso del bug del día que consiste en que el Internet Explorer te obsequia con que lo que funciona en los demás navegadores en IE inexplicablemente no, por lo que tendrás que dedicar hasta horas o en ocasiones días para averiguar que lo que esta vez hace fallar al producto estrella de <a href="http://www.microsoft.es">Microsoft</a> puede ser:</p>
+
+<ul>
+  <li>Si tienes una función <a href="http://es.wikipedia.org/wiki/JavaScript">JavaScript</a> que modifica el atributo <var>src</var> de una etiqueta <var>&lt;img&gt;</var> pero no lo haces al final de la función podría cortarse la carga de la imagen.</li>
+  <li>Una etiqueta <var>&lt;IMG&gt;</var> con <var>id</var> y <var>name</var> pero sin <var>src</var> (ejemplo típico de imagen que será posteriormente manipulada por JavaScript) causa que <a href="http://es.php.net/manual/es/ref.session.php#62450">las variables de sesión se pierdan inesperadamente</a>.</li>
+  <li>Al cambiar el estilo <var>visibility</var> de una etiqueta <var>&lt;div&gt;</var> de <var>hidden</var> a <var>visible</var> no siempre se lo aplica a los objetos hijos que deberían heredarlo.</li>
+  <li><a href="http://www.howtocreate.co.uk/fixedPosition.html">IE no soporta</a> <var>position: fixed;</var>.</li>
+  <li>Los <a href="http://es.wikipedia.org/wiki/PNG">PNG</a> que usan canal alfa para las transparencias <a href="http://homepage.ntlworld.com/bobosola/">se ven en IE con fondo negro</a> en lugar de tranparente.</li>
+  <li>Si creas un objeto con <var><a href="http://developer.mozilla.org/en/docs/DOM:document.createElement">document.createElement()</a></var> y luego lo añades con <var><a href="http://developer.mozilla.org/en/docs/DOM:element.appendChild">appendChild()</a></var> <a href="http://www.webdeveloper.com/forum/archive/index.php/t-17817.html">no será iniciado</a>, debes usar la propiedad <var><a href="http://developer.mozilla.org/en/docs/DOM:element.innerHTML">innerHTML</a></var> o <var><a href="http://developer.mozilla.org/en/docs/DOM:element.insertBefore">inserBefore()</a></var> o similar.</li>
+  <li>El evento <var><a href="http://html.conclase.net/w3c/html401-es/interact/scripts.html#adef-onmouseover">onmouseover</a></var> <a href="http://www.howtocreate.co.uk/tutorials/testMenu.html">no funciona</a> en una región con <a href="http://www.sidar.org/recur/desdi/traduc/es/css/colors.html#q2">fondo</a> transparente.</li>
+</ul>
+
+<p>Esos son los errores más recientes que recuerdo, seguro que cualquier desarrollador web podría aportar <a href="http://www.quirksmode.org/bugreports/archives/explorer_windows/index.html">muchos</a> <a href="http://chuso.net/search.php?be=google&amp;q=internet+explorer+bugs">más</a>. La mayoría de estos bugs fueron corregidos en la versión 7 de Internet Explorer, pero sus versiones 6.0 y 5.5 siguen siend las más usadas.</p>
+
+<p>Con los problemas de <a href="http://es.wikipedia.org/wiki/Safari_(navegador)">Safari</a> con JavaScript podría escribir un libro si recordara todos los que tuve.</p>
+
+<p style="font-style: italic">Última actualización: 01 de junio de 2007 20:58:32 CEST.</p>

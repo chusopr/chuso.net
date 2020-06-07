@@ -1,0 +1,32 @@
+---
+title: "Safari and MSIE on Linux"
+date: 2007-06-13T10:02:08+00:00
+slug: safari-and-msie-on-linux
+categories: [web-development]
+tags: [wine,safari,internet-explorer]
+---
+<p>As soon as I knew about <a href="http://www.apple.com/safari/">Safari</a> for Windows I knew what I wanted to do: after being able to run <a href="http://www.tatanka.com.br">Internet Explorer on Linux</a> it's time to do the same with Safari.<br>
+It's not easy, but when you know what you have to do it isn't difficult. And if you see <a href="http://www.igoo.co.uk/resources/articles/apple-release-safari-for-windows/">how it works on Windows</a>:</p>
+
+<figure class="aligncenter"><img src="http://img243.imageshack.us/img243/3599/safarizc9.png" alt="Safari for Windows crash" width="419" height="257"></figure>
+
+<p>you can't expect great things with Wine either</p>
+
+<p>These are the steps needed to be able to run Safari on Linux using <a href="http://www.winehq.com">Wine</a>.</p>
+
+<ol>
+  <li><div style="text-decoration: line-through;">Recompile wine using <a href="http://bugs.winehq.org/attachment.cgi?id=6721">this patch</a> to fix Wine bug <a href="http://bugs.winehq.org/show_bug.cgi?id=8674">#8674</a>. If you are using Gentoo you can download my <a href="http://h0m3r.sdf-eu.org/chuso-overlay/archive/app-emulation/wine/wine-0.9.38-r1.ebuild">patched ebuild</a>.</div> (no longer needed since version 0.9.39)</li>
+  <li>Install <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=32bc1bee-a3f9-4c13-9c99-220b62a191ee">Visual C++ 2005 libraries</a>, either <a href="http://download.microsoft.com/download/d/3/4/d342efa6-3266-4157-a2ec-5174867be706/vcredist_x86.exe">downloading</a> the package and installing it with Wine or using <a href="http://www.kegel.com/wine/winetricks" type="application/x-shellscript">winetricks</a> script.</li>
+  <li><a href="http://www.apple.com/safari/download/">Download</a> and install Safari for Windows unchecking automatic updates while installing.</li>
+</ol>
+
+<p>References: <a href="http://groups.google.com/group/comp.emulators.ms-windows.wine/browse_thread/thread/4ad4fac5fd33648d/bafcf09669cd9104">comp.emulators.ms-windows.wine</a>, <a href="http://bugs.winehq.org/show_bug.cgi?id=8674">WineHQ Bugzilla</a>, <a href="http://appdb.winehq.org/appview.php?iVersionId=8248">Wine App DB</a>.</p>
+
+<p>Internet Explorer installation is much more easy, you only have to run <a href="http://www.tatanka.com.br/ies4linux/page/Es/Página_Inicial">IES 4 Linux</a> script: <a href="http://www.tatanka.com.br/ies4linux/page/Installation">one</a> for versions 5, 5.5 and 6 and <a href="http://www.tatanka.com.br/ies4linux/page/Beta">another</a> for version 7.</p>
+
+<figure class="aligncenter">
+<a href="/screenshots/msie-safari.png"><img src="/img/archive/msie-safari.png" width="250" height="188" alt="MSIE and Safari on Linux with Wine"></a></figure>
+
+<p>Now everybody can run any of the major web browsers on Linux, something very appreciated for a Linux user and webmaster.</p>
+
+<p>Curiosity: compare <a href="http://www.apple.com/es/safari/">Apple speed test</a> with <a href="http://www.howtocreate.co.uk/browserSpeed.html">How To Create speed test</a>.</p>

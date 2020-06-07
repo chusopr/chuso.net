@@ -1,0 +1,92 @@
+# http://chuso.net/?id=1182217034
+# Patches number of balls (lifes) in Neverball to allow to configure
+# its number (balls option) or even set it to infinite (<0)
+#
+# Brought to you by Jesus Perez (Chuso) from Chuso Overlay for Gentoo
+# http://chuso.net/chuso-overlay
+#
+# See you at http://chuso.net
+
+diff -urN neverball-1.4.0.orig/ball/level.c neverball-1.4.0/ball/level.c
+--- neverball-1.4.0.orig/ball/level.c	2007-06-19 02:15:12.000000000 +0200
++++ neverball-1.4.0/ball/level.c	2007-06-19 02:35:41.000000000 +0200
+@@ -295,7 +295,10 @@
+ 
+     score = 0;
+     coins = 0;
+-    balls = 2;
++    if (config_get_d(CONFIG_BALLS) < 0)
++	balls = 0;
++    else
++    	balls = config_get_d(CONFIG_BALLS);
+     level = 0;
+ 
+     level_total = 0;
+@@ -483,7 +486,7 @@
+ 
+     case GAME_TIME:
+     case GAME_FALL:
+-        balls--;
++        if (config_get_d(CONFIG_BALLS) >= 0) balls--;
+         break;
+     }
+     
+diff -urN neverball-1.4.0.orig/ball/st_fail.c neverball-1.4.0/ball/st_fail.c
+--- neverball-1.4.0.orig/ball/st_fail.c	2007-06-19 02:15:12.000000000 +0200
++++ neverball-1.4.0/ball/st_fail.c	2007-06-19 02:45:57.000000000 +0200
+@@ -57,7 +57,7 @@
+         {
+             gui_state(jd, "Save Replay", GUI_SML, FAIL_SAVE, 0);
+ 
+-            if (level_dead())
++            if ((level_dead()) && (config_get_d(CONFIG_BALLS) >= 0))
+                 gui_start(jd, "Main Menu",   GUI_SML, FAIL_RETRY, 0);
+             else
+                 gui_start(jd, "Retry Level", GUI_SML, FAIL_RETRY, 0);
+diff -urN neverball-1.4.0.orig/share/config.c neverball-1.4.0/share/config.c
+--- neverball-1.4.0.orig/share/config.c	2007-06-19 02:15:13.000000000 +0200
++++ neverball-1.4.0/share/config.c	2007-06-19 02:17:59.000000000 +0200
+@@ -108,6 +108,7 @@
+     config_set_s(CONFIG_PLAYER,               DEFAULT_PLAYER);
+     config_set_s(CONFIG_BALL,                 DEFAULT_BALL);
+     config_set_s(CONFIG_COIN,                 DEFAULT_COIN);
++    config_set_d(CONFIG_BALLS,                DEFAULT_BALLS);
+ }
+ 
+ void config_load(void)
+@@ -213,6 +214,8 @@
+                     config_set_s(CONFIG_BALL,   val);
+                 else if (strcmp(key, "coin")   == 0)
+                     config_set_s(CONFIG_COIN,   val);
++                else if (strcmp(key, "balls")           == 0)
++                    config_set_d(CONFIG_BALLS,          atoi(val));
+             }
+ 
+         fclose(fp);
+@@ -314,6 +317,7 @@
+         fprintf(fp, "player               %s\n", option_s[CONFIG_PLAYER]);
+         fprintf(fp, "ball                 %s\n", option_s[CONFIG_BALL]);
+         fprintf(fp, "coin                 %s\n", option_s[CONFIG_COIN]);
++        fprintf(fp, "balls                %d\n", option_d[CONFIG_BALLS]);
+ 
+         fclose(fp);
+     }
+diff -urN neverball-1.4.0.orig/share/config.h neverball-1.4.0/share/config.h
+--- neverball-1.4.0.orig/share/config.h	2007-06-19 02:15:13.000000000 +0200
++++ neverball-1.4.0/share/config.h	2007-06-19 02:38:30.000000000 +0200
+@@ -106,6 +106,7 @@
+     CONFIG_VIEW_DZ,
+     CONFIG_ROTATE_FAST,
+     CONFIG_ROTATE_SLOW,
++    CONFIG_BALLS,
+ 
+     CONFIG_OPTION_D_COUNT
+ };
+@@ -164,6 +165,7 @@
+ #define DEFAULT_PLAYER               "Player"
+ #define DEFAULT_BALL                 "png/ball.png"
+ #define DEFAULT_COIN                 "png/coin.png"
++#define DEFAULT_BALLS                2
+ 
+ /*---------------------------------------------------------------------------*/
+ 

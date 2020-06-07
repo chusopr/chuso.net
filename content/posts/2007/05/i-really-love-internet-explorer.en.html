@@ -1,0 +1,29 @@
+---
+title: "<sarcasm>I really love Internet Explorer</sarcasm>"
+date: 2007-05-24T13:14:20+00:00
+lastmod: 2007-06-01T18:58:32+00:00
+slug: i-really-love-internet-explorer
+categories: [web-development]
+tags: [internet-explorer]
+---
+<figure class="alignright">
+<a href="/img/archive/disenoweb.png"><img alt="Time breakdown of modern web design" width="225" height="180" src="/img/archive/disenoweb.png"></a>
+</figure>
+<p>I know I've <a href="https://en.chuso.net/browsers-and-standards.html">already</a> criticized
+<a href="http://www.microsoft.com/ie/">Internet Explorer</a> because of its distinctive way to interpret standards. But then I found the bug-of-the-day issue which means that Internet Explorer will give you an unexpected behavior failing where other browsers get success, so you must waste even hours or sometimes days to guess that what's going wrong this time with <a href="http://www.microsoft.es">Microsoft</a>'s most (in)famous product may be:</p>
+
+<ul>
+  <li>If a <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> function modifies the <var>src</var> attribute in a <var>&lt;img&gt;</var> tag, but it doesn't do it at the end of the function, the loading of the image may be canceled.</li>
+  <li>An <var>&lt;IMG&gt;</var> tag with <var>id</var> and <var>name</var> but without <var>src</var> (common case of an image that will be manipulated through JavaScript) causes to <a href="http://es.php.net/manual/es/ref.session.php#62450">loss session variables unexpectedly</a>.</li>
+  <li>If you change a <var>&lt;div&gt;</var> <var>visibility</var> style from <var>hidden</var> to <var>visible</var>, sometimes this change is not applied to the child objects which should inherit this property.</li>
+  <li><a href="http://www.howtocreate.co.uk/fixedPosition.html">IE doesn't support</a> <var>position: fixed;</var>.</li>
+  <li><a href="http://en.wikipedia.org/wiki/PNG">PNGs</a> using an alpha channel for transparency show <a href="http://homepage.ntlworld.com/bobosola/">black background instead of transparency in IE</a>.</li>
+  <li>If you create an object with <var><a href="http://developer.mozilla.org/en/docs/DOM:document.createElement">document.createElement()</a></var> and then append it to content with <var><a href="http://developer.mozilla.org/en/docs/DOM:element.appendChild">appendChild()</a></var> it <a href="http://www.webdeveloper.com/forum/archive/index.php/t-17817.html">won't be initialized</a>, you should use <var><a href="http://developer.mozilla.org/en/docs/DOM:element.innerHTML">innerHTML</a></var> property or <var><a href="http://developer.mozilla.org/en/docs/DOM:element.insertBefore">insertBefore()</a></var> or similar.</li>
+  <li><var><a href="http://www.w3.org/TR/html401/interact/scripts.html#adef-onmouseover">onmouseover</a></var> event <a href="http://www.howtocreate.co.uk/tutorials/testMenu.html">doesn't work</a> over transparent <a href="http://www.w3.org/TR/REC-CSS2/colors.html#q2">backgrounds</a>.</li>
+</ul>
+
+<p>These are the most recent that I can't remember now, but any web developer can surely apport <a href="http://www.quirksmode.org/bugreports/archives/explorer_windows/index.html">much</a> <a href="http://chuso.net/search.php?be=google&amp;q=internet+explorer+bugs">more</a>. Many of these bugs have been solved in Internet Explorer 7, but 5.5 and 6.0 are still the most used.</p>
+
+<p>I would be able to write a book with <a href="http://en.wikipedia.org/wiki/Safari_(web_browser)">Safari</a> problems with JavaScript if I remember all I had.</p>
+
+<p style="font-style: italic">Latest update: 01 Jun 2007 20:58:32 CEST.</p>

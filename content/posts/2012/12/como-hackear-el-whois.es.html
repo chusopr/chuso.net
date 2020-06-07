@@ -1,0 +1,76 @@
+---
+title: "Cómo «hackear» el whois"
+date: 2012-12-13T19:09:33+00:00
+slug: como-hackear-el-whois
+categories: [internet]
+tags: [hack,facebook,whois,dns,glue,sbd,security-by-default]
+---
+<p>Supongo que no cuento nada nuevo si digo que ayer <a href="http://www.google.com/news?ncl=d046sH6pT8CslaMltelXvt0SzeDSM">se cayó Facebook</a>. Lo nuevo viene a continuación... o no, porque es algo que se viene haciendo desde hace años.</p>
+
+<p>Supongo también que buscando el motivo de la caída o por puro aburrimiento esperando a que volviera Facebook, a alguien le dio por consultar el <i>whois</i> de Facebook desde la línea de comandos:<p>
+
+<pre># whois facebook.com
+
+Whois Server Version 2.0
+
+Domain names in the .com and .net domains can now be registered
+with many different competing registrars. Go to http://www.internic.net
+for detailed information.
+
+   Server Name: FACEBOOK.COM.ZZZZZ.GET.LAID.AT.WWW.SWINGINGCOMMUNITY.COM
+   IP Address: 69.41.185.229
+   Registrar: TUCOWS.COM CO.
+   Whois Server: whois.tucows.com
+   Referral URL: http://domainhelp.opensrs.net
+
+   Server Name: FACEBOOK.COM.MORE.INFO.AT.WWW.BEYONDWHOIS.COM
+   IP Address: 203.36.226.2
+   Registrar: INSTRA CORPORATION PTY, LTD.
+   Whois Server: whois.instra.net
+   Referral URL: http://www.instra.com
+
+   Server Name: FACEBOOK.COM.LOVED.BY.WWW.SHQIPHOST.COM
+   IP Address: 46.4.210.254
+   Registrar: ONLINENIC, INC.
+   Whois Server: whois.onlinenic.com
+   Referral URL: http://www.OnlineNIC.com
+
+   Server Name: FACEBOOK.COM.KNOWS.THAT.THE.BEST.WEB.HOSTING.IS.NASHHOST.NET
+   IP Address: 78.47.16.44
+   Registrar: CENTER OF UKRAINIAN INTERNET NAMES
+   Whois Server: whois.ukrnames.com
+   Referral URL: http://www.ukrnames.com
+
+   Server Name: FACEBOOK.COM.GET.ONE.MILLION.DOLLARS.AT.WWW.UNIMUNDI.COM
+   IP Address: 209.126.190.70
+   Registrar: PDR LTD. D/B/A PUBLICDOMAINREGISTRY.COM
+   Whois Server: whois.PublicDomainRegistry.com
+   Referral URL: http://www.PublicDomainRegistry.com
+
+   Domain Name: FACEBOOK.COM
+   Registrar: MARKMONITOR INC.
+   Whois Server: whois.markmonitor.com
+   Referral URL: http://www.markmonitor.com
+   Name Server: A.NS.FACEBOOK.COM
+   Name Server: B.NS.FACEBOOK.COM
+   Status: clientDeleteProhibited
+   Status: clientTransferProhibited
+   Status: clientUpdateProhibited
+   Status: serverDeleteProhibited
+   Status: serverTransferProhibited
+   Status: serverUpdateProhibited
+   Updated Date: 28-sep-2012
+   Creation Date: 29-mar-1997
+   Expiration Date: 30-mar-2020</pre>
+
+<p>Pero... un momento... ¿Esto qué es? FACEBOOK.COM.ZZZZZ.GET.LAID.AT.WWW.SWINGINGCOMMUNITY.COM, FACEBOOK.COM.GET.ONE.MILLION.DOLLARS.AT.WWW.UNIMUNDI.COM, FACEBOOK.COM.LOVED.BY.WWW.SHQIPHOST.COM, ... Estoy seguro de que Facebook no quiere que eso salga ahí. La conclusión precipitada fue «Facebook se ha caído porque lo han <i>hackeado</i>» y así se empezó a propagar por Twitter, con la colaboración incluso de algunos periodistas (eh, contrastar la información, ¿recuerdan?).</p>
+
+<p>Lo cierto es que lo más probable es que esos registros ya estuvieran ahí antes de la caída de Facebook, igual que hay registros similares para google.com, yahoo.com, microsoft.com, ibm.com y cualquier dominio popular, y no tienen nada que ver con la caída de Facebook.
+Es algo que se viene produciendo desde hace muchos años, antes incluso de la existencia de Facebook. La primera vez que lo vi fue un caso parecido: a alguien le dio por consultar la información de <i>whois</i> de microsoft.com y le salió algo parecido, extrayendo la misma conclusión: han <i>hackeado</i> Microsoft.</p>
+
+<p>Desde entonces ya me he acostumbrado a ver este tipo de registros 'falsos' pero nunca había llegado hasta el fondo del asunto: en el <i>whois</i> está la información de los dominios, ¿qué hacen ahí esos subdominios? ¿Cómo consiguieron que <i>whois</i> los liste?
+Nunca me había propuesto responder a estas preguntas hasta que hablando del falso <i>hackeo</i> del <i>whois</i> de Facebook con <a href="https://twitter.com/YJesus">@YJesus</a>, entre otros, surgió la pregunta a la que nadie, ni siquiera Google, dio respuesta: ¿cómo llegaron hasta ahí esos subdominios?</p>
+
+<p>Me puse a investigarlo con <a href="https://twitter.com/ediazcomellas">@ediazcomellas</a>, que me dio la primera pista. Después fui consiguiendo más pistas, atando cabos y al final conseguí colar el dominio 'example.com.chuso.net' (ya lo he borrado) para que aparezca al hacer una búsqueda <i>whois</i> por el dominio example.com.</p>
+
+<p>Tras comentarle a @YJesus que ya había encontrado la respuesta a la pregunta, me ofreció una colaboración en Security By Default para explicar cómo '<i>hackear</i>' el <i>whois</i>: <a href="http://www.securitybydefault.com/2012/12/como-no-hackearon-el-whois-de.html">http://www.securitybydefault.com/2012/12/como-no-hackearon-el-whois-de.html</a>.</p>

@@ -1,0 +1,70 @@
+---
+title: "Moving a Linux directory to a new filesystem"
+date: 2015-03-23T16:11:53+00:00
+slug: documents/technical/linux-moving-directory-to-new-filesystem
+---
+<p>This document will cover the issue of moving a Linux directory to a new partition because the current one has run out of space (or for any other reason). For simplicity, we will suppose that this directory is <var>/home</var>, although it could be almost any other one without major changes. For example, let's assume that the new partition you want to locate that directory is <var>/dev/sdb1</var> and that this partition is already formatted. If it is not formatted, I understand that everybody knows how to get it. If not, is not the aim of this document to explain how to create and format partitions on Linux: it is a very basic task and there is abundant documentation.</p>
+
+<p>Then, what are the steps to achieve our purpose?</p>
+
+<p>First, boot the computer without logging in to X. If you have already logged in, then log out.</p>
+
+<p>Go to a text console with <var>Control+Alt+F1</var> (or <var>Control+Alt+F2</var>, <var>F3</var>, <var>F4</var>, etc. in some systems that do not have the console 1 enabled.)</p>
+
+<p>If you use a system like Ubuntu which has <var>root</var> user access disabled, you will have to log in as a normal user. This puts you at your home directory which will be something like <var>/home/<em>username</em></var>. You will need to go out of there and put yourself in any other directory so <var>/home</var> directory is not in use:</p>
+
+<p><code>cd /tmp</code></p>
+
+<p>So, now that <var>/home</var> is not in use, you can become <var>root</var>:</p>
+
+<p><code>sudo bash</code></p>
+
+<p>Now ensure that there is no file in use in <var>/home</var>:</p>
+
+<p><code>lsof -n | fgrep /home</code></p>
+
+<p>If there is still some process using any file in <var>/home</var>, close it or kill it.</p>
+
+<p>Mount the new <var>home</var> partition in an empty directory (remember to change <var>/dev/sdb1</var> as appropriate):</p>
+
+<p><code>mkdir /mnt/home<br />
+mount /dev/sdb1 /mnt/home</code></p>
+
+<p>Move all files in <var>/home</var> to the new filesystem:</p>
+
+<p><code> mv /home/* /mnt/home</code></p>
+
+<p>Make sure you have not left any hidden file (the hidden files are not included in <var>*</var>) and, if there is any, move it:</p>
+
+<p><code>ls -a /home</code></p>
+
+<p>Watch out for <var>mv</var> with <var>.*</var> since it doesn't have the result you could expect at first.</p>
+
+<p>Unmount the partition:</p>
+
+<p><code>umount /dev/sdb1<br />
+rmdir /mnt/home</code></p>
+
+<p>Add a new line in <var>/etc/fstab</var> to always mount the partition at boot:</p>
+
+<p><code>/dev/sdb1 /home ext3 defaults,noatime,nodiratime 1 2</code></p>
+
+<p>For more information about the meaning of each column, see the <var><a href="http://linux.die.net/man/5/fstab">fstab(5)</a></var> man page.</p>
+
+<p>Tip: imagine that you open your computer, you touch the wires and end up with the disk plugged into a different SATA bus and instead of <var>sdb</var> it becomes <var>sdc</var>. This <var>fstab</var> line will no longer work. So it is better to use the filesystem <var>UUID</var>, which never changes unless you format the partition. You can get the filesystem <var>UUID</var> with:</p>
+
+<p><code>blkid /dev/sdb1</code></p>
+
+<p>Take note of the <var>UUID</var> and use it in <var>fstab</var> instead of the device name. For example:</p>
+
+<p><code>UUID=911013a0-e6e3-401c-88ca-23532284b7de /home ext3 defaults,noatime,nodiratime 1 2</code></p>
+
+<p>Of course, replacing <var>ext3</var> with the file system you used: ext2, ext3, ext4, btrfs, xfs, ...</p>
+
+<p>By default, each time you access a file, its last access date is updated. This converts a read operation to a read/write one affecting performance and life of the drive. So it is always advisable to mount the device with <var>noatime</var> and <var>nodiratime</var> options unless you have a good reason to need access dates.</p>
+
+<p>Now you can check if /home partition is mounted correctly:</p>
+
+<p><code>mount /home</code></p>
+
+<p>And finally, you reboot the computer and, before logging in X, return to the text console (<var> Control+Alt+F1</var>) and log in to check with <var>mount</var> if the new <var>/home</var> filesystem is correctly mounted at startup.</p>

@@ -1,0 +1,10 @@
+---
+title: "Buscar ficheros modificados de paquetes de Gentoo"
+date: 2008-09-12T08:48:14+00:00
+slug: buscar-ficheros-modificados-de-paquetes-de-gentoo
+categories: [gentoo-linux]
+tags: [hack,portage]
+---
+<p>¿Sabías que el desarrollo de <a href="http://tug.org/teTeX/">teTeX</a> fue abandonado hace más de dos años? Pues sí, y se recomienda migrar a <a href="http://www.tug.org/texlive/">TeX Live</a>. En ello estaba yo siguiendo la <a href="http://www.gentoo.org/proj/en/tex/texlive-migration-guide.xml">guía</a> de Gentoo Linux para tal fin cuando encuentro que la susodicha guía dice: <em>en el caso de que hayas modificado los ficheros de configuración de tetex en /etc/texmf...</em>. ¿Y yo como lo voy a saber? Modifico muchos ficheros de configuración y no puedo acordarme de todos los que he tocado. Se me ocurrió que podría usar <a href="http://www.gentoo.org/proj/en/portage/tools/index.xml">equery</a> para comprobarlo, pero sólo conozco el comando para comprobar todos los ficheros de un paquete y no un sólo fichero, así que pensé que acabaría antes haciendo un script que haga lo que yo quiero que leyendo todo el manual de equery sin saber si iba a encotrar lo que quería. Así que, aquí está, el script que comprueba si determinados ficheros de un determinado paquete fueron modificados:</p>
+
+<p style="text-align: center; font-weight: bold;"><a href="https://chuso.net/software/echecksum/echecksum">Descargar echecksum</a></p>

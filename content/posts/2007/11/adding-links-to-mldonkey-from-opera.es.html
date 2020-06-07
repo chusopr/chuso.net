@@ -1,0 +1,42 @@
+---
+title: "Añadiendo enlaces a MLDonkey desde Opera"
+date: 2007-11-11T13:37:48+00:00
+slug: anadiendo-enlaces-a-mldonkey-desde-opera
+categories: [floss,software,opera]
+tags: [hack,opera,mldonkey]
+---
+<p>Envidiaba la <a href="http://www.informatik.uni-oldenburg.de/~dyna/mldonkey/">extensión de Firefox para MLDonkey</a> poder añadir elinks y torrents al MLDonkey desde el navegador con un simple click, aunque el <a href="http://mldonkey.sourceforge.net">MLDonkey</a> estuviera ejecutándose en otro equipo. Era un lujo que quería tener también disponible en mi Opera, así que me puse manos a la obra, es bastante fácil.</p>
+
+<p>Debería ser incluso más fácil usando la opción <var><a href="http://www.opera.com/docs/switches/">-remote openURL()</a></var> de Opera, pero me encontré con varios problemas haciéndolo de esta manera (básicamente, que ignora el <a href="http://www.opera.com/support/search/view/724/">parámetro %U</a>), así que al final tuve que hacerlo de la siguiente manera:</p>
+
+<ol>
+<li><p><a href="http://www.opera.com/support/search/view/840/">Desactivamos</a> el cliente BitTorrent de Opera, en la <a href="opera:config#BitTorrent|Enable">página de configuración</a> desactivamos <var>Enable</var> en la sección <var>BitTorrent</var> para que cuando hagamos clic en un .torrent el Opera no empiece a descargar el fichero con su propio cliente BT.</p></li>
+<li><p>Al igual que con la extensión de Firefox, necesitamos tener activado el interfaz web de MLDonkey (i.e. <a href="http://mldonkey.sourceforge.net/Http_port">http_port</a> != 0)</p></li>
+<li><p>A continuación, creamos un script, que llamaremos por ejemplo <var>mld-opera</var> y lo situamos donde nos parezca más apetecible, pongamos por ejemplo <var>/usr/local/bin</var>. El contenido del script será el siguiente:</p>
+<code>
+#!/bin/sh<br>
+opera -remote "openURL(http://192.168.0.1:4080/submit?q=dllink+$(echo -n "$*" | sed -e "s-/-%2F-g"),background-page)"
+</code>
+<p>Asumiendo que el MLDonkey está ejecutándose en la dirección IP 192.168.0.1 con el interfaz web en el puerto 4080, reemplácese por lo que proceda.</p>
+<p>Nótese que se usa <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sed">sed</a> para reemplazar / por %2F pues si no el servidor web de MLDonkey nos dará un error 404 con los elinks.</p></li>
+<li>Después, en el Opera vamos a Herramientas-&gt;Opciones-&gt;Avanzado-&gt;Programas y añadimos los siguientes protocolos:
+<ul>
+  <li>Protocolo: ed2k<br>
+      Abrir con otra aplicación: /usr/local/bin/mld-opera</li>
+  <li>Protocolo: magnet<br>
+      Abrir con otra aplicación: /usr/local/bin/mld-opera</li>
+  <li>Protocolo: sig2dat<br>
+      Abrir con otra aplicación: /usr/local/bin/mld-opera</li>
+</ul>
+<p>En caso de que hayas guardado el script en una ubicación distinta de /usr/local/bin/mld-opera deberás reemplazarlo por lo que proceda.</p>
+</li>
+<li><p>Y en Herramientas-&gt;Opciones-&gt;Avanzado-&gt;Descargas desmarcamos la opción "Ocultar los tipos de fichero que Opera abre" para modificar el tipo MIME <var>application/x-bittorrent</var> (si no existe lo creamos) de la siguiente manera:</p>
+<p>
+Tipo MIME: application/x-bittorrent<br>
+Extensiones de fichero: torrent<br>
+Abrir con otra aplicación: /usr/local/bin/mld-opera<br>
+Pasar la dirección web al programa: activado
+</p>
+<p>Nuevamente, en caso de que hayas guardado el script en una ubicación distinta de /usr/local/bin/mld-opera deberás reemplazarlo por lo que proceda.</p></li>
+<li><p>Si el acceso a MLDonkey está restringido por usuario y contraseña podemos marcar la opción "Recordar contraseña" cuando Opera nos la pida para mayor comodidad.</p></li>
+</ol>

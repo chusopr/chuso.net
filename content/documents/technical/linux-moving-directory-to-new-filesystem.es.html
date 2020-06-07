@@ -1,0 +1,70 @@
+---
+title: "Mover un directorio de Linux a una nueva partición"
+date: 2015-03-23T16:09:47+00:00
+slug: documentos/tecnicos/mover-un-directorio-de-linux-a-una-nueva-particion
+---
+<p>En este texto vamos a tratar el tema de mover un directorio de Linux a una nueva partición porque en la actual se ha quedado sin espacio (o por cualquier otro motivo). Por sencillez, supongamos que ese directorio es <var>/home</var>, aunque podría ser casi cualquier otro sin grandes variaciones. Para los ejemplos, supondremos que la nueva partición en la que queremos ubicar el directorio es <var>/dev/sdb1</var> y que esta partición ya esta formateada. Si esto no es así, entiendo que se sabe cómo llegar hasta ese punto y, en caso contrario, no es el objetivo de este texto explicar como crear y formatear particiones en Linux: es una tarea muy básica y hay abundante documentación al respecto.</p>
+
+<p>¿Cuáles serían los pasos para alcanzar el propósito que nos hemos planteado?</p>
+
+<p>En primer lugar, arrancamos el equipo sin iniciar sesión en las X. Si ya hemos iniciado sesión, la cerramos.</p>
+
+<p>Vamos a una consola de texto con <var>Control+Alt+F1</var> (o <var>Control+Alt+F2</var>, <var>F3</var>, <var>F4</var>, etc. en algunos sistemas que no tienen activada la consola 1).</p>
+
+<p>Si usamos algún sistema como Ubuntu que tiene desactivado el acceso con el usuario <var>root</var>, tendremos que acceder con un usuario normal. Esto nos situará en su directorio personal que será <var>/home/<em>nombre_de_usuario</em></var>. Será necesario salir de ahí y situarnos en cualquier otro directorio para no ocupar <var>/home</var>:</p>
+
+<p><code>cd /tmp</code></p>
+
+<p>Entonces, ahora que <var>/home</var> ya está libre, nos convertimos en <var>root</var>:</p>
+
+<p><code>sudo bash</code></p>
+
+<p>Nos aseguramos de que no hay ningún fichero en uso en <var>/home</var>:</p>
+
+<p><code>lsof -n | fgrep /home</code></p>
+
+<p>Si todavía existe algún proceso usando algún fichero en <var>/home</var>, lo cerramos o matamos.</p>
+
+<p>Montamos la nueva partición <var>home</var> en un directorio vacío (acordándonos de cambiar <var>/dev/sdb1</var> por lo que proceda):</p>
+
+<p><code>mkdir /mnt/home<br />
+mount /dev/sdb1 /mnt/home</code></p>
+
+<p>Movemos todos los ficheros de <var>/home</var> a la nueva partición:</p>
+
+<p><code>mv /home/* /mnt/home</code></p>
+
+<p>Nos aseguramos de que no haya quedado ningún fichero oculto por mover (los ficheros ocultos no se incluyen en <var>*</var>) y, si queda alguno, lo movemos:</p>
+
+<p><code>ls -a /home</code></p>
+
+<p>¡Ojo con hacer un <var>mv</var> de <var>.*</var>! Eso no tiene el resultado que se puede esperar en un principio.</p>
+
+<p>Desmontamos la partición:</p>
+
+<p><code>umount /dev/sdb1<br />
+rmdir /mnt/home</code></p>
+
+<p>Añadimos a <var>/etc/fstab</var> la línea que provocará que siempre se monte la partición al arrancar:</p>
+
+<p><code>/dev/sdb1    /home    ext3    defaults,noatime,nodiratime    1 2</code></p>
+
+<p>Para más información sobre el significado de cada columna, véase la página de manual de <var><a href="http://linux.die.net/man/5/fstab">fstab(5)</a></var>.</p>
+
+<p>Un truco: imaginemos que abrimos el ordenador, empezamos a tocar cables y el disco acaba enchufado en un bus SATA distinto y en vez de <var>sdb</var> pasa a ser <var>sdc</var>. Pues ya no funciona la línea que hemos puesto en <var>fstab</var>. Por eso es mejor usar el <var>UUID</var> del sistema de ficheros, ya que nunca cambia a no ser que formateemos. Podemos obtener el <var>UUID</var> de un sistema de ficheros con:</p>
+
+<p><code>blkid /dev/sdb1</code></p>
+
+<p>Apuntamos el <var>UUID</var> y lo usamos en <var>fstab</var> en lugar del nombre de dispositivo. Por ejemplo:</p>
+
+<p><code>UUID=911013a0-e6e3-401c-88ca-23532284b7de    /home    ext3  defaults,noatime,nodiratime    1 2</code></p>
+
+<p>Reemplazando, claro, <var>ext3</var> por el sistema de ficheros que hayamos usado: ext2, ext3, ext4, btrfs, xfs, ...</p>
+
+<p>Por defecto, cada vez que accedemos a un fichero, se actualiza su fecha de último acceso. Esto convierte una operación de lectura en una de lectura/escritura afectando al rendimiento y la vida del disco duro. Por eso es siempre recomendable montar los dispositivos con las opciones <var>noatime</var> y <var>nodiratime</var> a no ser que haya un buen motivo para necesitar las fechas de acceso.</p>
+
+<p>Probamos a ver si la partición <var>/home</var> se monta correctamente:</p>
+
+<p><code>mount /home</code></p>
+
+<p>Y, por último, reiniciamos el equipo y, antes de iniciar sesión en las X, volvemos a la consola de texto (<var>Control+Alt+F1</var>) e iniciamos sesión para comprobar con <var>mount</var> que <var>/home</var> se monta correctamente al arranque.</p>

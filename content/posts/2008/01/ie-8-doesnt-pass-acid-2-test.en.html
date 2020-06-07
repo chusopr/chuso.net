@@ -1,0 +1,14 @@
+---
+title: "IE 8 doesn't pass Acid 2 test"
+date: 2008-01-01T17:40:21+00:00
+slug: ie-8-doesnt-pass-acid-2-test
+categories: [web-development,windows]
+tags: [acid-test,internet-explorer]
+---
+<figure class="alignright">
+<a href="/img/archive/ieblog-standards-standards-standards.png"><img src="/img/archive/ieblog-standards-standards-standards.png" width="169" height="124" alt="IEBlog talking about standards, standards, standards"></a>
+<figcaption>Fragment of IEBlog</figcaption></figure>
+
+<p>The news spread on the specialized media: finally, <a href="http://en.wikipedia.org/wiki/Acid2#Timeline_of_successful_browsers">almost two years later</a> than the first browser doing it (which wasn't either iCab, Safari or Konqueror but <a href="http://www.howtocreate.co.uk/acid/">Opera</a>), Internet Explorer 8 will pass <a href="http://www.webstandards.org/action/acid2/">Acid 2</a> test. The title of the <a href="http://channel9.msdn.com/Showpost.aspx?postid=367207">only proof</a> offered by Microsoft (since the browser is not yet available) is conclusive: «Acid 2 test pass complete». The corresponding <a href="http://blogs.msdn.com/ie/archive/2007/12/19/internet-explorer-8-and-acid2-a-milestone.aspx">post on IEBlog</a> doesn't either left any doubt: «IE8 now renders the "Acid2 Face" correctly».</p>
+
+<p>Exciting. Will it be the beginning of the end of the headaches of web developers trying to make our web pages work on (sadly) the most used web browser keeping web standards compliance? I need to check this, 'cause if it's true, it will be, as the title of the post on IEBlog says, a milestone. Lacking better ways to check it I get the best proof offered by Microsoft: <a href="http://channel9.msdn.com/Showpost.aspx?postid=367207">a video</a> showing MSIE steps towards a right renderization of Acid 2 test. Lacking a better way to check the current renderization I have to assume that the last image appearing in the video is the one they say that passes the test. But, what I am seeing? A scrollbar. Scrollbar which shouldn't appear because of <var><a href="http://www.w3.org/TR/1998/REC-CSS2-19980512/visufx.html#overflow">overflow: hidden</a></var> property applied in Acid2 test to the whole <a href="http://www.w3.org/TR/1999/REC-html401-19991224/struct/global.html#h-7.5">body</a>. So, no, MSIE 8 doesn't pass the Acid 2 test.</p>

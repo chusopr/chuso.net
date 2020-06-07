@@ -1,0 +1,26 @@
+---
+title: "Módulo del núcleo de Linux para programar eventos al pulsar teclas"
+date: 2009-02-01T09:35:52+00:00
+slug: modulo-del-nucleo-de-linux-para-programar-eventos-al-pulsar-teclas
+categories: [floss]
+tags: [hack,linux,kernel,keylogger,typewriter,framebuffer-console]
+---
+<p>A modo de prueba del uso de <a href="http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=blob_plain;f=Documentation/kprobes.txt;hb=HEAD">kprobes</a> para la asignatura de <a href="http://www.ei.uvigo.es/docencia/asignatura.php?asignatura=0127010">Ampliación de Sistemas Operativos</a> he programado este módulo para Linux que permite ejecutar un comando para cada tecla pulsada así como ver cada tecla pulsada.</p>
+
+<p>Incluye unos scripts de demostración que se pueden usar como el comando que se ejecutará con cada tecla pulsada, estos scripts son:</p>
+
+<ul>
+  <li>keylogger
+    <p>Registra cada tecla pulsada en un fichero.</p>
+  </li>
+  <li>printscr
+    <p>Si <a href="http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=tree;f=Documentation/fb;h=0d75374d20682dcd21e8d688fe98859bbce95ce9;hb=HEAD">framebuffer</a> está activado permite hacer una captura de pantalla en consola usando la tecla imprimir pantalla (PrtSc).</p>
+  </li>
+  <li>typewriter
+    <p>Reproduce un sonido cada vez que se pulsa una tecla, los sonidos de muestra imitan a los de una máquina de escribir.
+  </li>
+</ul>
+
+<p>El fichero comprimido incluye más instrucciones y ejemplos de uso.</p>
+
+<p style="font-weight: bold; text-align: center;"><a href="/software/kbdevents/kbdevents-1.1.tar.gz">Descargar kbdevents</a></p>

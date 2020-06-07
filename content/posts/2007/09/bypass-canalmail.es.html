@@ -1,0 +1,51 @@
+---
+title: "Evita Canalmail"
+date: 2007-09-01T08:08:29+00:00
+slug: evita-canalmail
+categories: [web-development]
+tags: [hack,canalmail]
+---
+<p>Cualquiera que se mueva un poco por portales comunitarios tipo <a href="http://phpnuke.org/">PHPNuke</a> y similares seguro que se ha encontrado alguna vez con alguno en el que le pedían el registro en Canalmail para acceder a alguna de sus secciones (por ejemplo, a los enlaces de descarga). <a href="http://www.canalmail.com">Canalmail</a> es un servicio de envío masivo de emails publicitarios <a href="http://www.planetatortuga.com/modules/news/article.php?storyid=629">bastante molesto</a> y como una de las webs que más visito se pasó a Canalmail he acabado haciendo este <a href="http://es.wikipedia.org/wiki/Guión_(informática)">script</a> en <a href="http://es.wikipedia.org/wiki/JavaScript">JavaScript</a> que en el <a href="http://www.opera.com">Opera</a> sistituye las <a href="http://es.wikipedia.org/wiki/URL">URLs</a> intermedias de Canalmail por la URL final evitando tener que registrarse en Canalmail.</p>
+
+<p>Probado con éxito como <a href="http://www.opera.com/support/tutorials/userjs/">script de usuario</a> en el Opera en Maxitrucos.com, stage6fullero.net, ElPelaO.com y zonagratuita.com. Probado también exitosamente en <a href="http://www.mozilla.org">Firefox</a> con <a href="http://www.greasespot.net/">Greasemonkey</a>.</p>
+
+<p style="font-weight: bold; text-align: center;"><a href="/software/opera/userjs/bypass_canalmail.js">Descargar Bypass Canalmail</a></p>
+
+<script src="http://userscripts.org/scripts/source/11852.user.js"></script>
+<script>
+<!--
+  function uncm()
+  {
+   var origurl = document.getElementById('CMUrl').value;
+   if (
+         origurl.match(/canalmailcorp.com/) &&
+	 origurl.match(/url=/) &&
+	 origurl.match(/:\/\//)
+       )
+     {
+      var urlstart = origurl.indexOf('url=');
+      if (urlstart != -1)
+      {
+        newurl = origurl.substr(urlstart+4);
+        if (newurl.indexOf("&") != -1)
+          newurl = newurl.substr(0, newurl.indexOf("&"));
+
+	// Test if the URL is Base64 encoded
+	if (newurl.match(/:\/\//))	// It isn't
+          document.getElementById('CMResul').innerHTML = '<a href="' +
+	    newurl + '">' + newurl + '<\/a>';
+	else				// It is
+          document.getElementById('CMResul').innerHTML = '<a href="' +
+	    base64dec(newurl) + '">' + base64dec(newurl) + '<\/a>';
+       }
+     } else
+          document.getElementById('CMResul').innerHTML = 'URL incorrecta';
+   }
+// -->
+</script>
+<p>Alternativamente, puedes usar este formulario:</p>
+<form method="get" action="?" id="CMForm">
+  <input type="text" id="CMUrl">
+  <input type="button" value="Descubrir" onclick="javascript:uncm();">
+</form>
+<div id="CMResul"></div>

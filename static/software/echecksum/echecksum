@@ -1,0 +1,106 @@
+#!/bin/sh
+#
+# Copyleft © 2008, Jesus Perez (Chuso)
+# Distributed under the terms of the Artistic License
+#
+
+usage()
+{
+  echo "Syntax:  $0 [-d] <package> <file1> [file2] ... [fileN]" >&2
+  echo "    -d   Check dates too" >&2
+  echo "" >&2
+  echo "Directories are recursively checked" >&2
+  echo "" >&2
+  echo "Example: $0 app-shells/bash-3.2_p33 /bin/bash" >&2
+}
+
+checkfile()
+{
+  line=$(grep "^obj $1 [[:alnum:]]\{32\} [0-9]*$" "/var/db/pkg/$pkg/CONTENTS")
+  sum=$(echo "$line" | sed -e "s/ [0-9]*$//" -e "s/.* //")
+
+  if [ "$cdate" ]
+  then
+    date=$(echo "$line" | sed -e "s/.* //")
+  fi
+
+  if [ -z "$sum" ]
+  then
+    echo "$1 doesn't belong to $pkg"
+  else
+    if [ "$cdate" ] && [ "$date" != "$(stat -c%Y "$1")" ]
+    then
+      echo "$1: date differs"
+    elif [ "$sum" != "$(md5sum "$i" | cut -d \  -f 1)" ]
+    then
+      echo "$1: sum differs"
+    fi
+  fi
+}
+
+checklink()
+{
+  line=$(grep "^sym $1 -> " "/var/db/pkg/$pkg/CONTENTS")
+  link=$(echo "$line" | sed -e "s/.* -> //" -e "s/ [0-9]*$//")
+  if [ "$link" != "$(LC_ALL=C stat -c%N "$i" | sed -e "s/.*\`//" -e "s/'//")" ]
+  then
+    echo "$i: link differs"
+  fi
+}
+
+checkdir()
+{
+  line=$(grep "^dir `echo $1 | sed -e 's-/*$--'`$" "/var/db/pkg/$pkg/CONTENTS")
+  if [ "$line" ]
+  then
+    if [ "$cdate" ]
+    then
+      find "$1" -maxdepth 1 -mindepth 1 -exec "$0" -d "$pkg" {} \;
+    else
+      find "$1" -maxdepth 1 -mindepth 1 -exec "$0" "$pkg" {} \;
+    fi
+  else
+    echo "$1 doesn't belong to $pkg"
+  fi
+}
+
+check()
+{
+  if [ -L "$1" ]
+  then
+    checklink "$1"
+  elif [ -d "$1" ]
+  then
+    checkdir "$1"
+  elif [ -f "$1" ]
+  then
+    checkfile "$1"
+  fi
+
+}
+
+if [ $# -lt 2 ] || ([ $1 = "-d" ] && [ "$#" -lt 3 ])
+then
+  usage
+  exit
+fi
+
+if [ "$1" == "-d" ]
+then
+  cdate=1
+  shift
+fi
+
+pkg="$1"
+shift
+
+if [ ! -d "/var/db/pkg/$pkg" ]
+then
+  echo "Package $pkg doesn't exist" >&2
+  exit
+fi
+
+for i in "$*"
+do
+  check "$i"
+done

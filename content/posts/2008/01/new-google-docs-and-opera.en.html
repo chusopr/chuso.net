@@ -1,0 +1,21 @@
+---
+title: "New Google Docs and Opera"
+date: 2008-01-02T15:15:50+00:00
+lastmod: 2008-06-11
+slug: new-google-docs-and-opera
+categories: [web-development,opera]
+tags: [hack,opera,google-docs]
+---
+<p style="text-align: center"><strong><em>Update:</em></strong> This workaround is <a href="http://mepislovers.org/forums/showpost.php?p=106997&amp;postcount=11">no longer needed</a> with Opera 9.50 which seems to solve this problem. <a href="opera:about">Check your version</a> and update if needed.</p>
+
+<p>Google has recently developed a new <a href="http://docs.google.com">Google Docs</a> version and if you thought they took the chance to improve (at least a little) the compatibility with other browsers, you couldn't be more mistaken. Actually, it went worse with Opera.</p>
+
+<p>If previously it was enough by <a href="https://static.flickr.com/110/267663582_0f679f4789_o.jpg">adding ?browserok=true</a> in order to enter Google Docs with Opera and mask it as Internet Explorer to use Spreadsheets, now it gets constantly reloading with Google Docs and Spreadsheets is only usable with a poor read-only interface (masking Opera as IE throws errors).</p>
+
+<p>The first problem has an easy workaround: it's enough by adding a new string in the URL which must be different every time the browser is started. I don't know a solution for the second issue yet.</p>
+
+<p>And in order to make it easier for Opera and Google Docs users, I modified <a href="http://my.opera.com/xErath/blog/2007/01/02/the-world-through-a-google">João Eiras' script</a> that patches Google services making them Opera friendly to add this workaround. By installing this <a href="http://www.opera.com/support/tutorials/userjs/">user script</a> in Opera you will be able to use Google Docs and other Google services with Opera.</p>
+
+<p style="font-weight: bold; text-align: center;"><a href="/software/opera/userjs/fix-google-services-and-docs.js">Download fix-google-services-and-docs.js</a></p>
+
+<p>Reference: <a href="http://groups.google.com/group/Something-in-Writely-is-Broken/browse_thread/thread/2e2a494f933de587/a39e1246c54256f6">Google Docs constantly reloading in Opera @ Google Docs Google Group</a></p>

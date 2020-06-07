@@ -1,0 +1,23 @@
+---
+title: "Reloacting system DLLs"
+date: 2007-04-08T16:59:42+00:00
+slug: reloacting-system-dlls
+categories: [windows]
+---
+<figure class="alignright">
+<img alt="" width="100" height="141" src="/img/avatar/tux_win_killer_small.jpg">
+</figure>
+
+<p>What a week. <a href="http://www.microsoft.com">Microsoft</a> puts its foot in it and then I have to fix it, of course, it's <a href="http://www.sromero.org/linux/pringao/techslacky.html">what has to happen</a>.</p>
+
+<p>If this sentences does also sound familiar to you:</p>
+
+<cite>Illegal System DLL Relocation
+
+The  system  DLL  user32.dll  was relocated in memory. The application will not run properly. The relocation occurred
+because the DLL C:\Windows\System32\Hhctrl.ocx occupied an address range reserved for Windows system DLLs. The vendor
+supplying the DLL should be contacted for a new DLL.</cite>
+
+<p>Stay calm, it doesn't mean that it's time to format or call your <a href="http://www.sromero.org/linux/pringao/techslacky.html">tech-slacky</a>, it's only that <a href="http://en.wikipedia.org/wiki/Microsoft_Windows">Windows</a> has decided to compensate your loyalty <a href="http://support.microsoft.com/?kbid=935448">with a bug</a> in its latest update. And I'm going to compensate your loyalty as my reader and one of my <a href="/img/archive/sysstat.png">visitors</a> using Windows (yes, I <a href="http://www.google.com/analytics">spy</a> <a href="http://www.statcounter.com">you</a>) telling you how to fix it saving you searching, you only have to install the following patch:</p>
+
+<p><a href="http://www.microsoft.com/downloads/details.aspx?familyid=74AD4188-3131-429C-8FCB-F7B3B0FD3D86&amp;displaylang=en">WindowsXP-KB935448-x86-ENU</a></p>
