@@ -1,7 +1,7 @@
 baseURL = "https://chuso.net/"
 DefaultContentLanguage = "en"
 title = "chuso.net"
-theme = "cleanwhite"
+theme = "chuso"
 relativeURLs = true
 uglyURLs = true
 cleandestinationdir = true
