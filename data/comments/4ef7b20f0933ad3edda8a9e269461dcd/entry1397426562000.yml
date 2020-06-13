@@ -1,0 +1,22 @@
+_id: 7dc27bdb-1ec7-31c9-8ff3-f719e21e3e66
+replyTo: bf39d11b-1f67-374b-9d4b-b416b7ff8879
+name: Chuso
+email: 776b9662983df1753c11f85437ffd8d7
+url: https://chuso.net
+date: 1397426562
+message: |
+  Me matiza este comentario Ricardo Galli por Twitter:
+
+  > [@chusop](https://twitter.com/chusop) ojo, los datos que lee son del mismo proceso (que no se liberó en realidad, usan una capa sobre el malloc para no hacerlo)...
+  >
+  > — Ricardo Galli (@gallir) [April 13, 2014](https://twitter.com/gallir/statuses/455486770483052544)
+
+  > [@chusop](https://twitter.com/chusop) la memoria de otros procesos es siempre puesta a cero, si no es un problema de seguridad importante, se podría leer datos de otros.
+  >
+  > — Ricardo Galli (@gallir) [April 13, 2014](https://twitter.com/gallir/statuses/455486956689174528)
+
+  > [@chusop](https://twitter.com/chusop) los datos que lee de los 64kB es siempre de la memoria previamente usada con el (openssl_)malloc por el mismo proceso.
+  >
+  > — Ricardo Galli (@gallir) [April 13, 2014](https://twitter.com/gallir/statuses/455487350161039360)
+
+  Claro, sería un grave problema de seguridad que en la memoria que reservara un proceso aparecieran datos de otro proceso, no pensé eso. Gracias a Ricardo por aclararlo :-)

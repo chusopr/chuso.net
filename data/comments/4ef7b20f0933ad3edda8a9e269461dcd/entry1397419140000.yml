@@ -1,0 +1,9 @@
+_id: d2691760-b539-36c1-9d37-08bd51f68b5b
+replyTo: 
+name: Ignacio Agulló
+email: d766ecfe54443e0dc4781b4aa517e50e
+url: http://www.grafotema.com/agullo/
+date: 1397419140
+message: |
+  "Más sobre el punto dos: una de las posibles consecuencias que más se han repetido es que heartbleed también permitiría robar la clave privada del certificado del servidor. Esto es bastante improbable.".  Chuso, me temo que vas a tener que retractarte... el artículo al que se enlazaba desde las palabras "bastante improbable" ya ha sido retractado.  
+  Hoy 13 de abril de 2014 se ha revelado que Heartbleed es más grave aún de lo que se suponía.  Sí, más aún.  Cloudflare ha demostrado que no sólo es posible adquirir las claves privadas, sino además no queda constancia de ello.  Eso quiere decir que todo servidor que haya utilizado OpenSSL 1.0.1 _en algún momento de la historia_ está comprometido.  Eso son los 600.000 servidores que identificáis aquí... como mínimo.

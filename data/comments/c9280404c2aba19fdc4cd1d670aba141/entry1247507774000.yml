@@ -1,0 +1,12 @@
+_id: d6ff7451-147f-3657-831a-246df9f7b166
+replyTo: 
+name: Max
+email: d41d8cd98f00b204e9800998ecf8427e
+url: 
+date: 1247507774
+message: |
+  Al compilar muestra estos warnings:
+  
+  WARNING: "jprobe_return" [/usr/src/modules/kbdevents-1.1/kbdevents.ko] undefined!  
+  WARNING: "register_jprobe" [/usr/src/modules/kbdevents-1.1/kbdevents.ko] undefined!  
+  WARNING: "unregister_jprobe" [/usr/src/modules/kbdevents-1.1/kbdevents.ko] undefined!

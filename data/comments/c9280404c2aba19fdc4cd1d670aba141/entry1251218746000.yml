@@ -1,0 +1,10 @@
+_id: ad1c0a44-7676-30ac-9422-bb7de243b53c
+replyTo: d6ff7451-147f-3657-831a-246df9f7b166
+name: chuso
+email: 776b9662983df1753c11f85437ffd8d7
+url: https://chuso.net
+date: 1251218746
+message: |
+  A mí me compila perfectamente con 2.6.30-gentoo-r4
+  
+  Asegúrate de que tienes CONFIG_KPROBES=y (General Setup -> Kprobes), es necesario para compilar este módulo.

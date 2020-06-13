@@ -1,0 +1,13 @@
+_id: 35fb9d63-852f-3fb6-915f-c4bc27128475
+replyTo: 7b5c45bb-8a89-3911-ac3d-0d4b03cba482
+name: chuso
+email: 776b9662983df1753c11f85437ffd8d7
+url: https://chuso.net
+date: 1283287334
+message: |
+  Pues está bastante bien y evoluciona muy rápido, en menos de dos años fue capaz de ponerse a la altura del resto de los navegadores, algo que Internet Explorer todavía no consiguió en 9 años (es el tiempo que pasó desde que "Mammon se durmió" después del lanzamiento de la versión 6). Claro que también hay que tener en cuenta que el motor de Chrome es desarrollado por terceros por lo que el trabajo más duro ya lo tienen hecho y pueden preocuparse de extender otras características, una situación que no se da con el Explorer ya que tiene un motor propio y por lo tanto conlleva más desarrollo. Sin embargo, Opera también tiene motor propio y aún así fue capaz de manterse a la altura de las circunstancias siendo una empresa mucho más pequeña que estas dos (aunque también con un área de negocio mucho más específica).  
+  El motor de Google Chrome es de los mejores que hay (WebKit) tanto en rapidez como en soporte de estándares, es el mismo que usa Safari y fue desarrollado a partir de KHTML, el motor de Konqueror, que también es bastante bueno. Presto (el motor de Opera) y KHTML/WebKit (motores de Konqueror, Safari y Chrome) suelen ser los primeros en pasar los tests Acid de conformidad con los estándares[1] y son en mi opinión los mejores motores.  
+  Pero no se, sigue habiendo algo que no me convence de Google Chrome y no sé que es, creo que es la interfaz, no me resulta cómoda, cuestión de costumbres supongo. Aparte de que en Opera sigo teniendo algunas cosas que uso a menudo que no hay en Google Chrome como IRC, Crear búsqueda (sin esto no puedo vivir), lector RSS, gestos del ratón (también me cuesta vivir sin esto), los menús y barras de botones personalizados y con JavaScript (en las que tengo metidas las macros que necesito más habitualmente mientras desarrollo webs).  
+  Probablemente Chrome sería el navegador que yo usaría si no existiera Opera, pero hay otro motivo muy importante por el que no lo uso: su funcionamiento en Linux está lejos de ser perfecto y a menudo con algunas páginas web se cuelga durante un minuto o así.
+  
+  [1] De hecho, tengo instaladas actualmente las últimas versiones estables de los cuatro principales navegadores y Opera y Chrome son los únicos que pasan el test Acid3, Firefox se queda en el 94% e Internet Explorer no pasa del 20%: http://www.acidtests.org/

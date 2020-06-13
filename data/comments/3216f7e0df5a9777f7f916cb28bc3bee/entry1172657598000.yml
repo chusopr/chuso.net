@@ -1,0 +1,13 @@
+_id: d1c72756-aaec-3470-a2f2-97415f44d72f
+replyTo: 
+name: chuso
+email: 776b9662983df1753c11f85437ffd8d7
+url: https://chuso.net
+date: 1172657598
+message: |
+  Algo bastante fastidioso que he comprobado es que al quedarte sin espacio en la partición en la que se guarda tu configuración de Opera ésta se perderá al cerrar el programa.
+  
+  Con este comando se hace un backup en UN*X:
+  ```
+  tar -Pc ~/.opera/{keyboard,mail,menu,mouse,plugins,sessions,skin,styles,toolbar,userjs,widgets} .opera/*.{adr,dat,dir,ini,js,reg,txt} | bzip2 -c9 >| opera-backup.tar.bz2
+  ```

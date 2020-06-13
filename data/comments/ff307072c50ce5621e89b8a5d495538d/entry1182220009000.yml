@@ -1,0 +1,10 @@
+_id: 2bd8b4c9-01af-3cd0-aced-94ee6e2004b8
+replyTo: 
+name: Lorant
+email: d41d8cd98f00b204e9800998ecf8427e
+url: 
+date: 1182220009
+message: |
+  Hi,
+  
+  I've just seen your patch on the neverforum. Do you know that in the next version (currently available through SVN), there is no more limited balls in normal mode? (There's even a practice mode without limited time). May be you should use that instead of the old 1.4 (unless you want records in the nevertable).

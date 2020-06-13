@@ -1,0 +1,11 @@
+_id: 73a67c12-c5f0-3288-ad6a-c78aea0917b0
+replyTo: 
+name: sedzia
+email: d41d8cd98f00b204e9800998ecf8427e
+url: 
+date: 1194526944
+message: |
+  it doesn't work for me same error as befor install visual c++ 
+  
+  err:module:LdrInitializeThunk "MSVCR80.dll" failed to initialize, aborting  
+  err:module:LdrInitializeThunk Main exe initialization for L"C:\\Program Files\\Safari\\Safari.exe" failed, status c0000142

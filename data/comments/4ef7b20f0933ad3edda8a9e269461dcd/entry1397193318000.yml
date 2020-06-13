@@ -1,0 +1,19 @@
+_id: b11f4873-b6ea-3361-bd1c-f79eb62eeac9
+replyTo: a1b5ff86-5b4c-3af1-8dae-af9ee282d820
+name: Chuso
+email: 776b9662983df1753c11f85437ffd8d7
+url: https://chuso.net
+date: 1397193318
+message: |
+  Hola, Al.
+  
+  Gracias por tu comentario, me alegro de que te haya resultado interesante mi explicación.
+  
+  > Mi intención era encontrar datos objetivos sobre el tan cacareado defecto de OpenSSL
+  
+  Acabo de actualizar el post para incluir un enlace de Errata Security que da cifras orientativas del alcance del bug.
+  
+  > Por cierto, te pudiste ahorrar la parte de “La web en la que escribe Mercè, por ejemplo, no funciona sobre SSL”
+  
+  La noticia de Mercè Molist equipara servidores Apache y nginx con servidores que usan OpenSSL, lo que no es cierto. Quise buscar un ejemplo claro de que un servidor web no tiene por qué tener activado HTTPS, quise que fuese una web popular y grande para que no se pudiera considerar que era un caso aislado y se me ocurrió probar con El Mundo. Resultó que, efectivamente, El Mundo no soporta HTTPS y no me pareció inadecuado usar este ejemplo.  
+  Por cierto, como señala Ricardo Galli, este error de equiparar servidores Apache/nginx con servidores que usan OpenSSL procede de una mala interpretación de un dato sensacionalista en la web de heartbleed: https://twitter.com/gallir/status/453946144096149504
