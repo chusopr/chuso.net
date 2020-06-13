@@ -1,0 +1,17 @@
+staticman:
+  allowedFields: ["name", "email", "url", "message", "replyTo"]
+  branch: "master"
+  commitMessage: "Add comment"
+  filename: "entry{@timestamp}"
+  format: "yaml"
+  generatedFields:
+    date:
+      type: date
+      options:
+        format: "timestamp-seconds"
+  moderation: true
+  name: "chuso.net"
+  path: "data/comments/{options.entryId}"
+  requiredFields: ["name", "message"]
+  transforms:
+    email: md5

@@ -52,3 +52,9 @@ tag = "tags"
   mastodon = "https://mastodon.social/@chuso"
   keybase  = "https://keybase.io/jprey"
   flickr   = "https://flickr.com/chusopr"
+  openhub  = "https://www.openhub.net/accounts/chuso"
+
+  [params.staticman]
+  user       = "chusopr"
+  repository = "chuso.net"
+  property   = "staticman"

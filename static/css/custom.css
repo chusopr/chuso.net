@@ -116,3 +116,106 @@ form.search button {
     background: transparent;
     border: none;
 }
+
+form.comments {
+  font-size: 12px;
+}
+
+form.comments > div {
+  display: table;
+  caption-side: bottom;
+  width: 100%;
+}
+
+form.comments > div > fieldset {
+  display: table-row-group;
+}
+
+form.comments > div > fieldset > div {
+  display: table-row;
+}
+
+form.comments > div > fieldset > div > div {
+  display: table-cell;
+}
+
+form.comments > div > fieldset > div > div {
+  padding: 0.5em;
+}
+
+form.comments label:after {
+  content: ":";
+}
+
+form.comments > div > div:last-child {
+  display: table-caption;
+}
+
+form.comments > div > div:last-child > label {
+  display: block;
+}
+
+form.comments textarea {
+  width: 100%;
+}
+
+form.comments input,
+form.comments textarea {
+  border: 1px solid #cdcdcd;
+}
+
+form.comments input[type="submit"] {
+  text-align: right;
+}
+
+form.comments label.required:after {
+  content: "*:";
+}
+
+ul.comments {
+  margin: 0;
+  padding: 0;
+}
+
+ul.comments ul.comments {
+  margin-left: 2em;
+}
+
+ul.comments ul.comments li.comment:first-child::marker {
+  content: "└";
+  font-size: 30px;
+  overflow: visible;
+}
+
+ul.comments li.comment {
+  list-style: none;
+  margin: 0;
+}
+
+ul.comments div.comment_header {
+  color: #888;
+  font-size: 12px;
+}
+
+ul.comments div.comment_header img.avatar {
+  display: inline;
+  margin: 0 0 0 1em;
+}
+
+ul.comments div.comment_body {
+  background-color: #f8f8f8;
+  border: 1px solid #eee;
+  padding: 0.5em;
+}
+
+.notice {
+  background-color: #ffe;
+  border: 1px solid #e4e411;
+  padding: 1em;
+  font-size: 12px;
+}
+
+.show_hidden {
+  display: inherit !important;
+  visibility: inherit !important;
+}
