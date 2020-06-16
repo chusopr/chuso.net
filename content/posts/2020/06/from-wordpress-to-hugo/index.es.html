@@ -50,7 +50,7 @@ Ni siquiera necesita un servidor de bases de datos como MySQL o similar. Las ent
 <p>Los ficheros estáticos simplemente se pueden copiar de <var>wp-content/upload</var> en WordPress a <var>static/wp-content/upload</var> en Hugo, pero para posts, páginas, categorías, etiquetas y comentarios, he creado varios scripts de Python que leen esos contenidos de la base de datos de WordPress y los escribie en los tipos de ficheros necesarios, lo que es HTML con Front Matter para todo excepto los comentarios, que son ficheros YAML como los generados por Staticman.</p>
 
 <figure class="alignright">
-<a href="https://xkcd.com/1205/"><img alt="xkcd 1205: Is It Worth the Time?" src="de-wordpress-a-hugo/xkcd-automation.png" width="371" height="302" /></a>
+<a href="https://xkcd.com/1205/"><img alt="xkcd 1205: Is It Worth the Time?" src="{{< param "slug" >}}/xkcd-automation.png" width="371" height="302" /></a>
 <figcaption>xkcd 1205: <a href="https://xkcd.com/1205/">Is It Worth the Time?</a></figcaption>
 </figure>
 
