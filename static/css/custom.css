@@ -7,6 +7,10 @@ footer.post-footer {
     display: none;
 }
 
+article aside {
+    clear: both;
+}
+
 /*.post-container ul {
     overflow: hidden;
 }*/
