@@ -1,0 +1,71 @@
+---
+title: "From WordPress to Hugo"
+date: 2020-06-16T21:00:17+02:00
+slug: from-wordpress-to-hugo
+categories: [uncategorized]
+tags: [hugo,wordpress,apache]
+---
+<p>So far, I've been using WordPress for this website. It's a very powerful and complete blogging software, with a lot of plugins, themes, search engine optimizations, etc. It has been in the market for more than 15 years and continues to be actively developed. It's the undisputed leader in blogging and it's very easy and quick to produce content with it.<br />
+On the other hand, I haven't updated this blog for two years, with a single entry in the last 5 years. So why migrate it again? Well precisely for that.</p>
+
+<p>As a dynamic site, WordPress requires maintenance. Constant updates come not only from WordPress itself, but also from each plugin. Missing updates means leaving the site exposed to possible new vulnerabilities that are discovered in WordPress or any of the plugins you were using.</p>
+
+<p>Also, like any dynamic site, content is generated on the server with each visit, consuming resources and slowing down the load. I have tried all kinds of combinations that I could to try to improve the performance of the site. I have tried deactivating all the WordPress plugins that were not essential, optimizing the configuration of MySQL, Apache and PHP, using caches for <a href="https://wordpress.org/plugins/wp-super-cache/">WordPress</a>, <a href="https://www.php.net/manual/en/book.opcache.php">PHP</a> and <a href="https://httpd.apache.org/docs/current/en/mod/mod_cache.html">Apache</a>, <a href="https://xdebug.org/">debugging PHP</a> to look for bottlenecks, using cache and bots protection from Cloudflare... Nothing I tried could prevent loading times from being painful.</p>
+
+<p>This was all just too much for a site with so little activity, I needed to be able to get rid of all that maintenance and keep it working well and be able to continue adding content if I ever wanted to do it.<br />
+And it turns out that there was a lot of talk about Hugo lately, so I decided to give it a try.<br />
+And I liked it.</p>
+
+<p>It's simple. Extremely simple. WordPress is super complete and powerful. But do I really need that much for a blog where I just tell my stuff? Well no.<br />
+What I was looking for was simplicity. And Hugo is simple.<br />
+It doesn't even need a DBMS like MySQL or similar. Blog entries are simply put into a directory in HTML, Markdown, AsciiDoc, or any of the supported formats, and Hugo's build system creates the blog from the contents of that directory. It's that simple. If you want to create a new blog entry, you simply add a file to the directory.</p>
+
+<p>As long as you don't want to add more content to the blog, there is no maintenance required, as the generated blog is simply a directory of static HTML files. For the same reason, loading times are also much faster, since it does not require any kind of processing by the server other than sending the HTML file, which can even be accelerated by using Apache <a href="https://httpd.apache.org/docs/current/en/mod/core.html#enablesendfile">SendFile</a> directive.</p>
+
+<p>However, a static site has some limitations. Namely, user comments and a search engine, which are not supported by Hugo out of the box, but there are workarounds.</p>
+
+<p>For comments, I've used <a href="https://staticman.net">Staticman</a>, which is an API for receiving blog comments convert them into pull requests for the GitHub repository where the blog code is hosted.</p>
+
+<p>For searches, I've used <a href="https://fusejs.io/">Fuse.js</a>, which is a library for making searches on client side by providing a JSON file with the contents to search.</p>
+
+<p>Apart from that, my WordPress migration to Hugo would have to meet certain requirements:</p>
+
+<ul>
+<li>
+  Multilanguage. My WordPress site used <a href="https://wpml.org/">WPML</a> for offering content in English or Spanish and allowing changing the language of the page currently viewed.<br />
+  This is directly supported by Hugo, but not for taxonomies. WordPress allows establishing a category called <i lang="es">Noticias</i> and a tag called <i lang="es">privacidad</i> being the Spanish translation of <i>News</i> category and <i>privacy</i> tag in English. Nowadays, Hugo does not allow establishing this relationship between taxonomies in different languages. I needed a <a href="https://novelist.xyz/tech/custom-urls-for-category-pages-in-hugo/">hack</a> for having the same in Hugo. It more or less achieves its goal, but I'm not sure I totally like it and I may end up looking for another solution later.
+</li>
+<li>
+  Breaking as few URLs as possible.<br />
+  For most of the content, this was not a problem, but some hack was required for other content, especially taxonomies (categories and tags).
+</li>
+<li>
+  A clear and simple theme.<br />
+  For that, I used <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite</a> theme by <a href="https://zhaohuabing.com/">Huabing Zhao</a> and modified it to support the mentioned hacks, add support for Staticman, Fuse.js and Multilanguage and some other customization (the complete list is in the <a href="https://github.com/chusopr/hugo-theme/">README</a>).
+</li>
+</ul>
+
+<p id="migracion">Finally, I needed to migrate all the content I had in WordPress to Hugo. That is, HTML files with <a href="https://gohugo.io/content-management/front-matter/">Front Matter</a>.</p>
+
+<p>Static files can just be copied from <var>wp-content/upload</var> in WordPress to <var>static/wp-content-upload</var> in Hugo, but posts, pages, categories, tags and comments, I have created several Python scripts that read those contents from the WordPress database and write them to the necessary file types, which is HTML with Front Matter for everything except comments, which are YAML files like those generated by Staticman.</p>
+
+<figure class="alignright">
+<a href="https://xkcd.com/1205/"><img alt="xkcd 1205: Is It Worth the Time?" src="de-wordpress-a-hugo/xkcd-automation.png" width="371" height="302" /></a>
+<figcaption>xkcd 1205: <a href="https://xkcd.com/1205/">Is It Worth the Time?</a></figcaption>
+</figure>
+
+<p>Considering it's something I would only do once, I also didn't want to spend too much time on automation scripts. It is a matter of finding the balance between reducing the time it would take to manually migrate and not spending so much time automating it that automation would end up being not worth, even if I had to do a manual review and adjustments of the automation results.</p>
+
+<p>So these scripts don't generate content that can be used directly in Hugo, but the result will still need some manual work.</p>
+
+<p>More exactly, these are some of their limitations:</p>
+
+<ul>
+<li>They have been developed for a site with WPML. They would require modifications for a site without WPML.</li>
+<li>Multilanguage entries are generated correctly preserving the relationship between them and the original slug from WordPress. This is done by using the same filename for both languages and adding the language suffix. However, Hugo supports using the same slug for both languages while WordPress doesn't. In cases where the slug was the same, the script generates a message to manually review the generated content.</li>
+<li>WordPress uses that bastard HTML format that is like a mix between plain text and HTML. Even if you have been using the WordPress editor in WordPress, it still allows you to create line breaks and paragraphs by just adding plain line breaks instead of writing the corresponding HTML code <var>&lt;br /&gt;</var> or <var>&lt;p&gt;</var>. This is saved as is (without adding the corresponding HTML tags) in the database and is converted by WordPress when it generates the final HTML code. The code fetched from the database will also include WordPress <a href="https://wordpress.com/support/shortcodes/">shortcodes</a>. In short, the text in the WordPress database is not HTML ready to be used in other sites and needs manual review.</li>
+<li>I'm not sure that the post tags are applied correctly so that they work with the translated tags generated by the scripts.</li>
+<li>Similarly, the comment script takes the code as-is from the database and will need revision to add the missing HTML or convert it to another Markdown format if it is the one used in the destination Hugo blog. Also, if the comment is multiline, the script will not add the necessary indentation to each line and will cause an error in the YAML parser. YAML indentation needs to be added manually in multiline comments.</li>
+</ul>
+
+<p>The scripts can be found in GitHub: <a href="https://github.com/chusopr/wpml2hugo">wpml2hugo</a>.</p>
