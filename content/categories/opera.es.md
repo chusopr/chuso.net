@@ -2,5 +2,5 @@
 layout: category
 title: Opera
 pagecat: opera
-url: /opera/
+url: /software/opera/
 ---

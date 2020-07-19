@@ -2,5 +2,5 @@
 layout: category
 title: Administración de sistemas
 pagecat: sysadmin
-url: /sysadmin-es/
+url: /software/sysadmin/
 ---
