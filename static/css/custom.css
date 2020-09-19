@@ -15,11 +15,6 @@ article aside {
     overflow: hidden;
 }*/
 
-menu.languages {
-    list-style-type: none;
-    padding: 0;
-}
-
 .alignleft {
     float: left;
 }
