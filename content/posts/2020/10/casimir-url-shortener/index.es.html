@@ -1,0 +1,39 @@
+---
+title: "El regreso de Casim.ir, acortador de URLs"
+date: 2020-10-09T20:29:54+02:00
+slug: acortador-urls-casimir
+categories: [software,internet,links]
+tags: [casimir,url-shortener,captcha,spam]
+---
+<p>Empecemos con un poco de historia.</p>
+
+<figure class="alignright"><img src="{{< param "slug" >}}/casimir.png" width="128" height="128" alt"Casim.ir URL shortener logo" /></figure>
+<p>Casim.ir es un <a href="https://es.wikipedia.org/wiki/Acortador_de_URL">acortador de URLs</a> desarrollado por <a href="https://github.com/nhoizey">Nicolas Hoizey</a> en <a href="https://php.net">PHP</a> hace once años (por entonces Cas.im/ir) con la intención de hacer un acortador ligero y sencillo.</p>
+
+<p>Hace unos siete años, lo instalé para crear mi propio acortador de URLs privado en chu.so y algunos otros abiertos y públicos con algunas modificaciones sobre el proyecto de Nicolas.</p>
+
+<p>Poco después empecé a contribuir en el proyecto con mejoras y correcciones e inmediatamente Nicolas me dio permiso para hacer modificaciones directamente.</p>
+
+<p>Un año después, Nicolas decía ya no tener interés en el proyecto y me ofreció <a href="https://github.com/chusopr/casimir/issues/15">transferírmelo a mí</a>, lo cual acepté y fui introduciendo algunas mejoras más y nuevas características a la vez que se respetaba la idea de mantenerlo ligero y simple.</p>
+
+<p>Poco después lancé una <a href="https://github.com/chusopr/casimir/releases/tag/casimir-2.1">nueva versión</a> que entre sus principales novedades incluía la actualización de código obsoleto, soporte multilenguaje y soporte para <a href="https://es.wikipedia.org/wiki/Captcha">CAPTCHAs</a>.</p>
+
+<p>En ese momento aproveché para relanzar el sitio de demo que bajo el desarrollo de Nicolas había estado bajo Cas.im/ir, pero había desaparecido hace años. Entonces yo abrí un nuevo sitio bajo <a href-"http://casim.ir">Casim.ir</a>.</p>
+
+<p>Desde entonces, el proyecto se ha mantenido bastante inactivo a la vez que los <i lang="en">spambots</i> descubrían el sitio Casim.ir y empezar a crear un montón de redirecciones a sitios fraudulentos.</p>
+
+<p>Entonces tuve que cerrar el acceso a crear nuevas URLs cortas, porque incluso con los CAPTCHAs del servicio reCAPTCHA de Google, el nivel de abuso incluso llegó a provocarme problemas con alguno de mis proveedores que amenazó con cortarme el servicio por alojar contenido fraudulento (en realidad yo no alojaba nada, pero usaban mi servicio para crear redirecciones a tales contenidos fraudulentos).</p>
+
+<figure><img src="{{< param "slug" >}}/casimir-disabled.png" widht="841" height="323" alt="Casim.ir: &quote;Creation of new URLs is currently not available due to abuse&quote;" /></figure>
+
+<p>Y entonces llegamos a hoy, donde existe hCaptcha como una alternativa <i lang="en"><a hreflang="en" href="https://en.wikipedia.org/wiki/Drop-in_replacement">drop-in</a></i> a reCAPTCHA. Dada la facilidad de reemplazar el reCAPTCHA de Google con hCaptcha, añadir soporte para hCaptcha en Casim.ir aparte del ya existente para reCAPTCHA era trivial. Y visto que los <i lang="en">spambots</i> no tienen problemas en vencer el reCAPTCHA de Google, merecía la pena probar si hCapthca hace un mejor trabajo manteniendo los <i lang="en">spambots</i> a raya (y, de paso, mejorar la privacidad del sitio).</p>
+
+<p>Pero entonces surge la pregunta incómoda: ¿hay un caso de uso todavía para acortadores de URLs? El boom de estos servicios fue durante la época de la limitación de caracteres en Twitter, pero esa limitación ya no se aplica actualmente para enalces en Twitter. ¿Es todavía útil un acortador de URLs en 2002 o es una herramienta únicamente para <i lang="en">spambots</i>? Lo cierto es que ocasionalmente aún he necesitado acortadores de URLs en algunos casos, así que supongo que se puede probar a ver qué pasa.</p>
+
+<p>Además, aún tenía varias cosas pendientes de incorporar en la versión principal de Casim.ir que he estado probando en las versiones modificadas mencionadas anteriormente.</p>
+
+<p>Así que, años después, he creado una <a href="https://github.com/chusopr/casimir/releases/tag/casimir-2.2">nueva versión de Casim.ir</a> que, además del ya mencionado soporte para hCaptcha, incluye algunas otras mejoras y correcciones de bugs.</p>
+
+<p>¿Será la última o conseguiré mantener vivo el prouyecto? ¿Podré mantener <a href="https://casim.ir">Casim.ir</a> abierto o tendré que volver a cerrar el servicio?</p>
+
+<p>El tiempo y los <i lang="en">spambots</i> dirán.</p>

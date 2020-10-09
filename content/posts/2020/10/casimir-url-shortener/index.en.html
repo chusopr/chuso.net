@@ -1,0 +1,39 @@
+---
+title: "Casim.ir URL shortener returns"
+date: 2020-10-09T20:29:54+02:00
+slug: url-shortener-casimir
+categories: [software,internet,links]
+tags: [casimir,url-shortener,captcha,spam]
+---
+<p>Let's start with a bit of history.</p>
+
+<figure class="alignright"><img src="{{< param "slug" >}}/casimir.png" width="128" height="128" alt="Casim.ir logo" /></figure>
+<p>Casim.ir is a <a href="https://en.wikipedia.org/wiki/URL_shortening">URL shortener</a> developed by <a href="https://github.com/nhoizey">Nicolas Hoizey</a> in <a href="https://php.net">PHP</a> eleven years ago (stylized by then as Cas.im/ir) with the intention of creating a light and simple URL shortener.</p>
+
+<p>About seven years ago, I installed it to create my own private URL shortener at chu.so and some other open and public ones with some modifications on Nicolas's project.</p>
+
+<p>Shortly after, I started contributing to the project with improvements and bugfixes and almost instantly Nicolas gave me direct write permission.</p>
+
+<p>One year later, Nicolas said having no interest in the project anymore and offered me <a href="https://github.com/chusopr/casimir/issues/15">taking it over</a>, what I accepted and I started adding a few more improvements and new features at the same time that I tried to respect his idea of keeping it light and simple.</p>
+
+<p>Shortly after, I released a <a href="https://github.com/chusopr/casimir/releases/tag/casimir-2.1">new version</a> which had among its main news updating obsolete code, multilanguage support and <a href="https://en.wikipedia.org/wiki/CAPTCHA">CAPTCHAs</a>.</p>
+
+<p>It was then when I took the chance to relaunch the demo site that under Nicolas's development had been under Cas.im/ir, but has been gone years ago. So I started a new demo site under <a href="http://casim.ir">Casim.ir</a>.</p>
+
+<p>Since then, the project has been dormant at the same time that <a href="https://en.wikipedia.org/wiki/Spambot">spambots</a> discovered Casim.ir site and started creating a lot of malicious redirections.</p>
+
+<p>So I had to close down access to creating new short URLs because even with Google's reCAPTCHA service, the abusing level reached a point where I even got in trouble with some of my providers threatening with shutting down my service for hosting malicious content (I was not actually hosting it, but they were using my service to create redirections to such malicious contents).</p>
+
+<figure><img src="{{< param "slug" >}}/casimir-disabled.png" widht="841" height="323" alt="Casim.ir: &quote;Creation of new URLs is currently not available due to abuse&quote;" /></figure>
+
+<p>And here we are today, with hCaptcha exists as a <a hreflang="en" href="https://en.wikipedia.org/wiki/Drop-in_replacement">drop-in replacement</a> to reCAPTCHA. And given that spambots don't seem to have problems to defeat Google's reCAPTCHA, it was worth checking if hCaptcha could do a better work restraining spambots (and, at the same time, improve the site's privacy).</p>
+
+<p>But then the inconvenient question arises â is there still a place for URL shorteners? The peak of these services was when Twitter limited the number of characters you can use in status updates, but this limitation is no longer in place for links. Are URL shorteners still useful in 2020 or is it a tool left only for spambots? Actually, I occasionally still need URL shorteners in some cases, so I guess I can still try what happens.</p>
+
+<p>Also, I still had some pending changes to add to the Casim.ir mainline that I was testing in the modified versions mentioned above.</p>
+
+<p>So, years later, I'm releasing a <a href="https://github.com/chusopr/casimir/releases/tag/casimir-2.2">new Casimir version</a> which, apart from the aforementioned support for hCaptcha, includes some other improvements and bugfixes.</p>
+
+<p>Will this one be the last or will I be able to keep the project alive? Will I be able to keep <a href="https://casim.ir">Casim.ir</a> open or will I have to close the service again?</p>
+
+<p>Time and spambots will tell.</p>
