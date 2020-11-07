@@ -16,6 +16,6 @@ staticman:
   transforms:
     email: md5
   reCaptcha:
-    enabled: false
+    enabled: true
     sitekey: 6LeEUdsZAAAAABsP5EEN25G17j3JlxM-nYfky9Ld
     secret: YBl7f5z8ytwW4mYFgerryH+7sslXt7HchXAn7+D7fWyB94lTenrMIr2al+RJNvJnBmTKaGVTJVYURxIcQhSBztyewc4PtwM8O0bagUbS8LvA/qFJngGTif7K4xY4Ud/ohuAVbk924ZzrCm0UN3V/Ffftlh8Xu0P8uvGaIRNk3o8=
