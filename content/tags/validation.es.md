@@ -1,6 +1,6 @@
 ---
 layout: tag
 title: validación
-pagetag: validacion
+pagetag: validation
 url: /tag/validacion/
 ---

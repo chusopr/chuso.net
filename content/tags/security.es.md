@@ -1,6 +1,6 @@
 ---
 layout: tag
 title: seguridad
-pagetag: seguridad
+pagetag: security
 url: /tag/seguridad/
 ---

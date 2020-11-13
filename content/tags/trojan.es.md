@@ -1,6 +1,6 @@
 ---
 layout: tag
 title: troyano
-pagetag: troyano
+pagetag: trojan
 url: /tag/troyano/
 ---

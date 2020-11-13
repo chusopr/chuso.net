@@ -1,6 +1,6 @@
 ---
 layout: tag
 title: contraseña
-pagetag: contrasena
+pagetag: password
 url: /tag/contrasena/
 ---
