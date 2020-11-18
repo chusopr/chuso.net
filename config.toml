@@ -18,6 +18,12 @@ tag = "tags"
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
+[markup.goldmark.renderer]
+  unsafe = true
+
+[privacy.twitter]
+enableDNT = true
+
 [languages]
   [languages.en]
   weight = 1
