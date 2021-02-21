@@ -50,15 +50,15 @@ enableDNT = true
 
   [params.social]
   rss      = true
-  facebook = "https://facebook.com/chescu"
-  twitter  = "https://twitter.com/chusop"
-  linkedin = "https://www.linkedin.com/in/jes%C3%BAs-p%C3%A9rez-rey-64039013/"
+  facebook = "chescu"
+  twitter  = "chusop"
+  linkedin = "jes%C3%BAs-p%C3%A9rez-rey-64039013"
   github   = "https://github.com/chusopr"
   gitlab   = "https://gitlab.com/chuso"
   mastodon = "https://mastodon.social/@chuso"
-  keybase  = "https://keybase.io/jprey"
-  flickr   = "https://flickr.com/chusopr"
-  openhub  = "https://www.openhub.net/accounts/chuso"
+  keybase  = "jprey"
+  flickr   = "chusopr"
+  openhub  = "chuso"
 
   [params.staticman]
   user       = "chusopr"
