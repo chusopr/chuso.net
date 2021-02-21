@@ -6,6 +6,9 @@ relativeURLs = true
 uglyURLs = true
 cleandestinationdir = true
 
+[social]
+twitter  = "chusonet"
+
 [permalinks]
 posts = "/:slug"
 documents = "/:slug"
