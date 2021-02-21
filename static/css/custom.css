@@ -218,3 +218,7 @@ ul.comments div.comment_body {
   display: inherit !important;
   visibility: inherit !important;
 }
+
+figcaption p {
+  margin: 0;
+}
