@@ -2,6 +2,7 @@
 title: "A November patch introduces new conflicts in Active Directory"
 slug: active-directory-november-patch-restrictions
 date: 2022-01-12T22:17:20+02:00
+categories: [sysadmin]
 tags: [Active-Directory,Microsoft,Kerberos,CVE-2021-42282]
 images: [/documents/technical/active-directory-spn-upn-constraint-violation/CONSTRAINT_ATT_TYPE.png]
 summary: Since Novembmer '21 update, Active Directory new conditions may make it raise a CONSTRAINT_ATT_TYPE violation affecting other products.

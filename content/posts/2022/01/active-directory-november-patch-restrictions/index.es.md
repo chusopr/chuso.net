@@ -2,6 +2,7 @@
 title: "Un parche de noviembre introduce nuevos conflictos en Active Directory"
 slug: active-directory-parche-noviembre-restricciones
 date: 2022-01-12T22:17:20+02:00
+categories: [sysadmin]
 tags: [Active-Directory,Microsoft,Kerberos,CVE-2021-42282]
 images: [/documentos/tecnicos/active-directory-spn-upn-constraint-violation/CONSTRAINT_ATT_TYPE.png]
 summary: Desde la actualización de noviembre de 2021, nuevas condiciones en Active Directory pueden hacer que devuelva un error de tipo CONSTRAINT_ATT_TYPE afectando a otros productos.
