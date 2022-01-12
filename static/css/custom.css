@@ -2,7 +2,10 @@
     padding: 85px 0 55px;
 }
 
-header.post-header,
+header.post-header h1,
+header.post-header .article-author,
+header.post-header .article-date,
+header.post-header .article-author,
 footer.post-footer {
     display: none;
 }
