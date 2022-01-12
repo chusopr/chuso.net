@@ -21,13 +21,13 @@ An apparently normal error when a user with that principal already exists. But t
 So I tried to do the same operation in my own test environment, totally different from the client's environment and with a different Active Directory server.   
 The result is the same: `CONSTRAINT_ATT_TYPE`.
 
-After a day and a half trying everything possible with no progress, we started to see other customers who had the same problem. Too coincidence.
+After a day and a half of trying everything possible with no progress, we started to see other customers who had the same problem. Too much coincidence.
 
 It turned out all this was caused by change [KB5008382](https://support.microsoft.com/en-us/topic/kb5008382-verification-of-uniqueness-for-user-principal-name-service-principal-name-and-the-service-principal-name-alias-cve-2021-42282-4651b175-290c-4e59-8fcb-e4e5cd0cdb29) that Microsoft introduced to Active Directory in November.
 
-This change introduces new restrictions in Active Directory when creating new users that effectively represent a change in behavior in Active Directory affecting many products that use SPNEGO.
+This change introduces new restrictions in Active Directory when creating new users that effectively represent a change in behaviour in Active Directory affecting many products that use SPNEGO.
 
-For such a relevant change, it is difficult to understand that there has been so little communication. Considering that it is a change to correct a [security flaw ](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42282), they may not have wanted to give too many details in advance so they couldn't be exploited by attackers, but once the change was posted, they could have given it more publicity. There is not even public information about what the security flaw that this change fixes consists of (although speculation can be made, as will be seen later). [Security through obscurity](https://en.wikipedia.org/wiki/Security_through_obscurity)?
+For such a relevant change, it is difficult to understand that there has been so little communication. Considering that it is a change to correct a [security flaw](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42282), they may not have wanted to give too many details in advance so it couldn't be exploited by attackers, but once the change was published, they could have given it more publicity. There is not even public information about what the security flaw that this change fixes consists of (although speculation can be made, as will be seen later). [Security through obscurity](https://en.wikipedia.org/wiki/Security_through_obscurity)?
 
 In the following article I explain the background of the problem with the possible solutions, with help from [Cloudera](https://cloudera.com) and [Bluemetrix](https://bluemetrix.com) on the research:
 
