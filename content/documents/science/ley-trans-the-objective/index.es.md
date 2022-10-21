@@ -6,7 +6,7 @@ tags: [lgtbi,ley-trans,transfobia,the-objective,lidia-ramirez]
 summary: Revisión de los estudios y datos disponibles relacionados con las afirmaciones hechas por The Objective en su cobertura de la ley trans.
 showtoc: True
 ---
-<h2>Introducción</h2>
+## Introducción
 
 Si el bloqueo de los sectores tránsfobos en la coalición de gobierno no lo impide, en breve se aprobará en España la [Ley para la igualdad real y efectiva de las personas trans y para la garantía de los derechos de las personas LGTBI](https://www.igualdad.gob.es/servicios/participacion/audienciapublica/Paginas/2021/apl-igualdad-efectiva-persona-trans-derechos-lgtbi.aspx), popularmente conocido como <<ley trans>> porque es el punto que más desarrolla la ley y porque introduce importantes cambios en la autodeterminación de género.
 
@@ -16,7 +16,7 @@ Este artículo además dice que el ejercicio del derecho a la rectificación reg
 
 El caso de menores entre 12 y 14 años es tratado en la disposición adicional séptima de la ley que modifica la ley 15/2015 de la Jurisdicción Voluntaria para indicar que en ese caso el cambio tendrá que ser aprobado judicialmente aportando la documentación necesaria para acreditar que el menor <<ha mantenido de forma estable la disconformidad [de género]>> y podra <<solicitar la práctica de las pruebas que considere necesarias para acreditar la madurez necesaria del menor y la estabilidad de su voluntad de rectificar registralmente la mención a su sexo>>. Además, la autoridad judicial deberá informar al menor de <<la existencia de las medidas voluntarias de apoyo que estén a disposición de la persona solicitante en los ámbitos sanitario, social, laboral, educativo y administrativo>> y de <<la existencia de asociaciones y otras organizaciones de protección de los derechos en este ámbito a las que puede acudir>> para intentar garantizar que el menor reciba el apoyo necesario durante su transición.
 
-# Transición social y transición física
+## Transición social y transición física
 
 Uno de los cambios más importantes que introduce la ley es eliminar la necesidad de realizar un cambio físico para poder solicitar el cambio de sexo en el registro.
 
@@ -32,7 +32,7 @@ Esto forma parte de un intento a lo largo de todo el artículo de identificar au
 
 Al contrario, el único cambio relacionado que introduce, como ya se ha mencionado, es que ya no es necesario someterse a una terapia de modificación para solicitar el cambio registral. Así que si a Lidia Ramírez le preocupa el uso de bloqueadores de la pubertad o cualquier otro tipo de cambio físico, debería estar a favor de esta ley que eliminaría la necesidad de su uso cuando no fuese deseado si se quiere hacer el cambio registral.
 
-# Contexto internacional
+## Contexto internacional
 
 El anteproyecto menciona en su exposición de motivos la influencia de resoluciones de la ONU y directivas de la Unión Europea en la elaboración, pero no hay niguna referencia a las legislaciones de Francia, Reino Unido, Finlandia o Australia ni he encontrado ninguna declaración en prensa que reconozca tales influencias ni tampoco hablando con personas conocedoras del tema. Las únicas referencias que he encontrado en ese sentido es de páginas web de una línea ideológica afín a The Objective que también habían citado anteriormente (sin referencias) la misma supuesta influencia de estos países en esta ley y la misma marcha atrás que supuestamente han dado esos países con sus legislaciones similares.
 
@@ -48,7 +48,7 @@ Por lo tanto, tampoco merece la pena dedicar más esfuerzo en comprobar esas afi
 
 El artículo de The Objective es un compendio de afirmaciones similares sobre datos que o bien no están relacionados con esta ley pero sirven para crear un relato tránsfobo alarmista que se oponga a la ley, o están manipulados o son directamente falsos y llevan años repitiéndose en medios de agitprop reaccionaria. Así que vamos a seguir repasando sus afirmaciones.
 
-# Construcción de la identidad de género
+## Construcción de la identidad de género
 
 Ya hemos visto en qué consisten las condiciones para poder hacer el cambio registral de sexo, que se resumen en que se puede libremente cambiar legalmente de género a partir de los 16 años, de los 14 con autorización paterna y de 12 con autorización judicial. En ningún caso son necesarios bloqueadores de la pubertad, transición física o de ningún otro tipo y solo entre 12 y 14 será necesario presentar informes que lo avalen ante el juez.
 
@@ -64,7 +64,7 @@ Aparte de que esto confunde la identidad de género (el género con el que se id
 
 Sin embargo, como se acaba de mencionar, la edad crítica para la construcción de la identidad de género es mucho más temprana que la edad a la que esta ley permite la libre autodeterminación de género. Pasada esa etapa de construcción de la identidad de género, es muy poco habitual que haya una vuelta atrás de las personas que se habían identificado como trans.
 
-# Persistencia tras la transición
+## Persistencia tras la transición
 
 Un estudio de la Asociación Americana de Pediatría ([Olson et al., 2022](#Olson2022)) encontró que solo un 2.5 % de los adolescentes que se identificaron como trans, vuelven a identificarse con el género que se les había asignado al nacer tras cinco años.
 
@@ -92,7 +92,7 @@ Queda por aclarar qué entiende Lidia Ramírez por <<superar>> la disforia de g�
 
 Sin embargo, el texto citado parece intentar transmitir el mensaje de que las personas trans tienen otros problemas psicológicos que podrían hacerles creen que son trans, pero después se les pasa esa disforia de género, una afirmación que parece totalmente ficticia a la vista de los datos disponibles, pero que de nuevo se ve repetido habitualmente en sitios tránsfobos y reaccionarios sin ninguna referencia que la respalde.
 
-# Salud mental
+## Salud mental
 
 Quién puede dudar de que la adolesciencia es una etapa difícil para todo el mundo. Pero no es hasta hace poco cuando se ha empezado a prestar atención a problemas de salud mental que pueden afectar a personas en una etapa tan difícil como la adolescencia como la depresión o la ansiedad. Si a eso le añades una crisis de identidad y la pertenencia a un colectivo que tradicionalmente y aún a día de hoy sigue siendo discriminado y humillado en edades en las que el sujeto es más vulnerable y el diferente es apartado de manera más despiadada, es lógico pensar que los problemas de salud mental sean mayores en adolescentes trans. Así lo demuestran los estudios ([Connolly et al., 2016](#Connolly2016)) que citan en hasta cuatro veces mayor la ocurrencia de problemas de salud mental como depresión o pensamientos suicidas en personas trans.
 
@@ -104,7 +104,7 @@ Los estudios disponibles ya mencionados muestran que esto es falso. La discordan
 
 Hay pocas evidencias más solidas que las que muestran que facilitar la transición de personas trans es uno de los mayores factores para mejorar la salud mental de una población con tasas de pensamientos suicidas cuatro veces mayor que la media de la población debido a las presiones externas que sufren por su condición.
 
-# Disforia de género de inicio rápido
+## Disforia de género de inicio rápido
 
 A la vista de todo esto, ¿verdad que sonaría absurdo decir que hay adolescentes que deciden pasar voluntariamente por una experiencia tan dura sin sentirse realmente trans solo porque su entorno les presiona para hacerlo?
 
@@ -126,7 +126,7 @@ Eso hace que haya más gente trans visibilizándose y acudiendo a centros como l
 
 Probablemente no es que haya más gente trans (y, aunque lo fuera y eso les preocupara, eso solo evidenciaría su transfobia), sino que ahora acuden en mayor medida porque se sienten más seguros para no tener que ocultarse y eso es lo que hace que los números crezcan.
 
-# Conclusión
+## Conclusión
 
 No soy trans. No soy psicólogo. No soy una persona capacitada para tratar los desafíos a los que tiene que enfrentarse una persona trans.
 
@@ -136,11 +136,11 @@ Hay temas que son complejos y es muy difícil que podamos entenderlos bien desde
 
 Y, ante todo, duda de los artículos de prensa sensacionalistas con datos alarmantes que no están apoyados por ninguna referencia, sobre todo cuando hacen afirmaciones sorprendentes como que muchas personas se declaran trans para poder encajar y el 90 % se arrepiente después.
 
-# Agradecimientos
+## Agradecimientos
 
 Agradezco a las personas que colaboraron para corregir mis errores y aportar nuevas ideas, entre ellas, [Aurora](https://mastodon.social/@CorioPsicologia) de [Corio Psicología](https://corio.es).
 
-# Referencias
+## Referencias
 
 <a name="Carmichael2021"></a>Carmichael, P., Butler, G., Masic, U., Cole, T. J., De Stavola, B. L., Davidson, S., Skageberg, E. M., Khadr, S., & Viner, R. M. (2021). Short-term outcomes of pubertal suppression in a selected cohort of 12 to 15 year old young people with persistent gender dysphoria in the UK. *PLoS ONE*. <https://doi.org/10.1371/journal.pone.0243894>
 
