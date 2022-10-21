@@ -74,13 +74,13 @@ Otro estudio ([Turban et al., 2021](#Turban2021)) con una muestra mayor encontr�
 
 Este estudio, sin embargo, parece menos específico y riguroso ya que no hizo un seguimiento de los individuos a lo largo del tiempo como los anteriores, sino que se limitó a hacer una encuesta a varios individuos de distintas edades que habían declarado cambiar de género a distintas edades y después habían vuelto a su género asignado al nacer tras un tiempo indeterminado. Es decir, no se centra solo en el caso de adolescentes como los anteriores (y en lo que parece ser que se centran las preocupaciones de Lidia Ramírez) y, de hecho, la mayoría de los encuestados habían hecho su transición después de la mayoría de edad.
 
-![](table1.png)
+![](/{{< param "slug" >}}/table1.png)
 
 Sin embargo, este estudio aporta otros datos muy interesantes que son los miotivos por los que hicieron la transición de vuelta los que la hicieron. Y en la gran mayoría de los casos fue por presiones externas y muy pocos por arrepentimiento.
 
 Es decir, si ya el porcentaje de personas que se habían identificado como trans y vuelven a identificarse con el género asignado al nacer es pequeño, es mucho más pequeño el porcentaje que lo hace porque habían dejado de identificarse como trans, siendo la mayoría de los motivos el rechazo familiar, el estigma, la dificultad para encontrar trabajo, etc.
 
-![](table2.png)
+![](/{{< param "slug" >}}/table2.png)
 
 No es que se hayan dado cuenta de que en realidad no eran trans, es que su entorno no les ha permitido serlo. Así que no es que haya que extremar la prudencia para facilitar la transición social, hay que facilitarla más todavía.
 
