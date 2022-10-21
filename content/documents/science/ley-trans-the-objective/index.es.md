@@ -55,21 +55,21 @@ Ya hemos visto en qué consisten las condiciones para poder hacer el cambio regi
 
 El artículo de The Objective no miente directamente cuando dice que la ley contemplaría <<el cambio de sexo legal a partir de los 12 años>>, pero sin añadir ningún matiz podría dejar entender que a partir de esa edad el cambio de género legal es libre cuando ya hemos visto que eso solo es así a partir de los 16 años y **entre 12 y 14 sería necesaria autorización judicial con informes que lo justifiquen**.
 
-En la misma oración también dice que <<contempla la medicación con bloqueadores de pubertad [...] a partir de los 12 años>>, pero **los bloqueadores de pubertad no están mencionados en ningún lugar de la ley, como ya se ha dicho**, así que esa afirmación solo podría calificarse como pura mentira.
+En la misma oración también dice que <<contempla la medicación con bloqueadores de pubertad [...] a partir de los 12 años>>, pero **los bloqueadores de pubertad no están mencionados en ningún lugar de la ley**, como ya se ha dicho, así que esa afirmación solo podría calificarse como pura mentira.
 
 El cambio con control judicial hasta los 12 años, parental de 12 a 14 y libre a partir de los 16 es consistente con los datos disponibles que muestran que **la identidad de género es más o menos estable ya a los 4 años** ([Rafferty, 2022](#Rafferty2022)) y en cualquier caso, la edad más crítica para la construcción de la identidad de género no va más allá de los 13 años ([Steensma et al., 2011](#Steensma2011)).
 
-Sin embargo, Lidia Ramírez dice que esta ley facilita el cambio de identidad de género en etapas <<que **se caracterizan por el descubrimiento**, entre otras cuestiones, **de su sexualidad**>> (negritas mías).
+Sin embargo, Lidia Ramírez dice que esta ley facilita el cambio de identidad de género en etapas <<que se caracterizan por el descubrimiento, entre otras cuestiones, de su sexualidad>>.
 
 Aparte de que esto confunde la identidad de género (el género con el que se identifique uno) con la sexualidad (lo que atrae sexualmente a cada uno), este punto reincide en la clásica idea de que son épocas en las que las personas que se identifican como trans <<están confusas>> y <<se les acabará pasando>>.
 
-Sin embargo, como se acaba de mencionar, **la construcción de la identidad de género se produce mucho más temprana que la edad a la que esta ley permite la libre autodeterminación** de género. Pasada esa etapa, es muy poco habitual que haya una vuelta atrás de las personas que se habían identificado como trans.
+Sin embargo, como se acaba de mencionar, **la construcción de la identidad de género se produce mucho más temprano que la edad a la que esta ley permite la libre autodeterminación** de género. Pasada esa etapa, es muy poco habitual que haya una vuelta atrás de las personas que se habían identificado como trans.
 
 ## Persistencia tras la transición
 
-Un estudio de la Asociación Americana de Pediatría ([Olson et al., 2022](#Olson2022)) encontró que **solo un 2.5 % de los adolescentes que se identificaron como trans vuelven a identificarse con el género que se les había asignado al nacer tras cinco años**.
+Un estudio de la Asociación Americana de Pediatría ([Olson et al., 2022](#Olson2022)) encontró que **solo un 2.5 % de los adolescentes que se identificaron como trans vuelven a identificarse con el género que se les había asignado al nacer** tras cinco años.
 
-Si queremos buscar datos más cercanos, la Unidad de Identidad de Género de Cataluña ([De Castro et al., 2022](#DeCastro2022)) informa que **a lo largo de 18 años, el 97,6 % de los menores que recibieron en el centro <<persistió en su identidad transgénero después de una mediana de seguimiento de 2,6 años>>**.
+Si queremos buscar datos más cercanos, la Unidad de Identidad de Género de Cataluña ([De Castro et al., 2022](#DeCastro2022)) informa que **a lo largo de 18 años, el 97,6 % de los menores que recibieron en el centro <<persistió en su identidad transgénero** después de una mediana de seguimiento de 2,6 años>>.
 
 Otro estudio ([Turban et al., 2021](#Turban2021)) con una muestra mayor encontró que un 13.1 % de personas que se habían identificado como trans, volvieron a su género asignado al nacer tiempo después.
 
@@ -83,7 +83,7 @@ Es decir, si ya el porcentaje de personas que se habían identificado como trans
 
 ![](/{{< param "slug" >}}/table2.png)
 
-No es que se hayan dado cuenta de que en realidad no eran trans, es que su entorno no les ha permitido serlo. Así que no es que haya que extremar la prudencia para facilitar la transición social, hay que facilitarla más todavía.
+No es que se hayan dado cuenta de que en realidad no eran trans, es que su entorno no les ha permitido serlo. Así que no es que haya que extremar la prudencia a la hora de facilitar la transición social: hay que facilitarla más todavía.
 
 Sin embargo, el texto de The Objective dice:
 
@@ -95,7 +95,7 @@ Sin embargo, el texto citado parece intentar transmitir el mensaje de que las pe
 
 ## Salud mental
 
-Quién puede dudar de que la adolesciencia es una etapa difícil para todo el mundo. Pero no es hasta hace poco cuando se ha empezado a prestar atención a problemas de salud mental que pueden afectar a personas en una etapa tan difícil como la adolescencia como la depresión o la ansiedad. Si a eso le añades una crisis de identidad y la pertenencia a un colectivo que tradicionalmente y aún a día de hoy sigue siendo discriminado y humillado en edades en las que el sujeto es más vulnerable y el diferente es apartado de manera más despiadada, es lógico pensar que los problemas de salud mental sean mayores en adolescentes trans. Así lo demuestran los estudios ([Connolly et al., 2016](#Connolly2016)) que citan en **hasta cuatro veces mayor la ocurrencia de problemas de salud mental como depresión o pensamientos suicidas en personas trans y un 50 % de intentos de suicidio entre personas trans** ([Thoma et al., 2019](#Thomas2019)). Es decir, dos de cada tres personas trans habrían intentado suicidarse.
+Quién puede dudar de que la adolesciencia es una etapa difícil para todo el mundo. Pero no es hasta hace poco cuando se ha empezado a prestar atención a problemas de salud mental que pueden afectar a personas en una etapa tan difícil como la adolescencia como la depresión o la ansiedad. Si a eso le añades una crisis de identidad y la pertenencia a un colectivo que tradicionalmente y aún a día de hoy sigue siendo discriminado y humillado en edades en las que el sujeto es más vulnerable y el diferente es apartado de manera más despiadada, es lógico pensar que los problemas de salud mental sean mayores en adolescentes trans. Así lo demuestran los estudios ([Connolly et al., 2016](#Connolly2016)) que citan en **hasta cuatro veces mayor la ocurrencia de problemas de salud mental como depresión o pensamientos suicidas en personas trans y un 50 % de intentos de suicidio entre personas trans** ([Thoma et al., 2019](#Thomas2019)). Es decir, una de cada ds personas trans habrían intentado suicidarse.
 
 Los estudios ([De Vries et al., 2011](#DeVries2011); [Olson et al., 2016](#Olson2016); [Durwood et al., 2017](#Durwood2017); [Kuper et al., 2020](#Kuper2020)) con **personas trans que han realizado la transición muestran que experimentan una mejoría en su salud mental que llega incluso a acercarse a la de las personas cuya identidad de género se corresponde con el género asignado al nacer**, mientras que esa mejoría **no se produce en las personas trans que no realizan la transición** y no se identifican con el género asignado.
 
@@ -103,7 +103,7 @@ El artículo de The Objective, tras argumentar **contrariamente a los datos exis
 
 Los estudios disponibles ya mencionados muestran que esto es falso. La discordancia entre la identidad de género y el género asignado al nacer y, especialmente, factores externos como el rechazo social y familiar son los que provocan esos otros problemas y facilitar la autodeterminación de género es la manera de solucionarlos.
 
-**Hay pocas evidencias más solidas que las que muestran que facilitar la transición de personas trans es uno de los mayores factores para mejorar la salud mental de una población con tasas de pensamientos suicidas cuatro veces mayor que la media de la población debido a las presiones externas que sufren por su condición**.
+Hay pocas evidencias más solidas que las que muestran que **facilitar la transición de personas trans es uno de los mayores factores para mejorar la salud mental de una población con tasas de pensamientos suicidas cuatro veces mayores que la media de la población** debido a las presiones externas que sufren por su condición.
 
 ## Disforia de género de inicio rápido
 
