@@ -2,7 +2,7 @@
 title: "Revisión de la cobertura sobre ley trans en The Objective"
 slug: documentos/ciencia/ley-trans-the-objective
 date: 2022-10-21T19:22:21+02:00
-lastmod: 2022-10-21T21:35:21+02:00
+lastmod: 2022-10-22T19:36:00+02:00
 tags: [lgtbi,ley-trans,transfobia,the-objective,lidia-ramirez]
 summary: Revisión de los estudios y datos disponibles relacionados con las afirmaciones hechas por The Objective en su cobertura de la ley trans.
 showtoc: True
@@ -45,7 +45,7 @@ De hecho, hay muy pocos países que actualmente permitan la libre autodeterminac
 
 Así que parece que la influencia de los países mencionados por Lidia Ramírez y su posterior marcha atrás es una de esas afirmaciones que se repiten en páginas web de agitprop reaccionaria sin aportar fuentes y que se van propagando como un hecho real simplemente porque favorecen su relato.
 
-Por lo tanto, tampoco merece la pena dedicar más esfuerzo en comprobar esas afirmaciones ya que no se ha demostrado (y la carga de prueba reside en The Objective y Lidia Ramírez) que la legislaciones de esos países hayan influido en el anteproyecto español y que hayan introducido cambios posteriores que tengan relación con la nueva ley. Los únicos cambios que menciona Lidia Ramírez que están introduciendo esos países son relativos a los tratamientos hormonales de bloqueo de la pubertad que, como ya se ha dicho, **no están mencionados en ningún lugar de la futura ley trans, así que es pura argumentación inútil**.
+Por lo tanto, tampoco merece la pena dedicar más esfuerzo en comprobar esas afirmaciones ya que no se ha demostrado (y la carga de prueba reside en The Objective y Lidia Ramírez) que las legislaciones de esos países hayan influido en el anteproyecto español y que hayan introducido cambios posteriores que tengan relación con la nueva ley. Los únicos cambios que menciona Lidia Ramírez que están introduciendo esos países son relativos a los tratamientos hormonales de bloqueo de la pubertad que, como ya se ha dicho, **no están mencionados en ningún lugar de la futura ley trans, así que es pura argumentación inútil**.
 
 El artículo de The Objective es un compendio de afirmaciones similares sobre datos que o bien no están relacionados con esta ley pero sirven para crear un relato tránsfobo alarmista que se oponga a la ley, o están manipulados o son directamente falsos y llevan años repitiéndose en medios de agitprop reaccionaria. Así que vamos a seguir repasando sus afirmaciones.
 
@@ -67,7 +67,7 @@ Sin embargo, como se acaba de mencionar, **la construcción de la identidad de g
 
 ## Persistencia tras la transición
 
-Un estudio de la Asociación Americana de Pediatría ([Olson et al., 2022](#Olson2022)) encontró que **solo un 2.5 % de los adolescentes que se identificaron como trans vuelven a identificarse con el género que se les había asignado al nacer** tras cinco años.
+Un estudio de la Academia Americana de Pediatría ([Olson et al., 2022](#Olson2022)) encontró que **solo un 2.5 % de los adolescentes que se identificaron como trans vuelven a identificarse con el género que se les había asignado al nacer** tras cinco años.
 
 Si queremos buscar datos más cercanos, la Unidad de Identidad de Género de Cataluña ([De Castro et al., 2022](#DeCastro2022)) informa que **a lo largo de 18 años, el 97,6 % de los menores que recibieron en el centro <<persistió en su identidad transgénero** después de una mediana de seguimiento de 2,6 años>>.
 
