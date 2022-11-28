@@ -12,9 +12,9 @@ showtoc: True
 
 **Actualización 2022-11-28:**
 
-*Este artículo se escribió antes de que empezara el proceso de enmiendas parlamentarias al anteproyecto. Algunas enmiendas han modificado algunos detalles mencionados en este artículo, pero no modifican lo más esencial (v.gr., la ausencia de menciones en la ley a bloqueadores de la pubertad y otros procesos de transición física, las diferencias con las leyes de otros países, el efecto sobre la salud mental y el desarrollo de la identidad de género, etc.).*
+Este artículo se escribió antes de que empezara el proceso de enmiendas parlamentarias al anteproyecto. Algunas enmiendas han modificado algunos detalles mencionados en este artículo, pero no modifican lo más esencial (v.gr., la ausencia de menciones en la ley a bloqueadores de la pubertad y otros procesos de transición física, las diferencias con las leyes de otros países, el efecto sobre la salud mental y el desarrollo de la identidad de género, etc.).
 
-*Algunos detalles que sí que han cambiado desde entonces son los procesos de cambio registral para menores de 16 años, que debido a una [enmienda del PSOE](https://www.eldiario.es/sociedad/psoe-propone-ley-trans-menores-14-16-anos-deban-pedir-permiso-juez-cambiar-sexo-legal_1_9664322.html) serán siempre con tutela judicial. En el momento en el que se escribió este artículo, permitía el cambio registral entre 14 y 16 años con autorización parental y así se menciona en el artículo original a continuación.*
+Algunos detalles que sí que han cambiado desde entonces son los procesos de cambio registral para menores de 16 años, que debido a una [enmienda del PSOE](https://www.eldiario.es/sociedad/psoe-propone-ley-trans-menores-14-16-anos-deban-pedir-permiso-juez-cambiar-sexo-legal_1_9664322.html) serán siempre con tutela judicial. En el momento en el que se escribió este artículo, permitía el cambio registral entre 14 y 16 años con autorización parental y así se menciona en el artículo original a continuación.
 
 **Artículo original:**
 
