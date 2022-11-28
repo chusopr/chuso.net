@@ -8,7 +8,7 @@ summary: Revisión de los estudios y datos disponibles relacionados con las afir
 showtoc: True
 ---
 
-# Actualizaciones
+## Actualizaciones
 
 **Actualización 2022-11-28:**
 
