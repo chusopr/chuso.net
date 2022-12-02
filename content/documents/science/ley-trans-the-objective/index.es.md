@@ -180,4 +180,4 @@ Agradezco a las personas que colaboraron para corregir mis errores y aportar nue
 
 <a name="Turban2021"></a>Turban, J. L., Loo, S., Almazan, A., & Keuroghlian, A. S. (2021). Factors Leading to “Detransition” Among Transgender and Gender Diverse People in the United States: A Mixed-Methods Analysis. *LGBT Health*. <https://doi.org/10.1089/lgbt.2020.0437>
 
-<a name="Vrouenraets202"></a>Vrouenraets, L. J. J. J., de Vries, M. C., & Hannema, S. E. (2020). Trajectories of Adolescents Treated with Gonadotropin-Releasing Hormone Analogues for Gender Dysphoria. *Archives of Sexual Behavior*. <https://doi.org/10.1007/s10508-020-01660-8>
+<a name="Vrouenraets2020"></a>Vrouenraets, L. J. J. J., de Vries, M. C., & Hannema, S. E. (2020). Trajectories of Adolescents Treated with Gonadotropin-Releasing Hormone Analogues for Gender Dysphoria. *Archives of Sexual Behavior*. <https://doi.org/10.1007/s10508-020-01660-8>
