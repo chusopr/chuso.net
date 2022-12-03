@@ -1,0 +1,85 @@
+baseURL: https://chuso.net/
+DefaultContentLanguage: en
+title: chuso.net
+theme: chuso
+relativeURLs: true
+uglyURLs: true
+cleandestinationdir: true
+
+social:
+  twitter: chusonet
+
+permalinks:
+  posts: /:slug
+  documents: /:slug
+  pages: /:slug
+
+taxonomies:
+  category: categories
+  tag: tags
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+privacy:
+  twitter:
+    enableDNT: true
+
+params:
+  header_image: /img/header.png
+  custom_css:
+    - css/custom.css
+  featured_tags: true
+  featured_condition_size: 1
+  showtoc: false
+  SEOTitle: chuso.net
+  about_me: true
+  sidebar_avatar: /img/avatar-circle.png
+  about_page: /about
+  enable_search: true
+
+  social: &social-links
+    rss:      true
+    facebook: chescu
+    linkedin: jesusprey
+    github:   https://github.com/chusopr
+    gitlab:   https://gitlab.com/chuso
+    mastodon: https://mastodon.social/@chuso
+    keybase:  jprey
+    flickr:   chusopr
+    openhub:  chuso
+
+  staticman:
+    user:       chusopr
+    repository: chuso.net
+    property:   staticman
+
+languages:
+  en:
+    weight: 1
+    baseURL: https://en.chuso.net/
+    languageName: English
+    languageCode: en
+    params:
+      social:
+        <<: *social-links
+        mastodon: https://fosstodon.org/@chuso
+        twitter:  chusonet
+  es:
+    weight: 2
+    baseURL: https://es.chuso.net/
+    languageName: Español
+    languageCode: es
+    params:
+      social:
+        <<: *social-links
+        mastodon: https://mastodon.social/@chuso
+        twitter:  chusop
