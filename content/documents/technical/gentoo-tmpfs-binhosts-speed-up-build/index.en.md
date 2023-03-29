@@ -33,7 +33,7 @@ The necessary steps are quite simple:
 
 That's all. From now on, packages compiled with Portage will use `tmpfs`, bringing a noticeable speed increase.
 
-## Exceptions
+### Exceptions
 
 However, as I mentioned in the first step, the size of the packages we can compile in `tmpfs` will be limited by the size we provide in the `size` parameter, which may not be enough for larger packages like `dev-qt/qtwebengine`, `dev-lang/mono` or `dev-lang/spidermonkey`.
 
@@ -67,6 +67,8 @@ This is useful for example if you use Gentoo on several machines that are simila
 For more information, see the official documentation on [binary packages in Gentoo](https://wiki.gentoo.org/wiki/Binary_package_guide).
 
 Also, you can totally avoid the compilation of packages if you use a binhost or binary package repository, but we have to be sure we are using a trusted repository where the compiled packages have not been modified with malicious code. Also, some packages might be compiled with options that are incompatible with your system such as a newer version of glibc or a different [CHOST](https://wiki.gentoo.org/wiki/CHOST).
+
+### List of binary repositories
 
 Some repositories available for AMD64 architecture:
 

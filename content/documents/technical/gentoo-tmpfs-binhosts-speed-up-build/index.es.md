@@ -33,7 +33,7 @@ Los pasos necesarios son bastante sencillos:
 
 Eso es todo. A partir de ahora, los paquetes que se compilen con Portage usaran `tmpfs` con un notable incremento de velocidad.
 
-## Excepciones
+### Excepciones
 
 Sin embargo, como mencioné en el primer paso, el tamaño de los paquetes que podemos compilar en `tmpfs` estará limitado por el tamaño que proporcionemos en el parámetro `size`, lo que puede no ser suficiente para los paquetes más grandes como `dev-qt/qtwebengine`, `dev-lang/mono` o `dev-lang/spidermonkey`.
 
@@ -67,6 +67,8 @@ Esto es útil por ejemplo si usas Gentoo en varias máquinas parecidas o que usa
 Para más información, consulta la documentación oficial sobre [paquetes binarios en Gentoo](https://wiki.gentoo.org/wiki/Binary_package_guide/es).
 
 Además, puedes evitar totalmente la compilación de paquetes si usas un binhost o repositorio de paquetes binarios, pero tenemos que estar seguros de que es un repositorio de confianza en el que los paquetes compilados no han sido modificados con código malicioso. Además, algunos paquetes podrían estar compilados con opciones incompatibles con tu sistema como una versión más nueva de glibc o distinto [CHOST](https://wiki.gentoo.org/wiki/CHOST).
+
+### Lista de repositorios binarios
 
 Algunos repositorios disponibles para la arquitectura AMD64:
 
