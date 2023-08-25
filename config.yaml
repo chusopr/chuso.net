@@ -58,6 +58,7 @@ params:
     keybase:  jprey
     flickr:   chusopr
     openhub:  chuso
+    git:      https://git.chuso.net
 
   staticman:
     user:       chusopr
