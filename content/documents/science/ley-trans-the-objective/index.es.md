@@ -8,16 +8,6 @@ summary: Revisión de los estudios y datos disponibles relacionados con las afir
 showtoc: True
 ---
 
-## Actualizaciones
-
-**Actualización 2022-11-28:**
-
-Este artículo se escribió antes de que empezara el proceso de enmiendas parlamentarias al anteproyecto. Algunas enmiendas han modificado algunos detalles mencionados en este artículo, pero **no modifican lo más esencial** (v.gr., la ausencia de menciones en la ley a bloqueadores de la pubertad y otros procesos de transición física, las diferencias con las leyes de otros países, el efecto sobre la salud mental y el desarrollo de la identidad de género, etc.).
-
-Algunos detalles que sí que han cambiado desde entonces son los procesos de cambio registral para menores de 16 años, que debido a una [enmienda del PSOE](https://www.eldiario.es/sociedad/psoe-propone-ley-trans-menores-14-16-anos-deban-pedir-permiso-juez-cambiar-sexo-legal_1_9664322.html) serán siempre con tutela judicial. En el momento en el que se escribió este artículo, se permitía el cambio registral entre 14 y 16 años con autorización parental y así se menciona en el artículo original a continuación.
-
-**Artículo original:**
-
 ## Introducción
 
 Si el bloqueo de los sectores tránsfobos en la coalición de gobierno no lo impide, en breve se aprobará en España la [Ley para la igualdad real y efectiva de las personas trans y para la garantía de los derechos de las personas LGTBI](https://www.igualdad.gob.es/servicios/participacion/audienciapublica/Paginas/2021/apl-igualdad-efectiva-persona-trans-derechos-lgtbi.aspx), popularmente conocido como <<ley trans>> porque es el punto que más desarrolla la ley y porque introduce importantes cambios en la autodeterminación de género.
@@ -142,7 +132,7 @@ Probablemente no es que haya más gente trans (y, aunque lo fuera y eso les preo
 
 No soy trans. No soy psicólogo. No soy una persona capacitada para tratar los desafíos a los que tiene que enfrentarse una persona trans.
 
-Antes de escribir todo esto, he leído abundante documentación sobre investigaciones científicas, pero también he preguntado a personas trans como es su experiencia y como ven la situación actual y también he preguntado su punto de vista en distintas ocasiones a varios psicólogos. En algunos casos, me han hecho entender de manera distinta algunas ideas equivocadas que tenía.
+Antes de escribir todo esto, he leído abundante documentación sobre investigaciones científicas, pero también he preguntado a personas trans cómo es su experiencia y cómo ven la situación actual y también he preguntado su punto de vista en distintas ocasiones a varios psicólogos. En algunos casos, me han hecho entender de manera distinta algunas ideas equivocadas que tenía.
 
 Hay temas que son complejos y es muy difícil que podamos entenderlos bien desde el primer momento (especialmente si nuestra primera opinión se basa en prejuicios) y que nuestra forma de entenderlos no vaya a cambiar a medida que los investigamos más. No te resistas a cambiar tu punto de vista si nuevos datos así lo requieren. Habla con los afectados si no eres uno de ellos, ya que no hay otra forma de poder entender cómo se vive en primera persona. Si no eres un experto en el ámbito (o aunque lo seas), consulta con expertos cualificados y revisa cuál es el consenso científico y la investigación disponible.
 
