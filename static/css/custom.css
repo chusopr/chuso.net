@@ -225,3 +225,7 @@ ul.comments div.comment_body {
 figcaption p {
   margin: 0;
 }
+
+video {
+  max-width: 100%;
+}
