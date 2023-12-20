@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<!--
+
+ /***************************************************************
+  *                                                             *
+  * Copyright © 2006, Jesús Pérez Rey <chescu at gmail dot com> *
+  *                                                             *
+  * All rights reserved                                         *
+  *                                                             *
+  ***************************************************************/
+
+-->
+<html lang="en">
+<head>
+  
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>chuso.net - Gentoo XMMS overlay</title>
+<style>
+div.chuso_info {
+  background-color: white;
+  padding: 5px;
+  color: black;
+  float: right;
+  text-align: left;
+  font-family: Verdana;
+  font-size: 10pt;
+}
+
+table.top_table {
+  width: 100%;
+  background-color: white;
+  vertical-align: middle;
+  padding: 0px;
+  border-spacing: 0px;
+  color: black;
+  font-family: Verdana;
+  font-size: 10pt;
+}
+
+td.title {
+  text-align: left;
+  vertical-align: top;
+}
+
+table.title {
+  padding: 0px;
+  border-spacing: 0px;
+  font-size: 4pt;
+}
+
+td.title_i {
+  padding: 5px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+p.title {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+td.title_r {
+  border-bottom: 1px solid black;
+}
+
+td.title_d {
+  border-right: 1px solid black;
+}
+
+td.title_dr {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+a.title {
+  text-decoration: none;
+  color: black;
+}
+
+td.menu {
+  width: 18%;
+  font-size: 10pt;
+  text-align: center;
+}
+
+td.languages {
+  width: 10%;
+  text-align: center;
+}
+
+a.banner_link
+{
+  border: 1px solid black;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+td.submenu {
+  visibility: hidden;
+  position: fixed;
+  border-bottom: 1px solid black;
+}
+
+table.submenu {
+  visibility: hidden;
+  position: fixed;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  background-color: white;
+  vertical-align: middle;
+  padding: 0px;
+  border-spacing: 0px;
+}
+
+td.menu_i {
+  font-size: 10pt;
+  text-align: center;
+}
+
+p.redblock {
+  border: 1px solid red;
+  background-color: #FFCCCC;
+  padding: 20px;
+}
+  </style>
+  <script>
+  function show_menu(menu, menu_l, submenu)
+{
+  menu_l.style.position = 'relative';
+  menu_l.style.width = submenu.offsetWidth - menu.offsetWidth;
+  menu_l.style.visibility = 'visible';
+  submenu.style.visibility = 'visible';
+}
+
+function hide_menu(menu, menu_l, submenu)
+{
+  submenu.style.visibility = 'hidden';
+  menu_l.style.visibility = 'hidden';
+  menu_l.style.position = 'absolute';
+}
+
+function scrolldown_menu()
+{
+  top_table.style.top = 0;
+}
+
+function scrollup_menu()
+{
+  top_table.style.top = top_div.offsetTop - menu_tr.offsetHeight;
+}
+  </script>
+
+</head>
+
+<body>
+<table id="top_table" class="top_table" onmouseover="scrolldown_menu()" onmouseout="scrollup_menu()">
+  <tbody>
+    <tr id="menu_tr">
+      <td>
+	<table id="title" class="title">
+	  <tbody>
+	    <tr>
+	      <td id="title_i" class="title_i">
+                       <p class="title"><a class="title" href="https://chuso.net">chuso.net</a></p>
+	      </td>
+	      <td id="title_r" class="title_r">&nbsp;</td>
+	    </tr>
+	    <tr>
+	      <td id="title_d" class="title_d">&nbsp;</td>
+	      <td id="title_dr" class="title_dr">&nbsp;</td>
+	    </tr>
+	  </tbody>
+	</table>
+      </td>
+      <td class="menu">
+        <a class="banner_link" href="/">Index</a>
+      </td>
+      <td class="menu">
+	<table onmouseover="show_menu(menu1, menu1_12, menu1_2);" onmouseout="hide_menu(menu1, menu1_12, menu1_2);">
+	  <tr>
+	    <td class="menu_i" id="menu1"><a class="banner_link" href="">Software</a></td>
+	    <td class="submenu" id="menu1_12">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	      <table id="menu1_2" class="submenu">
+		<tr><td><a style="text-decoration: none;" href="">Gentoo Linux</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="/software">Otros</a></td></tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </td>
+
+      <td class="menu">
+	<table onmouseover="show_menu(menu2, menu2_12, menu2_2);" onmouseout="hide_menu(menu2, menu2_12, menu2_2);">
+	  <tr>
+	    <td class="menu_i" id="menu2"><a class="banner_link" href="https://en.chuso.net/documents">Documents</a></td>
+	    <td class="submenu" id="menu2_12">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	      <table id="menu2_2" class="submenu">
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/documents/technical">Technical</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/documents/not-technical">Not technical</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/documents/science">Science</a></td></tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </td>
+      <td class="menu">
+        <a class="banner_link" href="">Gopher</a>
+      </td>
+      <td class="menu">
+        <a class="banner_link" href="/screenshots.html">Screenshots</a>
+      </td>
+      <td class="menu">
+	<table onmouseover="show_menu(menu3, menu3_12, menu3_2);" onmouseout="hide_menu(menu3, menu3_12, menu3_2);">
+	  <tr>
+	    <td class="menu_i" id="menu3">
+              <a class="banner_link" href="https://en.chuso.net/contact">Contact</a>
+            </td>
+	    <td class="submenu" id="menu3_12">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	      <table id="menu3_2" class="submenu">
+		<tr><td><script>
+<!--
+  document.write('<a style="text-decoration: none;" href="');
+  document.write('&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#115;&#99;&#117;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;');
+  document.write('">E-mail<\/a>');
+//-->
+</script></td></tr>
+		<tr><td><a style="text-decoration: none;" href="/keys/chuso2013.asc">PGP&nbsp;key</a></td></tr>
+		<tr><td><a style="text-decoration: none;" href="https://en.chuso.net/contact/about">About</a></td></tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </td>
+      <td>
+      </td>
+      <td class="languages">
+</td>
+    </tr>
+    <tr style='background-image: url("/img/navbar.png");'>
+      <td colspan="9">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="9" style="text-align: center;">
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+<!--
+  top_table.style.position = 'absolute';
+  document.write("<div id=\"top_div\" style=\"height: " + (top_table.offsetHeight - menu_tr.offsetHeight) + ";\">&nbsp;<\/div>");
+  top_table.style.top = top_div.offsetTop - menu_tr.offsetHeight;
+//-->
+</script>
+
+<h1>Gentoo XMMS overlay</h1>
+
+<p>This is an <a href="https://www.gentoo.org/proj/en/overlays/userguide.xml">overlay</a>
+for <a href="https://gentoo.org">Gentoo</a>
+to provide old <a href="http://www.xmms.org">XMMS</a>
+1 ebuilds since they were removed Nov 20, 2006. Actually it is only a
+backup of old XMMS ebuilds present in Portage until 2006-11-20.</p>
+
+<h2>Installation</h2>
+
+<ol>
+
+  <li>Go into the directory where you want to store the overlay, for example<br>
+
+    <tt>cd
+/usr/local/overlays</tt></li>
+
+  <li>Download the repository<br>
+
+    <tt>svn co https://svn.code.sf.net/p/xmms-overlay/code/</tt></li>
+
+  <li>Add the directory to PORTDIR_OVERLAY<br>
+
+    <tt>grep -q ^PORTDIR_OVERLAY= /etc/make.conf &amp;&amp;<br>
+      sed -ie "s,^PORTDIR_OVERLAY=,&amp;\"`pwd`/xmms-overlay \"," /etc/make.conf ||<br>
+      echo "PORTDIR_OVERLAY=\"`pwd`/xmms-overlay\"" &gt;&gt; /etc/make.conf</tt></li>
+
+</ol>
+
+<h2>Update</h2>
+
+<ol>
+<li>Just go into the overlay directory:<br>
+
+<tt>cd /usr/local/overlays/xmms-overlay</tt></li>
+
+<li>And then execute:<br>
+
+<tt>svn up</tt></li>
+
+</ol>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="https://sourceforge.net/projects/xmms-overlay">SourceForge project page</a></li>
+<li><a href="https://sourceforge.net/p/xmms-overlay/code/">Browse SVN repository</a></li>
+</ul>
+
+<br>
+
+Contributions are welcomed.<br>
+
+<h2>ChangeLog</h2>
+
+<cite>Legend:</cite>
+<ul>
+<li><tt>--- </tt><cite>ebuild deleted</cite></li>
+<li><tt>+++ </tt><cite>ebuild added</cite></li>
+<li><tt>~~~ </tt><cite>ebuild modified</cite></li>
+</ul>
+
+<h3>Revision 3 (2007-05-05 04:49:14 +0200)</h3>
+
+<tt>
+--- dev-python/pyxmms-2.01<br>
+--- dev-python/pyxmms-2.02<br>
+~~~ dev-python/pyxmms-2.06<br>
++++ dev-python/pyxmms-2.07<br>
+--- rox-extra/roxmms-0.3.6<br>
++++ rox-extra/roxmms-0.3.6.1<br>
++++ rox-extra/roxmms-0.3.7<br>
+</tt>
+
+<h3>Revision 2 (2007-05-05 04:46:24 +0200)</h3>
+
+<tt>Bogus release. Please don't use it.</tt>
+
+<h3>Revision 1 (2007-04-15 05:48:56 +0200)</h3>
+
+<tt>Initial release.</tt>
+
+<h2>Packages included</h2>
+<pre>app-misc/livetools
+dev-perl/Xmms-Perl
+dev-python/pyxmms
+gnome-extra/gxmms
+media-plugins/dumb-xmms
+media-plugins/efxmms
+media-plugins/eq-xmms
+media-plugins/modplugxmms
+media-plugins/xalbumlist
+media-plugins/xmmplayer
+media-plugins/xmms-adplug
+media-plugins/xmms-alarm
+media-plugins/xmms-alsa
+media-plugins/xmms-arts
+media-plugins/xmms-blur-scope
+media-plugins/xmms-blursk
+media-plugins/xmms-btexmms
+media-plugins/xmms-cdaudio
+media-plugins/xmms-cdcover
+media-plugins/xmms-cdread
+media-plugins/xmms-coverviewer
+media-plugins/xmms-crossfade
+media-plugins/xmms-crystality
+media-plugins/xmms-dflowers
+media-plugins/xmms-disk-writer
+media-plugins/xmms-dscope
+media-plugins/xmms-dspectogram
+media-plugins/xmms-dspectral
+media-plugins/xmms-echo
+media-plugins/xmms-esd
+media-plugins/xmms-extra
+media-plugins/xmms-fc
+media-plugins/xmms-find
+media-plugins/xmms-finespectrum
+media-plugins/xmms-fmradio
+media-plugins/xmms-gdancer
+media-plugins/xmms-goom
+media-plugins/xmms-idcin
+media-plugins/xmms-imms
+media-plugins/xmms-infinity
+media-plugins/xmms-infopipe
+media-plugins/xmms-ir
+media-plugins/xmms-iris
+media-plugins/xmms-itouch
+media-plugins/xmms-jack
+media-plugins/xmms-jess
+media-plugins/xmms-joystick
+media-plugins/xmms-kde
+media-plugins/xmms-kjofol
+media-plugins/xmms-ladspa
+media-plugins/xmms-libvisual
+media-plugins/xmms-lirc
+media-plugins/xmms-liveice
+media-plugins/xmms-liveplugin
+media-plugins/xmms-lyrc
+media-plugins/xmms-mad
+media-plugins/xmms-midi
+media-plugins/xmms-mikmod
+media-plugins/xmms-morestate
+media-plugins/xmms-mp3cue
+media-plugins/xmms-mpg123
+media-plugins/xmms-musepack
+media-plugins/xmms-nas
+media-plugins/xmms-nebulus
+media-plugins/xmms-nsf
+media-plugins/xmms-null
+media-plugins/xmms-oggre
+media-plugins/xmms-opengl-spectrum
+media-plugins/xmms-oss
+media-plugins/xmms-outpost
+media-plugins/xmms-pipe
+media-plugins/xmms-realrandom
+media-plugins/xmms-repeatit
+media-plugins/xmms-sanalyzer
+media-plugins/xmms-scrobbler
+media-plugins/xmms-shell
+media-plugins/xmms-shn
+media-plugins/xmms-sid
+media-plugins/xmms-smpeg
+media-plugins/xmms-sndfile
+media-plugins/xmms-song-change
+media-plugins/xmms-spc
+media-plugins/xmms-speex
+media-plugins/xmms-status-plugin
+media-plugins/xmms-stereo
+media-plugins/xmms-synaesthesia
+media-plugins/xmms-tfmx
+media-plugins/xmms-tonegen
+media-plugins/xmms-voice
+media-plugins/xmms-volnorm
+media-plugins/xmms-vorbis
+media-plugins/xmms-wakeup
+media-plugins/xmms-wav
+media-plugins/xmms-wma
+media-plugins/xmms-wmdiscotux
+media-plugins/xmms-xf86audio
+media-plugins/xmms-xmmsd
+media-plugins/xmms-xmmsmplayer
+media-sound/longplayer
+media-sound/madman
+media-sound/noxmms
+media-sound/xmms
+media-sound/xmmsctrl
+rox-extra/roxmms
+x11-plugins/desklet-cornerxmms
+x11-plugins/gaim-xmms-remote
+x11-plugins/gkrellmms
+x11-plugins/wmalbum
+x11-plugins/wmusic
+x11-plugins/wmxmms
+x11-themes/xmms-themes
+xfce-extra/xfce4-xmms
+xfce-extra/xfce4-xmms-controller</pre>
+
+</body>
+</html>
