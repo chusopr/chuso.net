@@ -86,3 +86,13 @@ languages:
         <<: *social-links
         mastodon: https://mastodon.social/@chuso
         twitter:  chusop
+  gl:
+    weight: 3
+    baseURL: https://gl.chuso.net/
+    languageName: Galego
+    languageCode: gl
+    params:
+      social:
+        <<: *social-links
+        mastodon: https://mastodon.gal/@chuso
+        twitter:  chusop
