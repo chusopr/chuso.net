@@ -74,7 +74,7 @@ languages:
     params:
       social:
         <<: *social-links
-        mastodon: https://fosstodon.org/@chuso
+        mastodon: https://floss.social/@chuso
         twitter:  chusonet
   es:
     weight: 2
