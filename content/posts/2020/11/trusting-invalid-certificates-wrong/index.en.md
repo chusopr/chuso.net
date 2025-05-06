@@ -44,7 +44,7 @@ We are seeing users routinely accepting invalid certificates without questioning
 
 Even a renowned IT security analyst like Brian Krebs recently made a statement in Twitter that favoured the idea that browser SSL warnings can just be ignored:
 
-{{< tweet briankrebs 1328863446105010177 >}}
+{{< x user=briankrebs id=1328863446105010177 >}}
 
 And the Spanish administration for years favoured the spread of this kind of habits when they decided they would go with their own certification authority but it took [years of bureaucratic hell](https://bugzilla.mozilla.org/show_bug.cgi?id=435736) to get it accepted by major browsers while organisms of the Spanish administration were already using it pushing users to accept invalid certificates for more than a decade.
 

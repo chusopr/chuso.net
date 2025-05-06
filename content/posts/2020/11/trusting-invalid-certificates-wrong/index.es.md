@@ -44,7 +44,7 @@ Se pueden ver a usuarios aceptar certificados inválidos de manera rutinaria sin
 
 Incluso un experto en seguridad informática mediático y de renombre como Brian Krebs recientemente escribió un tuit que favorece la idea de que las advertencias de los navegadores sobre certificados inválidos simplemente pueden ser ignoradas:
 
-{{< tweet briankrebs 1328863446105010177 >}}
+{{< x user="briankrebs" id="1328863446105010177" >}}
 
 Y la Administración española ha estado extendiendo durante años esta clase de hábitos cuando decidieron empezar a usar su propia autoridad certificadora pero hicieron falta [años de infierno burocrático](https://bugzilla.mozilla.org/show_bug.cgi?id=435736) hasta que fue aceptada por los principales navegadores mientra los organismos gubernamentales ya lo estaban usando haciendo que los usuarios tuvieran que aceptar certificados inválidos durante más de una década.
 
