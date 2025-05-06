@@ -32,7 +32,7 @@ markup:
     style: dracula
 
 privacy:
-  twitter:
+  x:
     enableDNT: true
 
 params:
